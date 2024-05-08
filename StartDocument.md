@@ -74,3 +74,9 @@ Deadlines: On this screen, all deadlines can be seen.
 ## Class Diagram
 
 ![class_diagram](images/project_management_app_class_diagram.png)
+
+## Literature List
+
+Davidbritch. (2023, 25 juli). _What is .NET MAUI? - .NET MAUI_. Microsoft Learn. https://learn.microsoft.com/en-us/dotnet/maui/what-is-maui?view=net-maui-8.0
+
+Gewarren. (2024, 14 februari). _Nieuw in .NET 8_. Microsoft Learn. https://learn.microsoft.com/nl-nl/dotnet/core/whats-new/dotnet-8/overview
