@@ -85,6 +85,9 @@ Deadlines: On this screen, all deadlines can be seen.
 ![TaskView](images/Teamcode-opstellen.png)
 TaskView: This screen is an example, of what a task may look like.
 
+![Documents](images/Mijn-documenten.png)
+Document overview: On this screen, the user can see all files and add new files.
+
 ## Class Diagram
 
 ![class_diagram](images/project_management_app_class_diagram.png)
