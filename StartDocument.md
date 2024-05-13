@@ -55,21 +55,35 @@ Lastly, the **Won`t -Haves**. These, as the name suggests, will not be in the pr
 
 ## Screens
 
+![Login](images/Inloggen-Registreren.png)
 Login: The user can login on this screen in the application.
 
+![Register](images/Inloggen-Registreren.png)
 Registration: The user can registrate on this screen in the application.
 
+![ProjectList](images/Kies-een-project.png)
 Project: On this screen, the user can see all the projects where he or she participates in.
 
+![TaskList](images/Mijn-taken.png)
 Tasks: On this screen, the user can see all tasks of a project.
 
+![TaskAdding](images/Kies-een-project-1.png)
+Tasks adding: On this screen, the user can add a task to the project.
+
+![MemberViewing](images/Mijn-groep.png)
 Members (for the project): On this screen, the user can see all members of the project.
 
+![RoleAssigning](images/Mijn-groep.png)
 Roles: On this screen, the user can assign & dismiss roles from other project members. This depends on the role of the user as well.
 
+![ProjectManaging](images/Homepagina.png)
 Project managament: On this screen, the project can be managed. Think about adding new tasks, deadlines or members.
 
+![deadlines](images/Projectdeadlines.png)
 Deadlines: On this screen, all deadlines can be seen.
+
+![TaskView](images/Teamcode-opstellen.png)
+TaskView: This screen is an example, of what a task may look like.
 
 ## Class Diagram
 
