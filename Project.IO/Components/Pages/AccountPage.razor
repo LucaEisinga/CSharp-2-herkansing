@@ -1,6 +1,17 @@
 ﻿@page "/accountPage"
 
 <div class="container-fluid">
+
+    <Modal @ref="modal" title="Modal title" IsVerticallyCentered="true">
+        <bodyTemplate>
+            This is a vertically centered modal.
+        </bodyTemplate>
+        <footerTemplate>
+            <button Color="ButtonColor.Secondary" @onclick="OnHideModalClick">Close</button>
+            <button Color="ButtonColor.Primary">Save changes</button>
+        </footerTemplate>
+    </Modal>
+
     <div class="row">
         <div class="col-md-1"></div>
         <div class="col-md-10 mb-3">
@@ -21,7 +32,7 @@
                         <input type="password" class="form-control my-3 bg-light" placeholder="Wachtwoord...">
                     </div>
                     <div class="text-center">
-                        <button type="submit" class="btn text-white px-3" style="background-color: #9b78ff">Inloggen</button>
+                        <button @onclick="OnShowModalClick" class="btn text-white px-3" style="background-color: #9b78ff">Inloggen</button>
                     </div>
                 </div>
                 <div class="col-sm-6 px-4">
@@ -47,3 +58,17 @@
         <div class="col-md-1"></div>
     </div>
 </div>
+
+@code {
+    private Modal modal = default!;
+
+    private async Task OnShowModalClick()
+    {
+        await modal.Show();
+    }
+
+    private async Task OnHideModalClick()
+    {
+        await modal.Close();
+    }
+}
