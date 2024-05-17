@@ -101,8 +101,8 @@ h1:focus {
 
 .big-button,
 .big-button-red {
-    height: 250px;
-    width: 250px;
+    min-height: 250px;
+    min-width: 250px;
     align-items: center;
     justify-content: center;
     background-color: #9b78ff;
@@ -110,8 +110,162 @@ h1:focus {
     display: flex;
     margin-top: 20px;
     border: 0px;
+    color: white;
 }
 
 .big-button-red {
     background-color: red;
+}
+
+@media only screen and (max-width: 2000px) {
+
+    .big-button,
+    .big-button-red {
+        min-height: 250px;
+        min-width: 250px;
+        align-items: center;
+        justify-content: center;
+        background-color: #9b78ff;
+        border-radius: 5px;
+        display: flex;
+        margin-top: 20px;
+        border: 0px;
+        font-size: 30px;
+        color: white;
+    }
+
+    .big-button-red {
+        background-color: red;
+    }
+
+}
+
+@media only screen and (max-width: 1750px) {
+
+    .big-button,
+    .big-button-red {
+        min-height: 220px;
+        min-width: 220px;
+        align-items: center;
+        justify-content: center;
+        background-color: #9b78ff;
+        border-radius: 5px;
+        display: flex;
+        margin-top: 20px;
+        border: 0px;
+        font-size: 25px;
+        color: white;
+    }
+
+    .big-button-red {
+        background-color: red;
+    }
+}
+
+@media only screen and (max-width: 1500px) {
+
+    .big-button,
+    .big-button-red {
+        min-height: 200px;
+        min-width: 200px;
+        align-items: center;
+        justify-content: center;
+        background-color: #9b78ff;
+        border-radius: 5px;
+        display: flex;
+        margin-top: 20px;
+        border: 0px;
+        font-size: 20px;
+        color: white;
+    }
+
+    .big-button-red {
+        background-color: red;
+    }
+}
+
+@media only screen and (max-width: 1250px) {
+
+    .big-button,
+    .big-button-red {
+        min-height: 160px;
+        min-width: 160px;
+        align-items: center;
+        justify-content: center;
+        background-color: #9b78ff;
+        border-radius: 5px;
+        display: flex;
+        margin-top: 20px;
+        border: 0px;
+        font-size: 17px;
+        color: white;
+    }
+
+    .big-button-red {
+        background-color: red;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+
+    .big-button,
+    .big-button-red {
+        min-height: 150px;
+        min-width: 150px;
+        align-items: center;
+        justify-content: center;
+        background-color: #9b78ff;
+        border-radius: 5px;
+        display: flex;
+        border: 0px;
+        font-size: 15px;
+        color: white;
+    }
+
+    .big-button-red {
+        background-color: red;
+    }
+
+}
+
+@media only screen and (max-width: 850px) {
+
+    .big-button,
+    .big-button-red {
+        min-height: 120px;
+        min-width: 120px;
+        align-items: center;
+        justify-content: center;
+        background-color: #9b78ff;
+        border-radius: 5px;
+        display: flex;
+        border: 0px;
+        font-size: 12px;
+        color: white;
+    }
+
+    .big-button-red {
+        background-color: red;
+    }
+}
+
+@media only screen and (max-width: 750px) {
+
+    .big-button,
+    .big-button-red {
+        min-height: 100px;
+        min-width: 100px;
+        align-items: center;
+        justify-content: center;
+        background-color: #9b78ff;
+        border-radius: 5px;
+        display: flex;
+        border: 0px;
+        font-size: 10px;
+        color: white;
+    }
+
+    .big-button-red {
+        background-color: red;
+    }
 }
