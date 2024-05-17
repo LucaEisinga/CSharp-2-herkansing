@@ -1,15 +1,16 @@
 ﻿@page "/accountPage"
+@using BootstrapBlazor
 
 <div class="container-fluid">
 
     <Modal @ref="modal" title="Modal title" IsVerticallyCentered="true">
-        <bodyTemplate>
+        <BodyTemplate>
             This is a vertically centered modal.
-        </bodyTemplate>
-        <footerTemplate>
-            <button Color="ButtonColor.Secondary" @onclick="OnHideModalClick">Close</button>
-            <button Color="ButtonColor.Primary">Save changes</button>
-        </footerTemplate>
+        </BodyTemplate>
+        <FooterTemplate>
+            <Button Color="ButtonColor.Secondary" @onclick="OnHideModalClick">Close</Button>
+            <Button Color="ButtonColor.Primary">Save changes</Button>
+        </FooterTemplate>
     </Modal>
 
     <div class="row">
@@ -32,7 +33,7 @@
                         <input type="password" class="form-control my-3 bg-light" placeholder="Wachtwoord...">
                     </div>
                     <div class="text-center">
-                        <button @onclick="OnShowModalClick" class="btn text-white px-3" style="background-color: #9b78ff">Inloggen</button>
+                        <Button @onclick="OnShowModalClick" class="btn text-white px-3" style="background-color: #9b78ff">Inloggen</Button>
                     </div>
                 </div>
                 <div class="col-sm-6 px-4">
@@ -58,17 +59,3 @@
         <div class="col-md-1"></div>
     </div>
 </div>
-
-@code {
-    private Modal modal = default!;
-
-    private async Task OnShowModalClick()
-    {
-        await modal.Show();
-    }
-
-    private async Task OnHideModalClick()
-    {
-        await modal.Close();
-    }
-}

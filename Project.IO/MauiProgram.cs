@@ -15,7 +15,6 @@ namespace Project.IO
                 });
 
             builder.Services.AddMauiBlazorWebView();
-            builder.Services.AddBootstrapBlazor();
 
 
 #if DEBUG
@@ -23,6 +22,7 @@ namespace Project.IO
     		builder.Logging.AddDebug();
 #endif
 
+            builder.Services.AddBlazorBootstrap();
             return builder.Build();
         }
     }
