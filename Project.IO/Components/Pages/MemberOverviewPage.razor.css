@@ -1,0 +1,118 @@
+.member-button 
+{
+    background-color: #9b78ff;
+    border: 0px;
+    border-radius: 5px;
+    font-weight: bold;
+    justify-content: center;
+    font-size: 20px;
+    padding: 5px;
+    margin: 10px;
+    color: white;
+    box-shadow: 5px 5px 15px 0px rgba(138,138,138,1);
+    width: 30%;
+    height: 220px;
+}
+
+.add-back-button 
+{
+    background-color: #9b78ff;
+    border: 0px;
+    border-radius: 5px;
+    font-weight: bold;
+    justify-content: center;
+    font-size: 20px;
+    padding: 10px;
+    margin: 10px;
+    color: white;
+    box-shadow: 5px 5px 15px 0px rgba(138,138,138,1);
+    width: 70%;
+    height: 220px;
+}
+
+.icon-100
+{
+    font-size: 100px;
+}
+
+@media only screen and (max-width: 1100px) 
+{
+
+    .member-button 
+    {
+        background-color: #9b78ff;
+        border: 0px;
+        border-radius: 5px;
+        font-weight: bold;
+        justify-content: center;
+        font-size: 15px;
+        padding: 5px;
+        margin: 10px;
+        color: white;
+        box-shadow: 5px 5px 15px 0px rgba(138,138,138,1);
+        width: 30%;
+        height: 150px;
+    }
+
+    .add-back-button 
+    {
+        background-color: #9b78ff;
+        border: 0px;
+        border-radius: 5px;
+        font-weight: bold;
+        justify-content: center;
+        font-size: 15px;
+        padding: 10px;
+        margin: 10px;
+        color: white;
+        box-shadow: 5px 5px 15px 0px rgba(138,138,138,1);
+        width: 70%;
+        height: 150px;
+    }
+
+    .icon-100 
+    {
+        font-size: 50px;
+    }
+}
+
+@media only screen and (max-width: 1000px) 
+{
+
+    .member-button 
+    {
+        background-color: #9b78ff;
+        border: 0px;
+        border-radius: 5px;
+        font-weight: bold;
+        justify-content: center;
+        font-size: 10px;
+        padding: 5px;
+        margin: 10px;
+        color: white;
+        box-shadow: 5px 5px 15px 0px rgba(138,138,138,1);
+        width: 30%;
+        height: 100px;
+    }
+
+    .add-back-button 
+    {
+        background-color: #9b78ff;
+        border: 0px;
+        border-radius: 5px;
+        font-weight: bold;
+        justify-content: center;
+        font-size: 10px;
+        padding: 10px;
+        margin: 10px;
+        color: white;
+        box-shadow: 5px 5px 15px 0px rgba(138,138,138,1);
+        width: 70%;
+        height: 100px;
+    }
+
+    .icon-100 
+    {
+        font-size: 30px;
+    }
+}
