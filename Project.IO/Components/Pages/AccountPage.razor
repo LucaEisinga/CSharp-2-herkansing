@@ -1,16 +1,25 @@
 ﻿@page "/accountPage"
-@using BootstrapBlazor
 
 <div class="container-fluid">
 
-    <Modal @ref="modal" title="Modal title" IsVerticallyCentered="true">
+    <Modal @ref="modal" IsVerticallyCentered="true" IsScrollable="true">
         <BodyTemplate>
-            This is a vertically centered modal.
+            <div class="text-center py-2">
+                <p class="h5" style="color: #9b78ff">Kies een project</p>
+                <Button Type="ButtonType.Submit" Class="btn w-75 my-3" Style="background-color: #9b78ff">
+                    <p class="h5 text-white">BattleBots</p>
+                </Button>
+                <Button Type="ButtonType.Submit" Class="btn w-75 my-3" Style="background-color: #9b78ff">
+                    <p class="h5 text-white">Innovate</p>
+                </Button>
+                <Button Type="ButtonType.Submit" Class="btn w-75 my-3" Style="background-color: #9b78ff">
+                    <p class="h5 text-white">Project 5.2</p>
+                </Button>
+                <Button Type="ButtonType.Submit" Class="btn w-75 my-3 btn-secondary">
+                    <p class="h5 text-white">Maak een nieuw project</p>
+                </Button>
+            </div>
         </BodyTemplate>
-        <FooterTemplate>
-            <Button Color="ButtonColor.Secondary" @onclick="OnHideModalClick">Close</Button>
-            <Button Color="ButtonColor.Primary">Save changes</Button>
-        </FooterTemplate>
     </Modal>
 
     <div class="row">
