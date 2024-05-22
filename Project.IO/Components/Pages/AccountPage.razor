@@ -2,14 +2,24 @@
 
 <div class="container-fluid">
 
-    <Modal @ref="modal" title="Modal title" IsVerticallyCentered="true">
-        <bodyTemplate>
-            This is a vertically centered modal.
-        </bodyTemplate>
-        <footerTemplate>
-            <button Color="ButtonColor.Secondary" @onclick="OnHideModalClick">Close</button>
-            <button Color="ButtonColor.Primary">Save changes</button>
-        </footerTemplate>
+    <Modal @ref="modal" IsVerticallyCentered="true" IsScrollable="true">
+        <BodyTemplate>
+            <div class="text-center py-2">
+                <p class="h5" style="color: #9b78ff">Kies een project</p>
+                <Button Type="ButtonType.Submit" Class="btn w-75 my-3" Style="background-color: #9b78ff">
+                    <p class="h5 text-white">BattleBots</p>
+                </Button>
+                <Button Type="ButtonType.Submit" Class="btn w-75 my-3" Style="background-color: #9b78ff">
+                    <p class="h5 text-white">Innovate</p>
+                </Button>
+                <Button Type="ButtonType.Submit" Class="btn w-75 my-3" Style="background-color: #9b78ff">
+                    <p class="h5 text-white">Project 5.2</p>
+                </Button>
+                <Button Type="ButtonType.Submit" Class="btn w-75 my-3 btn-secondary">
+                    <p class="h5 text-white">Maak een nieuw project</p>
+                </Button>
+            </div>
+        </BodyTemplate>
     </Modal>
 
     <div class="row">
@@ -32,7 +42,7 @@
                         <input type="password" class="form-control my-3 bg-light" placeholder="Wachtwoord...">
                     </div>
                     <div class="text-center">
-                        <button @onclick="OnShowModalClick" class="btn text-white px-3" style="background-color: #9b78ff">Inloggen</button>
+                        <Button @onclick="OnShowModalClick" class="btn text-white px-3" style="background-color: #9b78ff">Inloggen</Button>
                     </div>
                 </div>
                 <div class="col-sm-6 px-4">
@@ -58,17 +68,3 @@
         <div class="col-md-1"></div>
     </div>
 </div>
-
-@code {
-    private Modal modal = default!;
-
-    private async Task OnShowModalClick()
-    {
-        await modal.Show();
-    }
-
-    private async Task OnHideModalClick()
-    {
-        await modal.Close();
-    }
-}

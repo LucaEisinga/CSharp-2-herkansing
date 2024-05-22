@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:Project.IO"
+             xmlns:components="clr-namespace:Project.IO.Components.Pages"
              x:Class="Project.IO.MainPage"
              BackgroundColor="{DynamicResource PageBackgroundColor}">
 
