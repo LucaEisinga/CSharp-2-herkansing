@@ -111,6 +111,9 @@ h1:focus {
     margin-top: 20px;
     border: 0px;
     color: white;
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(138,138,138,1);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(138,138,138,1);
+    box-shadow: 10px 10px 5px 0px rgba(138,138,138,1);
 }
 
 .big-button-red {
@@ -297,6 +300,9 @@ h1:focus {
     margin-top: 20px;
     border: 0px;
     color: white;
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(138,138,138,1);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(138,138,138,1);
+    box-shadow: 10px 10px 5px 0px rgba(138,138,138,1);
 }
 
 .long-button-green {
