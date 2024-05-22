@@ -268,4 +268,45 @@ h1:focus {
     .big-button-red {
         background-color: red;
     }
+
+    .long-button {
+        height: 100px;
+        width: 800px;
+        background-color: #9b78ff;
+        align-items: center;
+        justify-content: center;
+        border-radius: 5px;
+        display: flex;
+        margin-top: 20px;
+        border: 0px;
+        color: white;
+    }
+}
+
+.long-button,
+.long-button-green,
+.long-button-yellow,
+.long-button-red {
+    height: 60px;
+    width: 700px;
+    background-color: #9b78ff;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    display: flex;
+    margin-top: 20px;
+    border: 0px;
+    color: white;
+}
+
+.long-button-green {
+    background-color: #06E32B;
+}
+
+.long-button-yellow {
+    background-color: #FFD119;
+}
+
+.long-button-red {
+    background-color: #FF4646;
 }

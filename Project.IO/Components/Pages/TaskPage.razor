@@ -1,7 +1,32 @@
-﻿@page "/taskPage"
+@page "/taskPage"
+@inherits LayoutComponentBase
 
 <div class="container-fluid">
     <div class="px-4 py-4 rounded" style="background-color: white">
-        <h1>Hoi</h1>
+        <div class="row">
+            <h1 style="color: #9b78ff; font-weight: bold">Mijn taken</h1>
+            <div class="col-8">
+                <button class="btn long-button-green">
+                    Teamcode opstellen
+                </button>
+                <button class="btn long-button-red">
+                    FO: Hoofdstuk 5
+                </button>
+                <button class="btn long-button-green">
+                    PvA: spellingscontrole
+                </button>
+                <button class="btn long-button-yellow">
+                    Teamcode opstellen
+                </button>
+            </div>
+            <div class="col-4">
+                <button class="btn big-button">
+                    Taak toevoegen
+                </button>
+                <button class="btn big-button">
+                    Terug
+                </button>
+            </div>
+        </div>
     </div>
 </div>
