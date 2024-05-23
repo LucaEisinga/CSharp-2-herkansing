@@ -48,19 +48,19 @@
                 <div class="col-sm-6 px-4">
                     <h5 class="text-center" style="color: #9b78ff">Registreren</h5>
                     <div class="form-group">
-                        <input type="text" class="form-control my-3 bg-light" placeholder="Gebruikersnaam...">
+                        <input type="text" class="form-control my-3 bg-light" @bind="userName" placeholder="Gebruikersnaam...">
                     </div>
                     <div class="form-group">
-                        <input type="email" class="form-control my-3 bg-light" placeholder="E-mailadres...">
+                        <input type="email" class="form-control my-3 bg-light" @bind="email" placeholder="E-mailadres...">
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control my-3 bg-light" placeholder="Wachtwoord...">
+                        <input type="password" class="form-control my-3 bg-light" @bind="password" placeholder="Wachtwoord...">
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-control my-3 bg-light" placeholder="Herhaal Wachtwoord...">
+                        <input type="password" class="form-control my-3 bg-light" @bind="repeatPassword" placeholder="Herhaal Wachtwoord...">
                     </div>
                     <div class="text-center">
-                        <button type="submit" class="btn text-white px-3" style="background-color: #9b78ff">Registreren</button>
+                        <Button @onclick="CreateNewUser" class="btn text-white px-3" style="background-color: #9b78ff">Registreren</Button>
                     </div>
                 </div>
             </div>

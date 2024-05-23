@@ -1,4 +1,5 @@
 ﻿using BlazorBootstrap;
+using Project.IO.Utilities;
 
 namespace Project.IO.Components.Pages
 {
@@ -6,6 +7,12 @@ namespace Project.IO.Components.Pages
     {
 
         private Modal modal = default!;
+        private DatabaseUtil databaseUtil = new DatabaseUtil();
+        private AccountUtil accountUtil = new AccountUtil();
+        private string? userName;
+        private string? email;
+        private string? password;
+        private string? repeatPassword;
 
         private async Task OnShowModalClick()
         {
@@ -15,6 +22,21 @@ namespace Project.IO.Components.Pages
         private async Task OnHideModalClick()
         {
             await modal.HideAsync();
+        }
+
+        private void ShowConnection()
+        {
+            databaseUtil.CreateConnection();
+        }
+
+        private void CreateNewUser()
+        {
+
+            if (password.Equals(repeatPassword))
+            {
+                System.Diagnostics.Debug.WriteLine(userName);
+                accountUtil.RegisterNewUser(userName, email, password, repeatPassword);
+            }
         }
 
     }
