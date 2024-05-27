@@ -1,0 +1,18 @@
+﻿@page "/addProject"
+
+<div class="container-fluid">
+    <div class="px-4 py-4 rounded text-center" style="background-color: white">
+        <h1 style="color: #9b78ff; font-weight: bold">Nieuw project</h1>
+        <div class="form-group" style="color: #9b78ff; display: flex">
+            <input type="text" class="form-control my-3 bg-light" placeholder="Titel...">
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control my-3 bg-light" placeholder="Omschrijving...">
+        </div>
+        <div class="form-group">
+            <label for="deadline" class="form-label">Kies een deadline:</label>
+            <InputDate TValue="deadline" @bind-Value="deadline" class="form-control" />
+        </div>
+        <Button class="btn text-white px-3" style="background-color: #9b78ff">Maak nieuw project</Button>
+    </div>
+</div>

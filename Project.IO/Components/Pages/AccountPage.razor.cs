@@ -1,4 +1,5 @@
 ﻿using BlazorBootstrap;
+using Microsoft.AspNetCore.Components;
 using Project.IO.Utilities;
 
 namespace Project.IO.Components.Pages
@@ -37,6 +38,11 @@ namespace Project.IO.Components.Pages
                 System.Diagnostics.Debug.WriteLine(userName);
                 accountUtil.RegisterNewUser(userName, email, password, repeatPassword);
             }
+        }
+
+        private void NavigateToAddProject()
+        {
+            Navigation.NavigateTo("/addProject");
         }
 
     }
