@@ -1,18 +1,26 @@
 ﻿@page "/addProject"
 
-<div class="container-fluid">
-    <div class="px-4 py-4 rounded text-center" style="background-color: white">
-        <h1 style="color: #9b78ff; font-weight: bold">Nieuw project</h1>
-        <div class="form-group" style="color: #9b78ff; display: flex">
-            <input type="text" class="form-control my-3 bg-light" placeholder="Titel...">
+<div class="container d-flex justify-content-center align-items-center" style="height: 100vh; background-color: #9b78ff">
+    <div class="card p-4 shadow-lg" style="width: 400px; background-color: white;">
+        <div class="card-body text-center">
+            <h2 class="card-title mb-4" style="color: #9b78ff; font-weight: bold">Nieuw project</h2>
+
+            <div class="form-group mb-3">
+                <label for="title" class="form-label" style="color: #9b78ff;">Titel</label>
+                <input type="text" id="title" class="form-control" @bind="project.Title" />
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="description" class="form-label" style="color: #9b78ff;">Omschrijving</label>
+                <textarea id="description" class="form-control" rows="3" @bind="project.Description"></textarea>
+            </div>
+
+            <div class="form-group mb-4">
+                <label for="deadline" class="form-label" style="color: #9b78ff;">Deadline van project</label>
+                <InputDate id="deadline" class="form-control" @bind-Value="project.Deadline" TValue="DateTime" />
+            </div>
+
+            <button class="btn" style="background-color: #9b78ff; color: white;" @onclick="CreateProject">Maak nieuw project</button>
         </div>
-        <div class="form-group">
-            <input type="text" class="form-control my-3 bg-light" placeholder="Omschrijving...">
-        </div>
-        <div class="form-group">
-            <label for="deadline" class="form-label">Kies een deadline:</label>
-            <InputDate TValue="deadline" @bind-Value="deadline" class="form-control" />
-        </div>
-        <Button class="btn text-white px-3" style="background-color: #9b78ff">Maak nieuw project</Button>
     </div>
 </div>

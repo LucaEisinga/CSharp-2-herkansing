@@ -6,15 +6,22 @@ using System.Threading.Tasks;
 
 namespace Project.IO.Components.Pages
 {
-    internal class AddProject
+    public partial class AddProject
     {
-        private DateTime deadline = DateTime.Today;
+        private Project project = new Project();
 
-        // Optioneel: Methode om de deadline in de toekomst te verwerken
-        private void SaveDeadline()
+        private void CreateProject()
         {
-            // Logica om de deadline op te slaan of te verwerken
-            Console.WriteLine($"De geselecteerde deadline is: {deadline}");
+            // Logica om het project op te slaan of te verwerken
+            Console.WriteLine($"Project aangemaakt: {project.Title}, {project.Description}, {project.Deadline}");
+            // Hier kun je bijvoorbeeld een service aanroepen om het project op te slaan
+        }
+
+        public class Project
+        {
+            public string Title { get; set; }
+            public string Description { get; set; }
+            public DateTime Deadline { get; set; } = DateTime.Today;
         }
     }
 }
