@@ -8,7 +8,7 @@ namespace Project.IO.Classes
 {
     internal class Member
     {
-
+        public int Id { get; set; }
         public string username;
         public string email;
         public string password;
@@ -21,6 +21,19 @@ namespace Project.IO.Classes
             this.setPassword(password);
             this.setRepeatPassword(repeatPassword);
         }
+
+        /*private int getId()
+        {
+            return this.id;
+        }
+
+        private void setId(int id)
+        {
+            if (id != 0)
+            {
+                this.id = id;
+            }
+        }*/
 
         private string getUsername()
         {
@@ -73,6 +86,7 @@ namespace Project.IO.Classes
                 this.repeatPassword = repeatPassword;
             }
         }
+
 
     }
 }

@@ -5,6 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Project.IO.Classes;
+using FireSharp;
+using FireSharp.Interfaces;
+using System.Runtime.CompilerServices;
+using System.Collections;
+using Newtonsoft.Json;
 
 namespace Project.IO.Utilities
 {
@@ -12,17 +17,37 @@ namespace Project.IO.Utilities
     {
 
         private DatabaseUtil databaseUtil = new DatabaseUtil();
-        private Member? member;
+
+        public async Task<int> AutoIncrement()
+        {
+            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync("Member");
+            string jsonResponse = response.Body;
+            List<Member> members = JsonConvert.DeserializeObject<List<Member>>(jsonResponse);
+
+            int maxId = 0;
+
+            if (members != null)
+            {
+                foreach (var member in members)
+                {
+                    if (member != null && member.Id > maxId)
+                    {
+                        maxId = member.Id;
+                    }
+                }
+            }
+
+            return maxId + 1;
+        }
 
         public async void RegisterNewUser(string userName, string email, string password, string repeatedPassword)
         {
-            this.member = new Member(userName, email, password, repeatedPassword);
 
-            System.Diagnostics.Debug.WriteLine(this.member);
+            int nextId = await AutoIncrement();
+            Member member = new Member(userName, email, password, repeatedPassword);
+            member.Id = nextId;
 
-            //moet een manier vinden om een nieuwe id mee te geven, heeft geen automatische increment dus moet zelf een functie maken of zo.
-
-            SetResponse response = await databaseUtil.CreateConnection().SetTaskAsync("User/", this.member);
+            SetResponse response = await databaseUtil.CreateConnection().SetAsync($"Member/{nextId}", member);
         }
 
     }

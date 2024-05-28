@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using FireSharp.Config;
 using FireSharp.Interfaces;
 using FireSharp.Response;
+using FireSharp;
+using Project.IO.Classes;
 
 namespace Project.IO.Utilities
 {
@@ -18,12 +20,12 @@ namespace Project.IO.Utilities
             BasePath = "https://projectio-8c677-default-rtdb.europe-west1.firebasedatabase.app/"
         };
 
-        IFirebaseClient? client;
+        FirebaseClient? client;
 
-        public IFirebaseClient CreateConnection()
+        public FirebaseClient CreateConnection()
         {
 
-            client = new FireSharp.FirebaseClient(config);
+            client = new FirebaseClient(config);
 
             if (client != null)
             {
