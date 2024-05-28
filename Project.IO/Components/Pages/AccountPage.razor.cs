@@ -1,4 +1,5 @@
 ﻿using BlazorBootstrap;
+using Microsoft.AspNetCore.Components;
 using Project.IO.Utilities;
 
 namespace Project.IO.Components.Pages
@@ -61,6 +62,11 @@ namespace Project.IO.Components.Pages
             }
 
             return result;
+        }
+
+        private void NavigateToAddProject()
+        {
+            Navigation.NavigateTo("/addProject");
         }
 
     }

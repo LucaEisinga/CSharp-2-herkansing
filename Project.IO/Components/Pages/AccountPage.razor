@@ -1,5 +1,7 @@
 ﻿@page "/accountPage"
 
+@inject NavigationManager Navigation
+
 <div class="container-fluid">
 
     <Modal @ref="modal" IsVerticallyCentered="true" IsScrollable="true">
@@ -15,7 +17,7 @@
                 <Button Type="ButtonType.Submit" Class="btn w-75 my-3" Style="background-color: #9b78ff">
                     <p class="h5 text-white">Project 5.2</p>
                 </Button>
-                <Button Type="ButtonType.Submit" Class="btn w-75 my-3 btn-secondary">
+                <Button Type="ButtonType.Button" @onclick="NavigateToAddProject" Class="btn w-75 my-3 btn-secondary">
                     <p class="h5 text-white">Maak een nieuw project</p>
                 </Button>
             </div>
