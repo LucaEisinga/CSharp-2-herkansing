@@ -10,6 +10,8 @@ using FireSharp.Interfaces;
 using System.Runtime.CompilerServices;
 using System.Collections;
 using Newtonsoft.Json;
+using System.ComponentModel;
+using System.Diagnostics;
 
 namespace Project.IO.Utilities
 {
@@ -43,11 +45,73 @@ namespace Project.IO.Utilities
         public async void RegisterNewUser(string userName, string email, string password, string repeatedPassword)
         {
 
-            int nextId = await AutoIncrement();
-            Member member = new Member(userName, email, password, repeatedPassword);
-            member.Id = nextId;
+            if (await RegisterUsernameCheck(userName))
+            {
+                int nextId = await AutoIncrement();
+                Member member = new Member(userName, email, password, repeatedPassword);
+                member.Id = nextId;
 
-            SetResponse response = await databaseUtil.CreateConnection().SetAsync($"Member/{nextId}", member);
+                SetResponse response = await databaseUtil.CreateConnection().SetAsync($"Member/{nextId}", member);
+            }
+        }
+
+        public async Task<bool> canLogin(string userName, string password)
+        {
+
+            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync("Member");
+            string jsonResponse = response.Body;
+            List<Member> members = JsonConvert.DeserializeObject<List<Member>>(jsonResponse);
+
+            bool loggedIn = false;
+
+            if (members != null)
+            {
+                foreach (var member in members)
+                {
+                    if (member != null)
+                    {
+                        if (member.username.Equals(userName) && member.password.Equals(password))
+                        {
+                            loggedIn = true;
+                        }
+                    }
+                }
+            }
+
+            return loggedIn;
+        }
+
+        public async Task<bool> RegisterUsernameCheck(string newUser)
+        {
+            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync("Member");
+            string jsonResponse = response.Body;
+            List<Member> members = JsonConvert.DeserializeObject<List<Member>>(jsonResponse);
+            bool isSameUser = false;
+
+            if (members != null)
+            {
+                foreach (var member in members)
+                {
+                    if (member != null)
+                    {
+                        if (!(member.username.Equals(newUser)))
+                        {
+                            isSameUser = true;
+                        }
+                        else
+                        {
+                            isSameUser = false;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                isSameUser = true;
+            }
+
+
+            return isSameUser;
         }
 
     }

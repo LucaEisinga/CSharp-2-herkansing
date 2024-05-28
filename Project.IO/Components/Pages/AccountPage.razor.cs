@@ -7,8 +7,11 @@ namespace Project.IO.Components.Pages
     {
 
         private Modal modal = default!;
+        private Modal errorModal = default!;
         private DatabaseUtil databaseUtil = new DatabaseUtil();
         private AccountUtil accountUtil = new AccountUtil();
+        private string? logUser;
+        private string? logPassword;
         private string? userName;
         private string? email;
         private string? password;
@@ -29,14 +32,35 @@ namespace Project.IO.Components.Pages
             databaseUtil.CreateConnection();
         }
 
+        private async Task LoginUser()
+        {
+            if (await accountUtil.canLogin(logUser, logPassword))
+            {
+                await modal.ShowAsync();
+            }
+        }
+
         private void CreateNewUser()
         {
+            /*if (IsEmpty(userName) || IsEmpty(email))
+            {*/
+                if (password.Equals(repeatPassword))
+                {
+                    accountUtil.RegisterNewUser(userName, email, password, repeatPassword);
+                }
+            /*}*/
+        }
 
-            if (password.Equals(repeatPassword))
+        private bool IsEmpty(string value)
+        {
+            bool result = false;
+
+            if (!(value == null) || !(value == ""))
             {
-                System.Diagnostics.Debug.WriteLine(userName);
-                accountUtil.RegisterNewUser(userName, email, password, repeatPassword);
+                result = true;
             }
+
+            return result;
         }
 
     }
