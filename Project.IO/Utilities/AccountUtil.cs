@@ -42,7 +42,7 @@ namespace Project.IO.Utilities
             return maxId + 1;
         }
 
-        public async void RegisterNewUser(string userName, string email, string password, string repeatedPassword)
+        public async Task RegisterNewUser(string userName, string email, string password, string repeatedPassword)
         {
 
             if (await RegisterUsernameCheck(userName))
@@ -62,8 +62,6 @@ namespace Project.IO.Utilities
             string jsonResponse = response.Body;
             List<Member> members = JsonConvert.DeserializeObject<List<Member>>(jsonResponse);
 
-            bool loggedIn = false;
-
             if (members != null)
             {
                 foreach (var member in members)
@@ -72,13 +70,13 @@ namespace Project.IO.Utilities
                     {
                         if (member.username.Equals(userName) && member.password.Equals(password))
                         {
-                            loggedIn = true;
+                            return true;
                         }
                     }
                 }
             }
 
-            return loggedIn;
+            return false;
         }
 
         public async Task<bool> RegisterUsernameCheck(string newUser)
@@ -86,32 +84,19 @@ namespace Project.IO.Utilities
             FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync("Member");
             string jsonResponse = response.Body;
             List<Member> members = JsonConvert.DeserializeObject<List<Member>>(jsonResponse);
-            bool isSameUser = false;
 
             if (members != null)
             {
                 foreach (var member in members)
                 {
-                    if (member != null)
+                    if (member != null && member.username.Equals(newUser, StringComparison.OrdinalIgnoreCase))
                     {
-                        if (!(member.username.Equals(newUser)))
-                        {
-                            isSameUser = true;
-                        }
-                        else
-                        {
-                            isSameUser = false;
-                        }
+                        return false;
                     }
                 }
             }
-            else
-            {
-                isSameUser = true;
-            }
 
-
-            return isSameUser;
+            return true;
         }
 
     }

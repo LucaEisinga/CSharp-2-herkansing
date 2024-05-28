@@ -42,13 +42,13 @@ namespace Project.IO.Components.Pages
 
         private void CreateNewUser()
         {
-            /*if (IsEmpty(userName) || IsEmpty(email))
-            {*/
+            if (IsEmpty(userName) || IsEmpty(email))
+            {
                 if (password.Equals(repeatPassword))
                 {
                     accountUtil.RegisterNewUser(userName, email, password, repeatPassword);
                 }
-            /*}*/
+            }
         }
 
         private bool IsEmpty(string value)
