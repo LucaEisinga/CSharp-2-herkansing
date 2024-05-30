@@ -2,6 +2,37 @@
 @inherits LayoutComponentBase
 
 <div class="container-fluid">
+
+    <Modal @ref="taskModal" IsVerticallyCentered="true" IsScrollable="true">
+        <BodyTemplate>
+            <div class="text-center py-2 px-2">
+                <span class="h4" style="color: #9b78ff">Taak toevoegen</span>
+                <div class="form-group px-3">
+                    <input type="text" class="form-control my-3 bg-light" placeholder="Taak..." required>
+                </div>
+                <div class="form-group px-3">
+                    <select class="form-select my-3 bg-light" aria-label="Default select example">
+                        <option selected>Toewijzen aan...</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+                <div class="form-group px-3">
+                    <input type="input" class="form-control my-3 bg-light" placeholder="dd/mm/jj" required>
+                </div>
+                <div class="form-group px-3">
+                    <input type="password" class="form-control my-3 bg-light" placeholder="Omschrijving..." required>
+                </div>
+                <div class="form-group px-3">
+                    <Button Type="ButtonType.Submit" Class="btn w-100" Style="background-color: #9b78ff;">
+                        <span class="h5 text-white">Taak toevoegen</span>
+                    </Button>
+                </div>
+            </div>
+        </BodyTemplate>
+    </Modal>
+
     <div class="px-4 py-4 rounded" style="background-color: white">
         <div class="row">
             <h1 style="color: #9b78ff; font-weight: bold">Mijn taken</h1>
@@ -20,9 +51,9 @@
                 </button>
             </div>
             <div class="col-4">
-                <button class="btn big-button">
+                <Button @onclick="ShowTaskModal" class="btn big-button">
                     Taak toevoegen
-                </button>
+                </Button>
                 <button class="btn big-button">
                     Terug
                 </button>
