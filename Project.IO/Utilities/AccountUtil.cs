@@ -20,7 +20,7 @@ namespace Project.IO.Utilities
 
         private DatabaseUtil databaseUtil = new DatabaseUtil();
 
-        public async Task<int> AutoIncrement()
+        public async Task<int> AutoIncrementMember()
         {
             FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync("Member");
             string jsonResponse = response.Body;
@@ -42,12 +42,12 @@ namespace Project.IO.Utilities
             return maxId + 1;
         }
 
-        public async Task RegisterNewUser(string userName, string email, string password, string repeatedPassword)
+        public async void RegisterNewUser(string userName, string email, string password, string repeatedPassword)
         {
 
             if (await RegisterUsernameCheck(userName))
             {
-                int nextId = await AutoIncrement();
+                int nextId = await AutoIncrementMember();
                 Member member = new Member(userName, email, password, repeatedPassword);
                 member.Id = nextId;
 
