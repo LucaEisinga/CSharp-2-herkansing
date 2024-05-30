@@ -1,17 +1,6 @@
 ﻿using FireSharp.Response;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Project.IO.Classes;
-using FireSharp;
-using FireSharp.Interfaces;
-using System.Runtime.CompilerServices;
-using System.Collections;
 using Newtonsoft.Json;
-using System.ComponentModel;
-using System.Diagnostics;
+using Project.IO.Classes.Model;
 
 namespace Project.IO.Utilities
 {
@@ -45,7 +34,7 @@ namespace Project.IO.Utilities
         public async void RegisterNewUser(string userName, string email, string password, string repeatedPassword)
         {
 
-            if (await RegisterUsernameCheck(userName))
+            if (await RegisterUsernameCheck(userName, email))
             {
                 int nextId = await AutoIncrementMember();
                 Member member = new Member(userName, email, password, repeatedPassword);
@@ -79,7 +68,7 @@ namespace Project.IO.Utilities
             return false;
         }
 
-        public async Task<bool> RegisterUsernameCheck(string newUser)
+        public async Task<bool> RegisterUsernameCheck(string newUsername, string newUserEmail)
         {
             FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync("Member");
             string jsonResponse = response.Body;
@@ -89,7 +78,8 @@ namespace Project.IO.Utilities
             {
                 foreach (var member in members)
                 {
-                    if (member != null && member.username.Equals(newUser, StringComparison.OrdinalIgnoreCase))
+                    if (member != null && member.username.Equals(newUsername, StringComparison.OrdinalIgnoreCase) ||
+                        member.email.Equals(newUsername, StringComparison.OrdinalIgnoreCase))
                     {
                         return false;
                     }

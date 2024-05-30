@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Project.IO.Classes
+namespace Project.IO.Classes.Model
 {
     internal class Member
     {
@@ -16,10 +16,10 @@ namespace Project.IO.Classes
 
         public Member(string username, string email, string password, string repeatPassword)
         {
-            this.setUsername(username);
-            this.setEmail(email);
-            this.setPassword(password);
-            this.setRepeatPassword(repeatPassword);
+            setUsername(username);
+            setEmail(email);
+            setPassword(password);
+            setRepeatPassword(repeatPassword);
         }
 
         /*private int getId()
@@ -37,7 +37,7 @@ namespace Project.IO.Classes
 
         private string getUsername()
         {
-            return this.username;
+            return username;
         }
 
         private void setUsername(string username)
@@ -50,7 +50,7 @@ namespace Project.IO.Classes
 
         private string getEmail()
         {
-            return this.email;
+            return email;
         }
 
         private void setEmail(string email)
@@ -63,7 +63,7 @@ namespace Project.IO.Classes
 
         private string getPassword()
         {
-            return this.password;
+            return password;
         }
 
         private void setPassword(string password)
@@ -76,7 +76,7 @@ namespace Project.IO.Classes
 
         private string getRepeatPassword()
         {
-            return this.repeatPassword;
+            return repeatPassword;
         }
 
         private void setRepeatPassword(string repeatPassword)
