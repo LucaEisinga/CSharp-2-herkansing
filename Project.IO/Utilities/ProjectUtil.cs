@@ -1,14 +1,6 @@
 ﻿using FireSharp.Response;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Project.IO.Classes;
 using FireSharp;
-using FireSharp.Interfaces;
-using System.Runtime.CompilerServices;
-using System.Collections;
 using Newtonsoft.Json;
 
 namespace Project.IO.Utilities
@@ -25,11 +17,11 @@ namespace Project.IO.Utilities
 
             int maxId = 0;
 
-            if (projects.Count > 0)
+            if (projects != null)
             {
                 foreach (var project in projects)
                 {
-                    if (project.Id > maxId)
+                    if (project != null && project.Id > maxId)
                     {
                         maxId = project.Id;
                     }
@@ -39,21 +31,22 @@ namespace Project.IO.Utilities
             return maxId + 1;
         }
 
-        public async System.Threading.Tasks.Task AddProjectToFirebaseAsync(string title, string description, DateTime deadline)
+        public async void AddProjectToFirebase(string title, string description, DateTime deadline)
         {
+            
+            int nextId = await AutoIncrement();
             ProjectModel project = new ProjectModel(title, description, deadline);
+            project.Id = nextId;
 
             if (project == null)
             {
                 throw new ArgumentNullException(nameof(project));
             }
 
-            project.Id = await AutoIncrement();
-
             FirebaseClient client = databaseUtil.CreateConnection();
 
-            SetResponse response = await client.SetAsync($"projects/{project.Id}", project);
-            ProjectModel result = response.ResultAs<ProjectModel>();
+            SetResponse response = await client.SetAsync($"Project/{nextId}", project);
+            /*ProjectModel result = response.ResultAs<ProjectModel>();
 
             if (result != null)
             {
@@ -62,7 +55,7 @@ namespace Project.IO.Utilities
             else
             {
                 Console.WriteLine("Failed to add project to Firebase.");
-            }
+            }*/
         }
     }
 }

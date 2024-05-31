@@ -9,8 +9,6 @@ namespace Project.IO.Classes
         public string Title { get; set; }
         public string Description { get; set; }
         public DateTime Deadline { get; set; }
-        public List<Task> Tasks { get; set; } = new List<Task>();
-        public List<Member> Members { get; set; } = new List<Member>();
 
         public ProjectModel(string title, string description, DateTime deadline)
         {
@@ -19,7 +17,7 @@ namespace Project.IO.Classes
             Deadline = deadline;
         }
 
-        public void AddTask(Task task)
+        /*public void AddTask(Task task)
         {
             if (task == null)
             {
@@ -37,6 +35,6 @@ namespace Project.IO.Classes
             }
 
             Members.Add(member);
-        }
+        }*/
     }
 }

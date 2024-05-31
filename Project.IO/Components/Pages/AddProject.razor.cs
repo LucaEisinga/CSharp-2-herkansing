@@ -9,17 +9,14 @@ namespace Project.IO.Components.Pages
 {
     public partial class AddProject
     {
-        private ProjectUtil projectUtil;
+        private ProjectUtil projectUtil = new ProjectUtil();
         private string? projectTitle;
         private string? projectDescription;
         private DateTime projectDeadline;
 
-        private async void CreateProject()
+        private void CreateProject()
         {
-            if (projectUtil != null)
-            {
-                await projectUtil.AddProjectToFirebaseAsync(projectTitle, projectDescription, projectDeadline);
-            }
+            projectUtil.AddProjectToFirebase(projectTitle, projectDescription, projectDeadline);
         }
     }
 }

@@ -17,7 +17,7 @@
 
             <div class="form-group mb-4">
                 <label for="deadline" class="form-label" style="color: #9b78ff;">Deadline van project</label>
-                <InputDate id="deadline" class="form-control" @bind-value="projectDeadline" TValue="DateTime" />
+                <DateInput TValue="DateTime" @bind-Value="@projectDeadline" class="form-control" id="deadline" Placeholder="Enter Date" />
             </div>
 
             <button class="btn" style="background-color: #9b78ff; color: white;" @onclick="CreateProject">Maak nieuw project</button>
