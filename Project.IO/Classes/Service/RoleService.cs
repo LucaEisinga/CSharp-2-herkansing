@@ -10,7 +10,7 @@ namespace Project.IO.Classes.Service
 
         private DatabaseUtil databaseUtil;
 
-        public async Task<int> AutoIncrementRole()
+        private async Task<int> AutoIncrementRole()
         {
             FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync("Role");
             string jsonResponse = response.Body;
@@ -48,7 +48,7 @@ namespace Project.IO.Classes.Service
             }
         }
 
-        public async Task<int> getUserIdChosenForRole(string chosenUser)
+        private async Task<int> getUserIdChosenForRole(string chosenUser)
         {
 
             FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync("Member");
@@ -69,7 +69,7 @@ namespace Project.IO.Classes.Service
             return 0;
         }
 
-        public async Task<bool> hasRoleAlready(int userId)
+        private async Task<bool> hasRoleAlready(int userId)
         {
 
             FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync("Role");
