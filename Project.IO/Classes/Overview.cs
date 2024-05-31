@@ -8,14 +8,14 @@ namespace Project.IO.Classes
 {
     internal class Overview
     {
-        public List<Project> projects;
+        public List<ProjectModel> projects;
 
         public Overview()
         {
-            projects = new List<Project>();
+            projects = new List<ProjectModel>();
         }
 
-        public void addProject(Project project)
+        public void addProject(ProjectModel project)
         {
             projects.Add(project);
         }

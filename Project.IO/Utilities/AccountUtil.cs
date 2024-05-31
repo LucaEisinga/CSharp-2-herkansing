@@ -88,6 +88,5 @@ namespace Project.IO.Utilities
 
             return true;
         }
-
     }
 }
