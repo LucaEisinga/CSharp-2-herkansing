@@ -49,6 +49,5 @@ namespace Project.IO.Utilities
 
             SetResponse response = await databaseUtil.CreateConnection().SetAsync($"Member/{nextId}", member);
         }
-
     }
 }
