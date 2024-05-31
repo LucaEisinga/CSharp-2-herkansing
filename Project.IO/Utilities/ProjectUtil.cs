@@ -2,6 +2,8 @@
 using Project.IO.Classes;
 using FireSharp;
 using Newtonsoft.Json;
+using System.ComponentModel;
+using System.Diagnostics;
 
 namespace Project.IO.Utilities
 {
@@ -56,6 +58,29 @@ namespace Project.IO.Utilities
             {
                 Console.WriteLine("Failed to add project to Firebase.");
             }*/
+        }
+
+        public async Task<List<ProjectModel>> GetListOfProjects()
+        {
+            try
+            {
+                FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync("Project");
+                string jsonResponse = response.Body;
+                List<ProjectModel> projects = JsonConvert.DeserializeObject<List<ProjectModel>>(jsonResponse);
+
+                if (projects == null)
+                {
+                    Debug.WriteLine("Deserialized projects list is null.");
+                    return new List<ProjectModel>();
+                }
+
+                return projects;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception in GetListOfProjects: {ex.Message}");
+                return new List<ProjectModel>();
+            }
         }
     }
 }
