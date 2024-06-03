@@ -1,15 +1,17 @@
 ﻿using BlazorBootstrap;
+using Microsoft.AspNetCore.Components;
+using Project.IO.Classes.Service;
 using Project.IO.Utilities;
-
+ 
 namespace Project.IO.Components.Pages
 {
-    public partial class AccountPage
+    partial class AccountPage
     {
 
         private Modal modal = default!;
         private Modal errorModal = default!;
         private DatabaseUtil databaseUtil = new DatabaseUtil();
-        private AccountUtil accountUtil = new AccountUtil();
+        private AccountUtil _accountUtil = new AccountUtil();
         private string? logUser;
         private string? logPassword;
         private string? userName;
@@ -34,7 +36,7 @@ namespace Project.IO.Components.Pages
 
         private async Task LoginUser()
         {
-            if (await accountUtil.canLogin(logUser, logPassword))
+            if (await _accountUtil.canLogin(logUser, logPassword))
             {
                 await modal.ShowAsync();
             }
@@ -46,7 +48,7 @@ namespace Project.IO.Components.Pages
             {
                 if (password.Equals(repeatPassword))
                 {
-                    accountUtil.RegisterNewUser(userName, email, password, repeatPassword);
+                    _accountUtil.RegisterNewUser(userName, email, password, repeatPassword);
                 }
             }
         }

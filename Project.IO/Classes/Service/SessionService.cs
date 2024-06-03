@@ -1,35 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Blazored.LocalStorage;
+﻿using Blazored.LocalStorage;
 
 namespace Project.IO.Classes.Service
 {
-    internal class SessionService
+    public class SessionService
     {
 
-        private ILocalStorageService? _localStorageService;
+        private static SessionService _instance;
+        private static readonly object _lock = new object();
 
-        public async Task IsLoggedInAsync(bool isLoggedIn)
+        public static SessionService Instance
         {
-            await _localStorageService.SetItemAsync("IsLoggedIn", isLoggedIn);
+            get
+            {
+                lock (_lock)
+                {
+                    return _instance ??= new SessionService();
+                }
+            }
         }
 
-        public async Task<string> GetIsLoggedInAsync()
+        private string? _userId;
+        private bool _isLoggedIn;
+
+        private SessionService()
         {
-            return await _localStorageService.GetItemAsync<string>("IsLoggedIn");
+            // Initialize session data
+            _userId = null;
+            _isLoggedIn = false;
         }
 
-        public async Task SetUserIdAsync(string userId)
+        public string? UserId
         {
-            await _localStorageService.SetItemAsync("UserId", userId);
+            get { return _userId; }
+            set { _userId = value; }
         }
 
-        public async Task<string> GetUserIdAsync()
+        public bool IsLoggedIn
         {
-            return await _localStorageService.GetItemAsync<string>("UserId");
+            get { return _isLoggedIn; }
+            set { _isLoggedIn = value; }
         }
 
     }
