@@ -35,7 +35,10 @@
                         {
                             @foreach (var project in projects)
                             {
-                                <option value="@project.Id">@project.Title</option>
+                                if (project != null)
+                                {
+                                    <option value="@project.Id">@project.Title</option>
+                                }
                             }
                         }
                     </select>

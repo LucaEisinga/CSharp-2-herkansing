@@ -1,6 +1,7 @@
 ﻿using FireSharp.Response;
 using Newtonsoft.Json;
 using Project.IO.Classes.Model;
+using Project.IO.Classes.Service;
 
 namespace Project.IO.Utilities
 {
@@ -8,6 +9,7 @@ namespace Project.IO.Utilities
     {
 
         private DatabaseUtil databaseUtil = new DatabaseUtil();
+        private SessionService sessionService = new SessionService();
 
         public async Task<int> AutoIncrementMember()
         {
@@ -59,6 +61,9 @@ namespace Project.IO.Utilities
                     {
                         if (member.username.Equals(userName) && member.password.Equals(password))
                         {
+                            await sessionService.SetUserIdAsync($"{member.Id}");
+                            await sessionService.IsLoggedInAsync(true);
+
                             return true;
                         }
                     }

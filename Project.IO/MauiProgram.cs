@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Blazored.LocalStorage;
+using Microsoft.Extensions.Logging;
 
 namespace Project.IO
 {
@@ -15,6 +16,7 @@ namespace Project.IO
                 });
 
             builder.Services.AddMauiBlazorWebView();
+            builder.Services.AddBlazoredLocalStorage();
 
 
 #if DEBUG
