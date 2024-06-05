@@ -61,7 +61,7 @@ namespace Project.IO.Utilities
                         if (member.username.Equals(userName) && member.password.Equals(password))
                         {
                             SessionService.Instance.UserId = $"{member.Id}";
-                            SessionService.Instance.IsLoggedIn = true ;
+                            SessionService.Instance.IsLoggedIn = true;
                             return true;
                         }
                     }

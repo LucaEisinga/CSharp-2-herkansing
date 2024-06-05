@@ -24,7 +24,6 @@ namespace Project.IO.Classes.Service
 
         private SessionService()
         {
-            // Initialize session data
             _userId = null;
             _isLoggedIn = false;
         }
