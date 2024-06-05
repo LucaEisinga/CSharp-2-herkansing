@@ -32,5 +32,6 @@ namespace Project.IO.Classes.Service
             return await _localStorageService.GetItemAsync<string>("UserId");
         }
 
+
     }
 }
