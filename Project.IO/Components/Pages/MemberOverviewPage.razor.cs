@@ -28,7 +28,6 @@ namespace Project.IO.Components.Pages
                     Debug.WriteLine($"Fetched {projects.Count} projects.");
                 }
 
-                // Show the modal
                 await memberModal.ShowAsync();
             }
             catch (Exception ex)
@@ -40,6 +39,7 @@ namespace Project.IO.Components.Pages
         private async Task<List<ProjectModel>> ShowAllProjects()
         {
             var projectList = await projectUtil.GetListOfProjects();
+
             if (projectList == null)
             {
                 Debug.WriteLine("Project list is null in ShowAllProjects method.");
@@ -48,6 +48,7 @@ namespace Project.IO.Components.Pages
             {
                 Debug.WriteLine($"ShowAllProjects fetched {projectList.Count} projects.");
             }
+
             return projectList;
         }
 
