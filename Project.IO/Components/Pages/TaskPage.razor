@@ -11,7 +11,7 @@
                     <input type="text" class="form-control my-3 bg-light" @bind="taskTitle" placeholder="Taak..." required>
                 </div>
                 <div class="form-group px-3">
-                    <select class="form-select my-3 bg-light" aria-label="Default select example">
+                    <select @bind="projectMember" class="form-select my-3 bg-light" aria-label="Default select example">
                         <option selected>Toewijzen aan...</option>
                         @if (members == null)
                         {
@@ -40,7 +40,7 @@
                     <input type="text" class="form-control my-3 bg-light" @bind="taskDescription" placeholder="Omschrijving..." required>
                 </div>
                 <div class="form-group px-3">
-                    <Button Type="ButtonType.Submit" Class="btn w-100" Style="background-color: #9b78ff;">
+                    <Button Type="ButtonType.Submit" @onclick="AddNewTaskToUser" Class="btn w-100" Style="background-color: #9b78ff;">
                         <span class="h5 text-white">Taak toevoegen</span>
                     </Button>
                 </div>

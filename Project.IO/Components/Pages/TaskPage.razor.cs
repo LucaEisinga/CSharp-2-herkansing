@@ -2,6 +2,7 @@
 using Project.IO.Classes.Model;
 using System.Reflection;
 using System.Diagnostics;
+using Project.IO.Classes.Service;
 
 namespace Project.IO.Components.Pages
 {
@@ -9,7 +10,9 @@ namespace Project.IO.Components.Pages
     {
 
         private Modal taskModal = default!;
+        private TaskService taskService = new TaskService();
         private string? taskTitle;
+        private int? projectMember;
         private DateTime taskDeadline = DateTime.Now;
         private string? taskDescription;
 
@@ -40,7 +43,7 @@ namespace Project.IO.Components.Pages
 
         private async Task<List<Member>> ShowAllMembers()
         {
-            var memberList = new List<Member>();
+            var memberList = await taskService.GetAllMembersInProject();
 
             if (memberList == null)
             {
@@ -52,6 +55,29 @@ namespace Project.IO.Components.Pages
             }
 
             return memberList;
+        }
+
+        private async void AddNewTaskToUser()
+        {
+            if (IsEmpty(taskTitle) || IsEmpty(taskDescription))
+            {
+                if (projectMember != null)
+                {
+                    await taskService.AddNewTaskToProject(taskTitle, projectMember.Value, taskDescription, taskDeadline);
+                }
+            }
+        }
+
+        private bool IsEmpty(string value)
+        {
+            bool result = false;
+
+            if (!(value == null) || !(value == ""))
+            {
+                result = true;
+            }
+
+            return result;
         }
 
     }
