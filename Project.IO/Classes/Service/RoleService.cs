@@ -8,7 +8,7 @@ namespace Project.IO.Classes.Service
     internal class RoleService
     {
 
-        private DatabaseUtil databaseUtil;
+        private DatabaseUtil databaseUtil = new DatabaseUtil();
 
         private async Task<int> AutoIncrementRole()
         {
