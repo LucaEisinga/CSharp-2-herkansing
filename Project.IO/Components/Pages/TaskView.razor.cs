@@ -15,9 +15,9 @@ namespace Project.IO.Components.Pages
 
 		protected override async Task OnInitializedAsync()
 		{
+			Console.WriteLine(TaskId);
 			// Fetch the task data
-			Task = await TaskService.GetTask(TaskId);
-
+			Task = await TaskService.GetTaskById(TaskId);
 		}
 	}
 }

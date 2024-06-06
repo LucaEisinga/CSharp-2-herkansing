@@ -1,8 +1,8 @@
-﻿@page "/taskView/{taskId:int}"
+﻿@page "/taskView/{TaskId:int}"
 
 <div class="container-fluid">
     <div class="px-4 py-4 rounded" style="background-color: white">
-        if (Task != null)
+        @if (Task != null)
         {
             <div>
                 <h1 style="color: #9b78ff; font-weight: bold">@Task.Title</h1>

@@ -52,11 +52,18 @@
         <div class="row">
             <h1 style="color: #9b78ff; font-weight: bold">Mijn taken</h1>
             <div class="col-8">
-                @foreach (var task in tasks)
+                @if(tasks == null||!tasks.Any())
                 {
-                    <button class="btn long-button-green" @onclick="() => NavigateToTask(task.Id)">
-                        @task.Title
-                    </button>
+                    <p>Geen taken.</p>
+                }
+                else
+                {
+                    @foreach (var task in tasks)
+                    {
+                        <button class="btn long-button-green" @onclick="() => NavigateToTask(task.Id)">
+                            @task.Title
+                        </button>
+                    }
                 }
             </div>
             <div class="col-4">

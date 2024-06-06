@@ -16,15 +16,30 @@ namespace Project.IO.Components.Pages
         private DateTime taskDeadline = DateTime.Now;
         private string? taskDescription;
 
-        private List<Member> members = new List<Member>();
-        private List<TaskModel> tasks = new List<TaskModel>();
+        private List<Member> members = [];
+        private List<TaskModel> tasks = [];
 
         [Inject]
-        public TaskService TaskService { get; set; } = default!;
+        private TaskService TaskService { get; set; } = default!;
 
         [Inject]
         private NavigationManager navigationManager { get; set; } = default!;
-        private async Task ShowTaskModal()
+        protected override async Task OnInitializedAsync()
+        {   
+            try
+            {
+                // Fetch the task data
+                tasks = await TaskService.GetAllTasks();
+
+                // Debug logging
+                Console.WriteLine($"Loaded {tasks.Count} tasks on initialization");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error loading tasks: {ex.Message}");
+            }
+        }
+        public async Task ShowTaskModal()
         {
 
             try
@@ -38,7 +53,6 @@ namespace Project.IO.Components.Pages
                 {
                     Debug.WriteLine($"Fetched {members.Count} members.");
                 }
-
                 await taskModal.ShowAsync();
             }
             catch (Exception ex)
@@ -61,6 +75,21 @@ namespace Project.IO.Components.Pages
             }
 
             return memberList;
+        }
+        public async Task<List<TaskModel>> getTasks()
+        {
+            var tasks = await TaskService.GetAllTasks();
+
+            if (tasks == null)
+            {
+                Debug.WriteLine("Task list is null in ShowAllMembers method.");
+            }
+            else
+            {
+                Debug.WriteLine($"GetTasks fetched {tasks.Count} tasks.");
+            }
+
+            return tasks;
         }
 
         private async void AddNewTaskToUser()
@@ -85,8 +114,9 @@ namespace Project.IO.Components.Pages
 
             return result;
         }
-        private void NavigateToTask(int taskId)
+        public void NavigateToTask(int taskId)
         {
+            Console.WriteLine(taskId);
             navigationManager.NavigateTo($"/taskView/{taskId}");
         }
     }
