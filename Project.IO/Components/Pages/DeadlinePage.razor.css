@@ -1,0 +1,97 @@
+.deadline-panel {
+    background-color: #e8e8e8;
+    width: 100%;
+    padding-left: 10px;
+    padding-top: 10px;
+    box-shadow: 5px 5px 15px 0px rgba(138,138,138,1);
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+.add-back-button {
+    background-color: #9b78ff;
+    border: 0px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 10px;
+    margin-bottom: 10px;
+    margin-top: 5px;
+    margin-left: 20px;
+    color: white;
+    box-shadow: 5px 5px 15px 0px rgba(138,138,138,1);
+    width: 60%;
+    height: auto;
+}
+
+.icon-100 {
+    font-size: 100px;
+}
+
+@media only screen and (max-width: 1100px) {
+
+    .add-back-button {
+        background-color: #9b78ff;
+        border: 0px;
+        border-radius: 5px;
+        font-weight: bold;
+        justify-content: center;
+        font-size: 15px;
+        padding: 10px;
+        margin-bottom: 10px;
+        margin-left: 20px;
+        color: white;
+        box-shadow: 5px 5px 15px 0px rgba(138,138,138,1);
+        width: 70%;
+        height: auto;
+    }
+
+    .icon-100 {
+        font-size: 50px;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+
+    .add-back-button {
+        background-color: #9b78ff;
+        border: 0px;
+        border-radius: 5px;
+        font-weight: bold;
+        justify-content: center;
+        font-size: 10px;
+        padding: 10px;
+        margin-bottom: 10px;
+        color: white;
+        box-shadow: 5px 5px 15px 0px rgba(138,138,138,1);
+        width: 70%;
+        height: auto;
+    }
+
+    .icon-100 {
+        font-size: 30px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+
+    .add-back-button {
+        background-color: #9b78ff;
+        border: 0px;
+        border-radius: 5px;
+        font-weight: bold;
+        justify-content: center;
+        font-size: 10px;
+        padding: 10px;
+        margin-bottom: 10px;
+        margin-top: 10px;
+        margin-left: 10px;
+        color: white;
+        box-shadow: 5px 5px 15px 0px rgba(138,138,138,1);
+        width: 70%;
+        height: auto;
+    }
+
+    .icon-100 {
+        font-size: 30px;
+    }
+}
