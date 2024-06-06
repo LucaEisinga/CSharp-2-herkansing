@@ -6,6 +6,27 @@
             <p class="h1 fw-bold" style="color: #9b78ff">Projectdeadlines</p>
             <div class="row">
                 <div class="col-md-8">
+                    @if (deadlines != null)
+                    {
+                        foreach (var deadline in deadlines)
+                        {
+
+                            if (deadline != null)
+                            {
+                                <div class="rounded deadline-panel">
+                                    <div class="row">
+                                        <span class="h5 fw-bold text-muted">@deadline.TaskName</span>
+                                        <span class="h5 text-muted">@deadline.Username</span>
+                                        <p class="h5 text-muted">@deadline.Deadline</p>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    }
+                    else
+                    {
+                        <p>Loading...</p>
+                    }
                     <div class="rounded deadline-panel">
                         <div class="row">
                             <span class="h5 fw-bold text-muted">Documenten inleveren</span>

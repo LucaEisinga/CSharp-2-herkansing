@@ -9,6 +9,7 @@ namespace Project.IO.Classes.Service
     {
 
         private DatabaseUtil databaseUtil = new DatabaseUtil();
+        private DeadlineService deadlineService = new DeadlineService();
         
         public async Task<int> AutoIncrementTask()
         {
@@ -42,6 +43,8 @@ namespace Project.IO.Classes.Service
             task.Id = nextId;
             task.UserId = projectMember;
 
+            await deadlineService.AddNewDeadline(projectMember, await this.GetMemberNameUsingId(projectMember), taskTitle, taskDeadline);
+
             SetResponse response = await databaseUtil.CreateConnection().SetAsync($"Task/{nextId}", task);
 
         }
@@ -56,6 +59,27 @@ namespace Project.IO.Classes.Service
             return members;
         }
 
+        public async Task<string> GetMemberNameUsingId(int userId)
+        {
 
+            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync("Member/");
+            string jsonResponse = response.Body;
+            List<Member> members = JsonConvert.DeserializeObject<List<Member>>(jsonResponse);
+
+            string nameOfMember = null;
+
+            if (members != null)
+            {
+                foreach (Member member in members)
+                {
+                    if (member != null && member.Id.Equals(userId))
+                    {
+                        nameOfMember = member.username;
+                    }
+                }
+            }
+
+            return nameOfMember;
+        }
     }
 }
