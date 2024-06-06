@@ -1,6 +1,57 @@
 ﻿@page "/memberOverviewPage"
+@using System.Diagnostics
+@using Newtonsoft.Json
 
 <div class="container-fluid">
+
+    <Modal @ref="memberModal" IsVerticallyCentered="true" IsScrollable="true">
+        <BodyTemplate>
+            <div class="text-center py-2 px-2">
+                <span class="h4" style="color: #9b78ff">Lid toevoegen</span>
+                <div class="form-group px-3">
+                    <input type="email" class="form-control my-3 bg-light" placeholder="Email of gebruikersnaam van gebruiker..." required>
+                </div>
+                <div class="form-group px-3">
+                    <select class="form-select my-3 bg-light" aria-label="Default select example">
+                        <option selected>rollen...</option>
+                        <option value="1">voorzitter</option>
+                        <option value="2">vice-voorzitter</option>
+                        <option value="3">notulist</option>
+                        <option value="4">code controleur</option>
+                        <option value="5">planner</option>
+                    </select>
+                </div>
+                <div class="form-group px-3">
+                    <select class="form-select my-3 bg-light" aria-label="Default select example">
+                        @if (projects == null)
+                        {
+                            <option disabled>Laden...</option>
+                        }
+                        else if (!projects.Any())
+                        {
+                            <option disabled>Geen project beschikbaar</option>
+                        }
+                        else
+                        {
+                            @foreach (var project in projects)
+                            {
+                                if (project != null)
+                                {
+                                    <option value="@project.Id">@project.Title</option>
+                                }
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="form-group px-3">
+                    <Button Type="ButtonType.Submit" Class="btn w-100" Style="background-color: #9b78ff;">
+                        <span class="h5 text-white">Lid toevoegen</span>
+                    </Button>
+                </div>
+            </div>
+        </BodyTemplate>
+    </Modal>
+
     <div class="row">
         <div class="col-lg-12 bg-white rounded p-3">
             <p class="h1 fw-bold" style="color: #9b78ff">Mijn groep</p>
@@ -29,7 +80,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="row">
-                        <div class="btn add-back-button">
+                        <div class="btn add-back-button" @onclick="ShowAddMemberModal">
                             <i class="bi bi-plus-lg icon-100"></i>
                             <p>Lid toevoegen</p>
                         </div>

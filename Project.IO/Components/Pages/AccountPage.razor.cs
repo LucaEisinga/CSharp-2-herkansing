@@ -1,11 +1,23 @@
 ﻿using BlazorBootstrap;
-
+using Microsoft.AspNetCore.Components;
+using Project.IO.Classes.Service;
+using Project.IO.Utilities;
+ 
 namespace Project.IO.Components.Pages
 {
-    public partial class AccountPage
+    partial class AccountPage
     {
 
         private Modal modal = default!;
+        private Modal errorModal = default!;
+        private DatabaseUtil databaseUtil = new DatabaseUtil();
+        private AccountUtil _accountUtil = new AccountUtil();
+        private string? logUser;
+        private string? logPassword;
+        private string? userName;
+        private string? email;
+        private string? password;
+        private string? repeatPassword;
 
         private async Task OnShowModalClick()
         {
@@ -15,6 +27,47 @@ namespace Project.IO.Components.Pages
         private async Task OnHideModalClick()
         {
             await modal.HideAsync();
+        }
+
+        private void ShowConnection()
+        {
+            databaseUtil.CreateConnection();
+        }
+
+        private async Task LoginUser()
+        {
+            if (await _accountUtil.canLogin(logUser, logPassword))
+            {
+                await modal.ShowAsync();
+            }
+        }
+
+        private void CreateNewUser()
+        {
+            if (IsEmpty(userName) || IsEmpty(email))
+            {
+                if (password.Equals(repeatPassword))
+                {
+                    _accountUtil.RegisterNewUser(userName, email, password, repeatPassword);
+                }
+            }
+        }
+
+        private bool IsEmpty(string value)
+        {
+            bool result = false;
+
+            if (!(value == null) || !(value == ""))
+            {
+                result = true;
+            }
+
+            return result;
+        }
+
+        private void NavigateToAddProject()
+        {
+            Navigation.NavigateTo("/addProject");
         }
 
     }
