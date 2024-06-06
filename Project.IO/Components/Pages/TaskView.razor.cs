@@ -1,7 +1,6 @@
-﻿using BlazorBootstrap;
-using Microsoft.AspNetCore.Components;
-using Project.IO.Classes.Models;
-using Project.IO.Classes.Services;
+﻿using Microsoft.AspNetCore.Components;
+using Project.IO.Classes.Model;
+using Project.IO.Classes.Service;
 
 namespace Project.IO.Components.Pages
 {
@@ -9,13 +8,16 @@ namespace Project.IO.Components.Pages
 	{
 		[Inject]
 		protected TaskService TaskService { get; set; }
+		[Parameter]
+        public int TaskId { get; set;}
 
 		protected TaskModel Task { get; set; }
 
-		protected override void OnInitialized()
+		protected override async Task OnInitializedAsync()
 		{
 			// Fetch the task data
-			Task = TaskService.GetTask();
+			Task = await TaskService.GetTask(TaskId);
+
 		}
 	}
 }

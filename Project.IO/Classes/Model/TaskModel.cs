@@ -1,7 +1,7 @@
 ﻿
 namespace Project.IO.Classes.Model
 {
-    internal class TaskModel
+    public class TaskModel
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -11,9 +11,9 @@ namespace Project.IO.Classes.Model
 
         public TaskModel(string title, string description, DateTime deadline)
         {
-            this.Title = title;
-            this.Description = description;
-            this.Deadline = deadline;
+            Title = title;
+            Description = description;
+            Deadline = deadline;
         }
     }
 }

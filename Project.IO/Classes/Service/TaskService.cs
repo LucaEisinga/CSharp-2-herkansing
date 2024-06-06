@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace Project.IO.Classes.Service
 {
-    internal class TaskService
+    public class TaskService
     {
 
         private DatabaseUtil databaseUtil = new DatabaseUtil();
@@ -39,9 +39,11 @@ namespace Project.IO.Classes.Service
 
             int nextId = await AutoIncrementTask();
 
-            TaskModel task = new TaskModel(taskTitle, taskDescription, taskDeadline);
-            task.Id = nextId;
-            task.UserId = projectMember;
+            TaskModel task = new TaskModel(taskTitle, taskDescription, taskDeadline)
+            {
+                Id = nextId,
+                UserId = projectMember
+            };
 
             await deadlineService.AddNewDeadline(projectMember, await this.GetMemberNameUsingId(projectMember), taskTitle, taskDeadline);
 
@@ -80,6 +82,20 @@ namespace Project.IO.Classes.Service
             }
 
             return nameOfMember;
+        }
+        public async Task<List<TaskModel>> GetAllTasks()
+        {
+            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync("Task/");
+            string jsonResponse = response.Body;
+            List<TaskModel> tasks = JsonConvert.DeserializeObject<List<TaskModel>>(jsonResponse);
+
+            return tasks;
+        }
+        public async Task<TaskModel> GetTask(int id)
+        {
+            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync($"Task/{id}");
+            string jsonResponse = response.Body;
+            return JsonConvert.DeserializeObject<TaskModel>(jsonResponse);
         }
     }
 }

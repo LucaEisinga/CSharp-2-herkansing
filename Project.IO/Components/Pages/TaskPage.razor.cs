@@ -3,6 +3,7 @@ using Project.IO.Classes.Model;
 using System.Reflection;
 using System.Diagnostics;
 using Project.IO.Classes.Service;
+using Microsoft.AspNetCore.Components;
 
 namespace Project.IO.Components.Pages
 {
@@ -10,14 +11,19 @@ namespace Project.IO.Components.Pages
     {
 
         private Modal taskModal = default!;
-        private TaskService taskService = new TaskService();
         private string? taskTitle;
         private int? projectMember;
         private DateTime taskDeadline = DateTime.Now;
         private string? taskDescription;
 
         private List<Member> members = new List<Member>();
+        private List<TaskModel> tasks = new List<TaskModel>();
 
+        [Inject]
+        public TaskService TaskService { get; set; } = default!;
+
+        [Inject]
+        private NavigationManager navigationManager { get; set; } = default!;
         private async Task ShowTaskModal()
         {
 
@@ -34,16 +40,16 @@ namespace Project.IO.Components.Pages
                 }
 
                 await taskModal.ShowAsync();
-            } 
+            }
             catch (Exception ex)
             {
                 Debug.WriteLine($"Error fetching members: {ex.Message}");
             }
         }
 
-        private async Task<List<Member>> ShowAllMembers()
+        public async Task<List<Member>> ShowAllMembers()
         {
-            var memberList = await taskService.GetAllMembersInProject();
+            var memberList = await TaskService.GetAllMembersInProject();
 
             if (memberList == null)
             {
@@ -63,7 +69,7 @@ namespace Project.IO.Components.Pages
             {
                 if (projectMember != null)
                 {
-                    await taskService.AddNewTaskToProject(taskTitle, projectMember.Value, taskDescription, taskDeadline);
+                    await TaskService.AddNewTaskToProject(taskTitle, projectMember.Value, taskDescription, taskDeadline);
                 }
             }
         }
@@ -79,6 +85,9 @@ namespace Project.IO.Components.Pages
 
             return result;
         }
-
+        private void NavigateToTask(int taskId)
+        {
+            navigationManager.NavigateTo($"/taskView/{taskId}");
+        }
     }
 }
