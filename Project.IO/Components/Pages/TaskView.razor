@@ -1,0 +1,20 @@
+﻿@page "/taskView/{TaskId:int}"
+
+<div class="container-fluid">
+    <div class="px-4 py-4 rounded" style="background-color: white">
+        @if (Task != null)
+        {
+            <div>
+                <h1 style="color: #9b78ff; font-weight: bold">@Task.Title</h1>
+                <h2 style="color: #9b78ff;">@Task.Deadline</h2>
+                <h4 style="color: #9b78ff;">@Task.UserId</h4>
+                <h4 style="color: #9b78ff;">Description</h4>
+                <p>@Task.Description</p>
+            </div>
+        }
+        else
+        {
+            <p>Loading...</p>
+        }
+    </div>
+</div>

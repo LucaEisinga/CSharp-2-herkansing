@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace Project.IO.Classes.Service
 {
-    internal class TaskService
+    public class TaskService
     {
 
         private DatabaseUtil databaseUtil = new DatabaseUtil();
@@ -39,9 +39,11 @@ namespace Project.IO.Classes.Service
 
             int nextId = await AutoIncrementTask();
 
-            TaskModel task = new TaskModel(taskTitle, taskDescription, taskDeadline);
-            task.Id = nextId;
-            task.UserId = projectMember;
+            TaskModel task = new TaskModel(taskTitle, taskDescription, taskDeadline)
+            {
+                Id = nextId,
+                UserId = projectMember
+            };
 
             await deadlineService.AddNewDeadline(projectMember, await this.GetMemberNameUsingId(projectMember), taskTitle, taskDeadline);
 
@@ -58,6 +60,23 @@ namespace Project.IO.Classes.Service
 
             return members;
         }
+        public async Task<List<TaskModel>> GetAllTasks()
+        {
+            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync("Task/");
+            string jsonResponse = response.Body;
+
+            // Deserialize and filter out null or incomplete tasks
+            var tasks = JsonConvert.DeserializeObject<List<TaskModel>>(jsonResponse) ?? new List<TaskModel>();
+
+            var validTasks = tasks
+                .Where(task => task != null && !string.IsNullOrWhiteSpace(task.Title) && task.Id > 0)
+                .ToList();
+
+            // Debug logging to check valid tasks count
+            Console.WriteLine($"Retrieved {validTasks.Count} valid tasks");
+
+            return validTasks;
+        }
 
         public async Task<string> GetMemberNameUsingId(int userId)
         {
@@ -66,7 +85,7 @@ namespace Project.IO.Classes.Service
             string jsonResponse = response.Body;
             List<Member> members = JsonConvert.DeserializeObject<List<Member>>(jsonResponse);
 
-            string nameOfMember = null;
+            string? nameOfMember = null;
 
             if (members != null)
             {
@@ -80,6 +99,24 @@ namespace Project.IO.Classes.Service
             }
 
             return nameOfMember;
+        }
+        public async Task<TaskModel?> GetTaskById(int id)
+        {
+            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync($"Task/");
+            string jsonResponse = response.Body;
+            List<TaskModel> tasks = JsonConvert.DeserializeObject<List<TaskModel>>(jsonResponse);
+            if (tasks != null)
+            {
+                foreach (TaskModel task in tasks)
+                {
+                    if (task != null && task.Id.Equals(id))
+                    {
+                        Console.WriteLine($"Task Id: {task?.Id}, Title: {task?.Title}");
+                        return task;
+                    }
+                }
+            }
+            return null;
         }
     }
 }

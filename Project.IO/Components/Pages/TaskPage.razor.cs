@@ -3,6 +3,7 @@ using Project.IO.Classes.Model;
 using System.Reflection;
 using System.Diagnostics;
 using Project.IO.Classes.Service;
+using Microsoft.AspNetCore.Components;
 
 namespace Project.IO.Components.Pages
 {
@@ -10,15 +11,35 @@ namespace Project.IO.Components.Pages
     {
 
         private Modal taskModal = default!;
-        private TaskService taskService = new TaskService();
         private string? taskTitle;
         private int? projectMember;
         private DateTime taskDeadline = DateTime.Now;
         private string? taskDescription;
 
-        private List<Member> members = new List<Member>();
+        private List<Member> members = [];
+        private List<TaskModel> tasks = [];
 
-        private async Task ShowTaskModal()
+        [Inject]
+        private TaskService TaskService { get; set; } = default!;
+
+        [Inject]
+        private NavigationManager navigationManager { get; set; } = default!;
+        protected override async Task OnInitializedAsync()
+        {   
+            try
+            {
+                // Fetch the task data
+                tasks = await TaskService.GetAllTasks();
+
+                // Debug logging
+                Console.WriteLine($"Loaded {tasks.Count} tasks on initialization");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error loading tasks: {ex.Message}");
+            }
+        }
+        public async Task ShowTaskModal()
         {
 
             try
@@ -32,18 +53,17 @@ namespace Project.IO.Components.Pages
                 {
                     Debug.WriteLine($"Fetched {members.Count} members.");
                 }
-
                 await taskModal.ShowAsync();
-            } 
+            }
             catch (Exception ex)
             {
                 Debug.WriteLine($"Error fetching members: {ex.Message}");
             }
         }
 
-        private async Task<List<Member>> ShowAllMembers()
+        public async Task<List<Member>> ShowAllMembers()
         {
-            var memberList = await taskService.GetAllMembersInProject();
+            var memberList = await TaskService.GetAllMembersInProject();
 
             if (memberList == null)
             {
@@ -56,6 +76,21 @@ namespace Project.IO.Components.Pages
 
             return memberList;
         }
+        public async Task<List<TaskModel>> getTasks()
+        {
+            var tasks = await TaskService.GetAllTasks();
+
+            if (tasks == null)
+            {
+                Debug.WriteLine("Task list is null in ShowAllMembers method.");
+            }
+            else
+            {
+                Debug.WriteLine($"GetTasks fetched {tasks.Count} tasks.");
+            }
+
+            return tasks;
+        }
 
         private async void AddNewTaskToUser()
         {
@@ -63,7 +98,7 @@ namespace Project.IO.Components.Pages
             {
                 if (projectMember != null)
                 {
-                    await taskService.AddNewTaskToProject(taskTitle, projectMember.Value, taskDescription, taskDeadline);
+                    await TaskService.AddNewTaskToProject(taskTitle, projectMember.Value, taskDescription, taskDeadline);
                 }
             }
         }
@@ -79,6 +114,10 @@ namespace Project.IO.Components.Pages
 
             return result;
         }
-
+        public void NavigateToTask(int taskId)
+        {
+            Console.WriteLine(taskId);
+            navigationManager.NavigateTo($"/taskView/{taskId}");
+        }
     }
 }

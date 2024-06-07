@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Project.IO.Classes.Model
 {
-    internal class Member
+    public class Member
     {
         public int Id { get; set; }
         public string username;

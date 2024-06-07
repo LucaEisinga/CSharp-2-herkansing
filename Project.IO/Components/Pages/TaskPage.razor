@@ -52,18 +52,19 @@
         <div class="row">
             <h1 style="color: #9b78ff; font-weight: bold">Mijn taken</h1>
             <div class="col-8">
-                <button class="btn long-button-green">
-                    Teamcode opstellen
-                </button>
-                <button class="btn long-button-red">
-                    FO: Hoofdstuk 5
-                </button>
-                <button class="btn long-button-green">
-                    PvA: spellingscontrole
-                </button>
-                <button class="btn long-button-yellow">
-                    Teamcode opstellen
-                </button>
+                @if(tasks == null||!tasks.Any())
+                {
+                    <p>Geen taken.</p>
+                }
+                else
+                {
+                    @foreach (var task in tasks)
+                    {
+                        <button class="btn long-button-green" @onclick="() => NavigateToTask(task.Id)">
+                            @task.Title
+                        </button>
+                    }
+                }
             </div>
             <div class="col-4">
                 <Button @onclick="ShowTaskModal" class="btn big-button">
