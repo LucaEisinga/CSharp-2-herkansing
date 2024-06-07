@@ -19,16 +19,18 @@ namespace Project.IO.Classes.Service
             }
         }
 
-        private string? _userId;
+        private int? _userId;
         private bool _isLoggedIn;
+        private int? _projectId;
 
         private SessionService()
         {
             _userId = null;
             _isLoggedIn = false;
+            _projectId = null;
         }
 
-        public string? UserId
+        public int? UserId
         {
             get { return _userId; }
             set { _userId = value; }
@@ -40,6 +42,10 @@ namespace Project.IO.Classes.Service
             set { _isLoggedIn = value; }
         }
 
-
+        public int? ProjectId
+        {
+            get { return _projectId; }
+            set { _projectId = value; }
+        }
     }
 }

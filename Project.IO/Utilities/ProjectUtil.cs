@@ -4,6 +4,8 @@ using FireSharp;
 using Newtonsoft.Json;
 using System.ComponentModel;
 using System.Diagnostics;
+using Project.IO.Classes.Model;
+using Project.IO.Classes.Service;
 
 namespace Project.IO.Utilities
 {
@@ -13,32 +15,41 @@ namespace Project.IO.Utilities
 
         public async Task<int> AutoIncrement()
         {
-            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync("Project");
-            string jsonResponse = response.Body;
-            List<ProjectModel> projects = JsonConvert.DeserializeObject<List<ProjectModel>>(jsonResponse);
-
             int maxId = 0;
 
-            if (projects != null)
+            try
             {
-                foreach (var project in projects)
+                FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync("Project");
+                string jsonResponse = response.Body;
+                List<ProjectModel> projects = JsonConvert.DeserializeObject<List<ProjectModel>>(jsonResponse);
+
+                if (projects != null)
                 {
-                    if (project != null && project.Id > maxId)
+                    foreach (var project in projects)
                     {
-                        maxId = project.Id;
+                        if (project != null && project.Id > maxId)
+                        {
+                            maxId = project.Id;
+                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in AutoIncrement: {ex.Message}");
             }
 
             return maxId + 1;
         }
 
-        public async void AddProjectToFirebase(string title, string description, DateTime deadline)
+        public async Task AddProjectToFirebase(string title, string description, DateTime deadline)
         {
             
             int nextId = await AutoIncrement();
             ProjectModel project = new ProjectModel(title, description, deadline);
             project.Id = nextId;
+            SessionService.Instance.ProjectId = nextId;
+            project.UserId = (int)SessionService.Instance.UserId;
 
             if (project == null)
             {
@@ -81,6 +92,27 @@ namespace Project.IO.Utilities
                 Debug.WriteLine($"Exception in GetListOfProjects: {ex.Message}");
                 return new List<ProjectModel>();
             }
+        }
+
+        public async Task<List<ProjectModel>> GetProjectsForLoggedInUser()
+        {
+            if (!SessionService.Instance.IsLoggedIn)
+                throw new InvalidOperationException("User isn't logged in");
+
+            int? userId = SessionService.Instance.UserId;
+
+            List<ProjectModel> projectModels = new List<ProjectModel>();
+
+            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync("Project");
+            string jsonResponse = response.Body;
+            List<ProjectModel> projects = JsonConvert.DeserializeObject<List<ProjectModel>>(jsonResponse);
+
+            if (projects != null)
+            {
+                projectModels = projects.Where(p => p.UserId == userId).ToList();
+            }
+
+            return projectModels;
         }
     }
 }
