@@ -16,7 +16,7 @@ namespace Project.IO.Components.Pages
         private DateTime taskDeadline = DateTime.Now;
         private string? taskDescription;
 
-        private List<Member> members = [];
+        private List<Role> members = [];
         private List<TaskModel> tasks = [];
 
         [Inject]
@@ -61,7 +61,7 @@ namespace Project.IO.Components.Pages
             }
         }
 
-        public async Task<List<Member>> ShowAllMembers()
+        public async Task<List<Role>> ShowAllMembers()
         {
             var memberList = await TaskService.GetAllMembersInProject();
 

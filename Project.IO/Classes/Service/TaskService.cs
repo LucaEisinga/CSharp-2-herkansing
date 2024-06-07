@@ -42,7 +42,8 @@ namespace Project.IO.Classes.Service
             TaskModel task = new TaskModel(taskTitle, taskDescription, taskDeadline)
             {
                 Id = nextId,
-                UserId = projectMember
+                UserId = projectMember,
+                ProjectId = SessionService.Instance.ProjectId
             };
 
             await deadlineService.AddNewDeadline(projectMember, await this.GetMemberNameUsingId(projectMember), taskTitle, taskDeadline);
@@ -51,15 +52,38 @@ namespace Project.IO.Classes.Service
 
         }
 
-        public async Task<List<Member>> GetAllMembersInProject()
+        public async Task<List<Role>> GetAllMembersInProject()
         {
 
-            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync("Member/");
+            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync("Role/");
             string jsonResponse = response.Body;
-            List<Member> members = JsonConvert.DeserializeObject<List<Member>>(jsonResponse);
+            List<Role> roles = JsonConvert.DeserializeObject<List<Role>>(jsonResponse);
 
-            return members;
+            List<Role> roleList = new List<Role>();
+
+            if (roles != null)
+            {
+                foreach (Role role in roles)
+                {
+                    if (role != null && role.ProjectId.Equals(SessionService.Instance.ProjectId))
+                    {
+                        Role currentRole = new Role(role.RoleName)
+                        {
+                            Id = role.Id,
+                            ProjectId = role.ProjectId,
+                            Username = role.Username,
+                            UserId = role.UserId
+                        };
+
+                        roleList.Add(currentRole);
+                    }
+                }
+            }
+
+
+            return roleList;
         }
+
         public async Task<List<TaskModel>> GetAllTasks()
         {
             FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync("Task/");

@@ -44,6 +44,7 @@ namespace Project.IO.Classes.Service
                 role.Id = nextId;
                 role.UserId = chosenUserId;
                 role.ProjectId = SessionService.Instance.ProjectId;
+                role.Username = username;
 
                 SetResponse response = await databaseUtil.CreateConnection().SetAsync($"Role/{nextId}", role);
             }

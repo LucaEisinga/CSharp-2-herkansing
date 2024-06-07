@@ -8,6 +8,7 @@ namespace Project.IO.Classes.Model
         public int UserId { get; set; }
         public DateTime Deadline { get; set; }
         public string Description { get; set; }
+        public int? ProjectId { get; set; }
 
         public TaskModel(string title, string description, DateTime deadline)
         {
