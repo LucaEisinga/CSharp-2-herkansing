@@ -62,7 +62,7 @@ namespace Project.IO.Components.Pages
             return Task.CompletedTask;
         }
 
-        private async Task<List<ProjectModel>> GetUserProjects()
+        /*private async Task<List<ProjectModel>> GetUserProjects()
         {
             try
             {
@@ -73,6 +73,6 @@ namespace Project.IO.Components.Pages
                 Console.WriteLine($"Error getting projects: {ex.Message}");
                 return new List<ProjectModel>();
             }
-        }
+        }*/
     }
 }

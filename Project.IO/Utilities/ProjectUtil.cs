@@ -19,7 +19,7 @@ namespace Project.IO.Utilities
 
             try
             {
-                FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync("Project");
+                FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync("Project/");
                 string jsonResponse = response.Body;
                 List<ProjectModel> projects = JsonConvert.DeserializeObject<List<ProjectModel>>(jsonResponse);
 
@@ -59,16 +59,6 @@ namespace Project.IO.Utilities
             FirebaseClient client = databaseUtil.CreateConnection();
 
             SetResponse response = await client.SetAsync($"Project/{nextId}", project);
-            /*ProjectModel result = response.ResultAs<ProjectModel>();
-
-            if (result != null)
-            {
-                Console.WriteLine($"Project {project.Title} added to Firebase succesfully.");
-            }
-            else
-            {
-                Console.WriteLine("Failed to add project to Firebase.");
-            }*/
         }
 
         public async Task<List<ProjectModel>> GetListOfProjects()
@@ -109,7 +99,19 @@ namespace Project.IO.Utilities
 
             if (projects != null)
             {
-                projectModels = projects.Where(p => p.UserId == userId).ToList();
+                foreach (var project in projects)
+                {
+                    if (project != null && project.UserId.Equals(userId))
+                    {
+                        ProjectModel instantProject = new ProjectModel(project.Title, project.Description, project.Deadline)
+                        {
+                            Id = project.Id,
+                            UserId = project.UserId
+                        };
+
+                        projectModels.Add(instantProject);
+                    }
+                }
             }
 
             return projectModels;

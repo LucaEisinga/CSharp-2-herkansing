@@ -10,7 +10,7 @@ namespace Project.IO.Classes
         public string Title { get; set; }
         public string Description { get; set; }
         public DateTime Deadline { get; set; }
-        public List<Member> Members { get; set; }
+        /*public List<Member> Members { get; set; }*/
         public int UserId { get; set; }
 
         public ProjectModel(string title, string description, DateTime deadline)
