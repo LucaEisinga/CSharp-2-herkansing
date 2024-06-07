@@ -1,20 +1,39 @@
 ﻿@page "/taskView/{TaskId:int}"
 
 <div class="container-fluid">
-    <div class="px-4 py-4 rounded" style="background-color: white">
-        @if (Task != null)
-        {
-            <div>
-                <h1 style="color: #9b78ff; font-weight: bold">@Task.Title</h1>
-                <h2 style="color: #9b78ff;">@Task.Deadline</h2>
-                <h4 style="color: #9b78ff;">@Task.UserId</h4>
-                <h4 style="color: #9b78ff;">Description</h4>
-                <p>@Task.Description</p>
-            </div>
-        }
-        else
-        {
-            <p>Loading...</p>
-        }
+    <div class="row">
+        <div class="col-md-12 bg-white px-3 py-3 rounded">
+            @if (Task != null)
+            {
+                <div class="row">
+                    <div class="col-md-8">
+                        <h1 style="color: #9b78ff; font-weight: bold">@Task.Title</h1>
+                        <h2 style="color: #9b78ff;">@Task.Deadline</h2>
+                    </div>
+                    <div class="col-md-4">
+                        <i class="bi bi-check-circle-fill btn icon-task-100 text-success"></i>
+                        <i class="bi bi-exclamation-circle btn icon-task-100"></i>
+                        <i class="bi bi-x-circle btn icon-task-100"></i>
+                    </div>
+                </div>
+                <div class="row">
+                    <h4 style="color: #9b78ff;">@Task.UserId</h4>
+                </div>
+                <div class="row">
+                    <h5 style="color: #9b78ff;">Omschrijving:</h5>
+                    <p class="text-muted">@Task.Description</p>
+                </div>
+                <div class="row">
+                    <div class="col-md-9"></div>
+                    <div class="col-md-3">
+                        <i class="bi bi-arrow-left-square-fill icon-100 btn"></i>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <p>Loading...</p>
+            }
+        </div>
     </div>
 </div>
