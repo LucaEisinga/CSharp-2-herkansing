@@ -81,10 +81,14 @@ namespace Project.IO.Utilities
             {
                 foreach (var member in members)
                 {
-                    if (member != null && member.username.Equals(newUsername, StringComparison.OrdinalIgnoreCase) ||
-                        member.email.Equals(newUsername, StringComparison.OrdinalIgnoreCase))
+
+                    if (member != null)
                     {
-                        return false;
+                        if (member.username.Equals(newUsername, StringComparison.OrdinalIgnoreCase) ||
+                                                member.email.Equals(newUsername, StringComparison.OrdinalIgnoreCase))
+                        {
+                            return false;
+                        }
                     }
                 }
             }
