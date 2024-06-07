@@ -29,7 +29,7 @@ namespace Project.IO.Components.Pages
             try
             {
                 // Fetch the task data
-                tasks = await TaskService.GetAllTasks();
+                await getTasks();
 
                 // Debug logging
                 Console.WriteLine($"Loaded {tasks.Count} tasks on initialization");
@@ -76,9 +76,9 @@ namespace Project.IO.Components.Pages
 
             return memberList;
         }
-        public async Task<List<TaskModel>> getTasks()
+        private async Task<List<TaskModel>> getTasks()
         {
-            var tasks = await TaskService.GetAllTasks();
+            tasks = await TaskService.GetAllTasks();
 
             if (tasks == null)
             {
@@ -92,15 +92,25 @@ namespace Project.IO.Components.Pages
             return tasks;
         }
 
-        private async void AddNewTaskToUser()
+        private async Task AddNewTaskToUser()
         {
             if (IsEmpty(taskTitle) || IsEmpty(taskDescription))
             {
                 if (projectMember != null)
                 {
                     await TaskService.AddNewTaskToProject(taskTitle, projectMember.Value, taskDescription, taskDeadline);
+                    await getTasks();
+                    ClearInputMenu();
+                    await taskModal.HideAsync();
                 }
             }
+        }
+        private void ClearInputMenu()
+        {
+            taskTitle = string.Empty;
+            projectMember = null;
+            taskDeadline = DateTime.Now;
+            taskDescription = string.Empty;
         }
 
         private bool IsEmpty(string value)
@@ -118,6 +128,20 @@ namespace Project.IO.Components.Pages
         {
             Console.WriteLine(taskId);
             navigationManager.NavigateTo($"/taskView/{taskId}");
+        }
+        private string GetButtonColour(DateTime deadline)
+        {
+            var date = DateTime.Today;
+            var difference = (deadline - date).TotalDays;
+            switch(difference)
+            {
+                case < 0:
+                    return "btn long-button-red";
+                case <= 7:
+                    return "btn long-button-yellow";
+                default:
+                    return "btn long-button-green";
+            }
         }
     }
 }

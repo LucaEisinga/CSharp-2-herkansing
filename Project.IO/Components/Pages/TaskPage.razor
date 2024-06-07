@@ -60,7 +60,7 @@
                 {
                     @foreach (var task in tasks)
                     {
-                        <button class="btn long-button-green" @onclick="() => NavigateToTask(task.Id)">
+                        <button class="@GetButtonColour(task.Deadline)" @onclick="() => NavigateToTask(task.Id)">
                             @task.Title
                         </button>
                     }
