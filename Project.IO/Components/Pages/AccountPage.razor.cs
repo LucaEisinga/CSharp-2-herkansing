@@ -1,8 +1,10 @@
 ﻿using BlazorBootstrap;
 using Microsoft.AspNetCore.Components;
+using Project.IO.Classes;
 using Project.IO.Classes.Service;
 using Project.IO.Utilities;
- 
+using System.Diagnostics;
+
 namespace Project.IO.Components.Pages
 {
     partial class AccountPage
@@ -10,6 +12,7 @@ namespace Project.IO.Components.Pages
 
         private Modal modal = default!;
         private Modal errorModal = default!;
+        private ProjectUtil _projectUtil = new ProjectUtil();
         private DatabaseUtil databaseUtil = new DatabaseUtil();
         private AccountUtil _accountUtil = new AccountUtil();
         private string? logUser;
@@ -18,10 +21,15 @@ namespace Project.IO.Components.Pages
         private string? email;
         private string? password;
         private string? repeatPassword;
+        private List<ProjectModel> userProjects;
 
         private async Task OnShowModalClick()
         {
-            await modal.ShowAsync();
+
+
+                // Show the modal
+                await modal.ShowAsync();
+            
         }
 
         private async Task OnHideModalClick()
@@ -39,6 +47,22 @@ namespace Project.IO.Components.Pages
             if (await _accountUtil.canLogin(logUser, logPassword))
             {
                 await modal.ShowAsync();
+            }
+        }
+
+        private async Task LoadUserProjects()
+        {
+            Debug.WriteLine("Loading user projects...");
+
+            userProjects = await _projectUtil.GetProjectsForLoggedInUser();
+
+            if (userProjects != null && userProjects.Count > 0)
+            {
+                Debug.WriteLine($"Loaded {userProjects.Count} projects.");
+            }
+            else
+            {
+                Debug.WriteLine("No projects found for the user");
             }
         }
 
@@ -64,6 +88,8 @@ namespace Project.IO.Components.Pages
 
             return result;
         }
+
+        
 
         private void NavigateToAddProject()
         {
