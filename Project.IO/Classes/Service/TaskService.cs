@@ -118,5 +118,9 @@ namespace Project.IO.Classes.Service
             }
             return null;
         }
+        public async Task DeleteTask(int id)
+        {
+            await databaseUtil.CreateConnection().DeleteAsync($"Task/{id}");
+        }
     }
 }

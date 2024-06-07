@@ -8,6 +8,8 @@ namespace Project.IO.Components.Pages
 	{
 		[Inject]
 		protected TaskService TaskService { get; set; }
+		[Inject]
+		private NavigationManager navigationManager { get; set; } = default!;
 		[Parameter]
         public int TaskId { get; set;}
 
@@ -18,6 +20,11 @@ namespace Project.IO.Components.Pages
 			Console.WriteLine(TaskId);
 			// Fetch the task data
 			Task = await TaskService.GetTaskById(TaskId);
+		}
+		private async Task DeleteTask()
+		{
+			await TaskService.DeleteTask(TaskId);
+			navigationManager.NavigateTo("/taskPage");
 		}
 	}
 }
