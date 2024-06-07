@@ -11,7 +11,7 @@ namespace Project.IO.Classes.Model
 
         public int Id { get; set; }
         public int UserId { get; set; }
-        public int ProjectId { get; set; }
+        public int? ProjectId { get; set; }
         public string RoleName { get; set; }
 
         public Role(string RoleName)

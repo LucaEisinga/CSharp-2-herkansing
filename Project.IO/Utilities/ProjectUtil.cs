@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using Project.IO.Classes.Model;
 using Project.IO.Classes.Service;
+using Microsoft.UI.Xaml.Media;
 
 namespace Project.IO.Utilities
 {
@@ -61,28 +62,14 @@ namespace Project.IO.Utilities
             SetResponse response = await client.SetAsync($"Project/{nextId}", project);
         }
 
-        public async Task<List<ProjectModel>> GetListOfProjects()
+        public async Task<ProjectModel> GetCurrentProject()
         {
-            try
-            {
-                FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync("Project");
-                string jsonResponse = response.Body;
-                List<ProjectModel> projects = JsonConvert.DeserializeObject<List<ProjectModel>>(jsonResponse);
+            int? projectId = SessionService.Instance.ProjectId;
 
-                if (projects == null)
-                {
-                    Debug.WriteLine("Deserialized projects list is null.");
-                    return new List<ProjectModel>();
-                }
-
-                return projects;
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Exception in GetListOfProjects: {ex.Message}");
-                return new List<ProjectModel>();
-            }
+            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync($"Project/{projectId}");
+            return JsonConvert.DeserializeObject<ProjectModel>(response.Body);
         }
+
 
         public async Task<List<ProjectModel>> GetProjectsForLoggedInUser()
         {

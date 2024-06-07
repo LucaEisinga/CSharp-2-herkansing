@@ -101,6 +101,7 @@ namespace Project.IO.Components.Pages
 
         private void NavigateToProject(int projectId)
         {
+            SessionService.Instance.ProjectId = projectId;
             Navigation.NavigateTo($"/mainMenu/{projectId}");
         }
     }

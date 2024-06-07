@@ -3,6 +3,7 @@ using Project.IO.Utilities;
 using Project.IO.Classes;
 using System.Diagnostics;
 using System.ComponentModel;
+using Project.IO.Classes.Service;
 
 namespace Project.IO.Components.Pages
 {
@@ -11,21 +12,24 @@ namespace Project.IO.Components.Pages
 
         private Modal memberModal = default!;
         private ProjectUtil projectUtil = new ProjectUtil();
+        private RoleService roleService = new RoleService();
+        private string? chosenUser;
+        private string? chosenRole;
 
-        private List<ProjectModel> projects = new List<ProjectModel>();
+        private ProjectModel currentProject;
 
         private async void ShowAddMemberModal()
         {
             try
             {
-                projects = await ShowAllProjects();
-                if (projects == null)
+                currentProject = await ShowCurrentProject();
+                if (currentProject == null)
                 {
                     Debug.WriteLine("Projects list is null after fetching.");
                 }
                 else
                 {
-                    Debug.WriteLine($"Fetched {projects.Count} projects.");
+                    Debug.WriteLine($"Fetched {currentProject} projects.");
                 }
 
                 await memberModal.ShowAsync();
@@ -36,20 +40,40 @@ namespace Project.IO.Components.Pages
             }
         }
 
-        private async Task<List<ProjectModel>> ShowAllProjects()
+        private async Task<ProjectModel> ShowCurrentProject()
         {
-            var projectList = await projectUtil.GetListOfProjects();
+            var project = await projectUtil.GetCurrentProject();
 
-            if (projectList == null)
+            if (project == null)
             {
-                Debug.WriteLine("Project list is null in ShowAllProjects method.");
+                Debug.WriteLine("Project is null in ShowCurrentProject method.");
             }
             else
             {
-                Debug.WriteLine($"ShowAllProjects fetched {projectList.Count} projects.");
+                Debug.WriteLine($"ShowCurrentProject fetched {project} project.");
             }
 
-            return projectList;
+            return project;
+        }
+
+        private async Task AddRoleToUser()
+        {
+            if (IsEmpty(chosenUser) && IsEmpty(chosenRole))
+            {
+                await roleService.AddRoleToMember(chosenUser, chosenRole);
+            }
+        }
+
+        private bool IsEmpty(string value)
+        {
+            bool result = false;
+
+            if (!(value == null) || !(value == ""))
+            {
+                result = true;
+            }
+
+            return result;
         }
 
     }

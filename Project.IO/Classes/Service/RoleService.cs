@@ -32,7 +32,7 @@ namespace Project.IO.Classes.Service
             return maxId + 1;
         }
 
-        public async void AddRoleToMember(string username, string roleName)
+        public async Task AddRoleToMember(string username, string roleName)
         {
 
             if (await hasRoleAlready(await getUserIdChosenForRole(username)))
@@ -43,6 +43,7 @@ namespace Project.IO.Classes.Service
                 Role role = new Role(roleName);
                 role.Id = nextId;
                 role.UserId = chosenUserId;
+                role.ProjectId = SessionService.Instance.ProjectId;
 
                 SetResponse response = await databaseUtil.CreateConnection().SetAsync($"Role/{nextId}", role);
             }
@@ -80,7 +81,7 @@ namespace Project.IO.Classes.Service
             {
                 foreach (var role in roles)
                 {
-                    if (role != null && role.UserId.Equals(userId) && role.ProjectId.Equals(1))
+                    if (role != null && role.UserId.Equals(userId) && role.ProjectId.Equals(SessionService.Instance.ProjectId))
                     {
                         return false;
                     }
