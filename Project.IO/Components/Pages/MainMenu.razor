@@ -1,42 +1,68 @@
-@page "/mainMenu"
+@page "/mainMenu/{projectId:int}"
+@using Project.IO.Classes
+@using Project.IO.Classes.Service
+@using Project.IO.Utilities
 @inherits LayoutComponentBase
 
-<div class="container-fluid">
-    <div class="px-4 py-4 rounded" style="background-color: white">
-        <div class="row">
-            <h1 style="color: #9b78ff; font-weight: bold">Welkom, naam!</h1>
-            <div class="col-sm-3">
-                <NavLink class="nav-link" href="taskView">
+@inject ProjectUtil ProjectUtil
+
+@if (project == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+
+    <div class="container-fluid">
+        <div class="px-4 py-4 rounded" style="background-color: white">
+            <div class="row">
+                <h1 style="color: #9b78ff; font-weight: bold">Welkom, naam!</h1>
+                <div class="col-sm-3">
+                    <NavLink class="nav-link" href="taskView">
+                        <button class="btn big-button">
+                            Mijn taken
+                        </button>
+                    </NavLink>
+                </div>
+                <div class="col-sm-3">
                     <button class="btn big-button">
-                        Mijn taken
+                        Mijn groep
                     </button>
-                </NavLink>
+                </div>
+                <div class="col-sm-3">
+                    <button class="btn big-button">
+                        Projectdeadlines
+                    </button>
+                </div>
+                <div class="col-sm-3">
+                    <button class="btn big-button">
+                        Mijn documenten
+                    </button>
+                </div>
             </div>
-            <div class="col-sm-3">
-                <button class="btn big-button">
-                    Mijn groep
-                </button>
+            <div class="row">
+                <div class="col-sm-3">
+                    <button class="btn big-button-red">
+                        Uitloggen
+                    </button>
+                </div>
+                <div class="col-sm-3"></div>
+                <div class="col-sm-3"></div>
+                <div class="col-sm-3"></div>
             </div>
-            <div class="col-sm-3">
-                <button class="btn big-button">
-                    Projectdeadlines
-                </button>
-            </div>
-            <div class="col-sm-3">
-                <button class="btn big-button">
-                    Mijn documenten
-                </button>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-3">
-                <button class="btn big-button-red">
-                    Uitloggen
-                </button>
-            </div>
-            <div class="col-sm-3"></div>
-            <div class="col-sm-3"></div>
-            <div class="col-sm-3"></div>
         </div>
     </div>
-</div>
+}
+
+@code
+{
+    [Parameter]
+    public int ProjectId { get; set; }
+
+    private ProjectModel project;
+
+    protected override async Task OnInitializedAsync()
+    {
+        project = await ProjectUtil.GetProjectById(ProjectId);
+    }
+}

@@ -99,5 +99,9 @@ namespace Project.IO.Components.Pages
             Navigation.NavigateTo("/addProject");
         }
 
+        private void NavigateToProject(int projectId)
+        {
+            Navigation.NavigateTo($"/mainMenu/{projectId}");
+        }
     }
 }
