@@ -116,5 +116,11 @@ namespace Project.IO.Utilities
 
             return projectModels;
         }
+
+        public async Task<ProjectModel> GetProjectById(int projectId)
+        {
+            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync($"Project/{projectId}");
+            return JsonConvert.DeserializeObject<ProjectModel>(response.Body);
+        }
     }
 }

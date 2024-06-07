@@ -47,5 +47,11 @@ namespace Project.IO.Classes.Service
             get { return _projectId; }
             set { _projectId = value; }
         }
+
+        public void Logout()
+        {
+            UserId = null;
+            IsLoggedIn = false;
+        }
     }
 }

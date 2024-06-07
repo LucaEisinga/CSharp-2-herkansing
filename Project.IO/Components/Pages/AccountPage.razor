@@ -14,7 +14,7 @@
                     {
                         if (project != null)
                         {
-                            <Button Type="ButtonType.Submit" Class="btn w-75 my-3" Style="background-color: #9b78ff">
+                            <Button Type="ButtonType.Submit" @onclick="() => NavigateToProject(project.Id)" Class="btn w-75 my-3" Style="background-color: #9b78ff">
                                 <p class="h5 text-white">@project.Title</p>
                             </Button>
                         }

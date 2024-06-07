@@ -1,6 +1,7 @@
 ﻿using Blazored.LocalStorage;
 using Microsoft.Extensions.Logging;
 using Project.IO.Classes.Service;
+using Project.IO.Utilities;
 
 namespace Project.IO
 {
@@ -19,6 +20,7 @@ namespace Project.IO
             builder.Services.AddMauiBlazorWebView();
             builder.Services.AddBlazoredLocalStorage();
             builder.Services.AddScoped<SessionService>();
+            builder.Services.AddScoped<ProjectUtil>();
 
 
 #if DEBUG
