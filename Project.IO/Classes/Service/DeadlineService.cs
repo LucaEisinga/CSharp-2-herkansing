@@ -41,6 +41,7 @@ namespace Project.IO.Classes.Service
 
             DeadlineModel deadline = new DeadlineModel(userId, username, taskName, taskDeadline);
             deadline.Id = nextId;
+            deadline.ProjectId = SessionService.Instance.ProjectId;
 
             SetResponse response = await databaseUtil.CreateConnection().SetAsync($"Deadline/{nextId}", deadline);
 
@@ -53,7 +54,27 @@ namespace Project.IO.Classes.Service
             string jsonResponse = response.Body;
             List<DeadlineModel> deadlines = JsonConvert.DeserializeObject<List<DeadlineModel>>(jsonResponse);
 
-            return deadlines;
+            List<DeadlineModel> deadlineList = new List<DeadlineModel>();
+            int? projectId = SessionService.Instance.ProjectId;
+
+            if (deadlines != null)
+            {
+                foreach (DeadlineModel deadline in deadlines)
+                {
+                    if (deadline != null && deadline.ProjectId.Equals(projectId))
+                    {
+                        DeadlineModel currentDeadline = new DeadlineModel(deadline.UserId, deadline.Username, deadline.TaskName, deadline.Deadline)
+                        {
+                            Id = deadline.Id,
+                            ProjectId = deadline.ProjectId
+                        };
+
+                        deadlineList.Add(currentDeadline);
+                    }
+                }
+            }
+
+            return deadlineList;
 
         }
 

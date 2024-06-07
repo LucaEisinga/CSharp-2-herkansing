@@ -6,6 +6,7 @@ namespace Project.IO.Classes.Model
 
         public int Id { get; set; }
         public int UserId { get; set; }
+        public int? ProjectId { get; set; }
         public string? Username { get; set; }
         public string? TaskName { get; set; }
         public DateTime Deadline { get; set; }
