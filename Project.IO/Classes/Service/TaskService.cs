@@ -93,7 +93,7 @@ namespace Project.IO.Classes.Service
             var tasks = JsonConvert.DeserializeObject<List<TaskModel>>(jsonResponse) ?? new List<TaskModel>();
 
             var validTasks = tasks
-                .Where(task => task != null && !string.IsNullOrWhiteSpace(task.Title) && task.Id > 0)
+                .Where(task => task != null && !string.IsNullOrWhiteSpace(task.Title) && task.Id > 0 && task.ProjectId.Equals(SessionService.Instance.ProjectId))
                 .ToList();
 
             // Debug logging to check valid tasks count
