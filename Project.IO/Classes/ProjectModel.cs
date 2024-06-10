@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Project.IO.Classes.Model;
+using System;
 using System.Collections.Generic;
 
 namespace Project.IO.Classes
@@ -9,6 +10,8 @@ namespace Project.IO.Classes
         public string Title { get; set; }
         public string Description { get; set; }
         public DateTime Deadline { get; set; }
+        /*public List<Member> Members { get; set; }*/
+        public int UserId { get; set; }
 
         public ProjectModel(string title, string description, DateTime deadline)
         {
@@ -16,25 +19,5 @@ namespace Project.IO.Classes
             Description = description;
             Deadline = deadline;
         }
-
-        /*public void AddTask(Task task)
-        {
-            if (task == null)
-            {
-                throw new ArgumentNullException(nameof(task));
-            }
-
-            Tasks.Add(task);
-        }
-
-        public void AddMemberToProject(Member member)
-        {
-            if (member == null)
-            {
-                throw new ArgumentNullException(nameof(member));
-            }
-
-            Members.Add(member);
-        }*/
     }
 }

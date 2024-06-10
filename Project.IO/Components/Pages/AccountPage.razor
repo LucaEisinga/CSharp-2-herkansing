@@ -8,15 +8,22 @@
         <BodyTemplate>
             <div class="text-center py-2">
                 <p class="h5" style="color: #9b78ff">Kies een project</p>
-                <Button Type="ButtonType.Submit" Class="btn w-75 my-3" Style="background-color: #9b78ff">
-                    <p class="h5 text-white">BattleBots</p>
-                </Button>
-                <Button Type="ButtonType.Submit" Class="btn w-75 my-3" Style="background-color: #9b78ff">
-                    <p class="h5 text-white">Innovate</p>
-                </Button>
-                <Button Type="ButtonType.Submit" Class="btn w-75 my-3" Style="background-color: #9b78ff">
-                    <p class="h5 text-white">Project 5.2</p>
-                </Button>
+                @if (userProjects != null)
+                {
+                    @foreach (var project in userProjects)
+                    {
+                        if (project != null)
+                        {
+                            <Button Type="ButtonType.Submit" @onclick="() => NavigateToProject(project.Id)" Class="btn w-75 my-3" Style="background-color: #9b78ff">
+                                <p class="h5 text-white">@project.Title</p>
+                            </Button>
+                        }
+                    }
+                }
+                else
+                {
+                    <p class="h5 text-muted">Geen projecten beschikbaar</p>
+                }
                 <Button Type="ButtonType.Button" @onclick="NavigateToAddProject" Class="btn w-75 my-3 btn-secondary">
                     <p class="h5 text-white">Maak een nieuw project</p>
                 </Button>

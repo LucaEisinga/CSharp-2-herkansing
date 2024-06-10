@@ -9,42 +9,36 @@
             <div class="text-center py-2 px-2">
                 <span class="h4" style="color: #9b78ff">Lid toevoegen</span>
                 <div class="form-group px-3">
-                    <input type="email" class="form-control my-3 bg-light" placeholder="Email of gebruikersnaam van gebruiker..." required>
+                    <input @bind="chosenUser" type="text" class="form-control my-3 bg-light" placeholder="Gebruikersnaam van gebruiker..." required>
                 </div>
                 <div class="form-group px-3">
-                    <select class="form-select my-3 bg-light" aria-label="Default select example">
-                        <option selected>rollen...</option>
-                        <option value="1">voorzitter</option>
-                        <option value="2">vice-voorzitter</option>
-                        <option value="3">notulist</option>
-                        <option value="4">code controleur</option>
-                        <option value="5">planner</option>
+                    <select @bind="@chosenRole" class="form-select my-3 bg-light" aria-label="Default select example">
+                        <option selected>Selecteer rol...</option>
+                        <option value="voorzitter">voorzitter</option>
+                        <option value="vice-voorzitter">vice-voorzitter</option>
+                        <option value="notulist">notulist</option>
+                        <option value="code controleur">code controleur</option>
+                        <option value="planner">planner</option>
                     </select>
                 </div>
                 <div class="form-group px-3">
-                    <select class="form-select my-3 bg-light" aria-label="Default select example">
-                        @if (projects == null)
+                    <select class="form-select my-3 bg-light" aria-label="Default select example" disabled>
+                        @if (currentProject == null)
                         {
                             <option disabled>Laden...</option>
                         }
-                        else if (!projects.Any())
-                        {
-                            <option disabled>Geen project beschikbaar</option>
-                        }
                         else
                         {
-                            @foreach (var project in projects)
+
+                            if (currentProject != null)
                             {
-                                if (project != null)
-                                {
-                                    <option value="@project.Id">@project.Title</option>
-                                }
+                                <option value="@currentProject.Id">@currentProject.Title</option>
                             }
                         }
                     </select>
                 </div>
                 <div class="form-group px-3">
-                    <Button Type="ButtonType.Submit" Class="btn w-100" Style="background-color: #9b78ff;">
+                    <Button @onclick="AddRoleToUser"  Type="ButtonType.Submit" Class="btn w-100" Style="background-color: #9b78ff;">
                         <span class="h5 text-white">Lid toevoegen</span>
                     </Button>
                 </div>
