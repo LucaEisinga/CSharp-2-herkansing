@@ -4,6 +4,7 @@ using Project.IO.Classes;
 using System.Diagnostics;
 using System.ComponentModel;
 using Project.IO.Classes.Service;
+using Project.IO.Classes.Model;
 
 namespace Project.IO.Components.Pages
 {
@@ -16,7 +17,22 @@ namespace Project.IO.Components.Pages
         private string? chosenUser;
         private string? chosenRole;
 
+        private List<Role> roles = new List<Role>();
+
         private ProjectModel currentProject;
+
+        protected override async Task OnInitializedAsync()
+        {
+            try
+            {
+                // Fetch the Role data
+                await GetProjectMembers();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error loading roles: {ex.Message}");
+            }
+        }
 
         private async void ShowAddMemberModal()
         {
@@ -74,6 +90,23 @@ namespace Project.IO.Components.Pages
             }
 
             return result;
+        }
+
+        private async Task<List<Role>> GetProjectMembers()
+        {
+
+            roles = await roleService.GetAllMembersInProject();
+
+            if (roles == null)
+            {
+                Debug.WriteLine("Role list is null in GetAllMembersInProject method.");
+            }
+            else
+            {
+                Debug.WriteLine($"Get members fetched {roles.Count} members.");
+            }
+
+            return roles;
         }
 
     }

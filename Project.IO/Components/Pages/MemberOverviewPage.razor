@@ -51,26 +51,23 @@
             <p class="h1 fw-bold" style="color: #9b78ff">Mijn groep</p>
             <div class="row">
                 <div class="col-md-9">
-                    <div class="btn member-button">
-                        <i class="bi bi-person-fill icon-100"></i>
-                        <p>Jaafar (voorzitter)</p>
-                    </div>
-                    <div class="btn member-button">
-                        <i class="bi bi-person-fill icon-100"></i>
-                        <p>Chris (vice-voorzitter)</p>
-                    </div>
-                    <div class="btn member-button">
-                        <i class="bi bi-person-fill icon-100"></i>
-                        <p>Robin (notulist)</p>
-                    </div>
-                    <div class="btn member-button">
-                        <i class="bi bi-person-fill icon-100"></i>
-                        <p>Max (code controleur)</p>
-                    </div>
-                    <div class="btn member-button">
-                        <i class="bi bi-person-fill icon-100"></i>
-                        <p>Yannieck (planner)</p>
-                    </div>
+                    @if (roles == null)
+                    {
+                        <p>Geen leden in project of beschikbaar...</p>
+                    }
+                    else
+                    {
+                        @foreach(var role in roles)
+                        {
+                            if (role != null)
+                            {
+                                <div class="btn member-button">
+                                    <i class="bi bi-person-fill icon-100"></i>
+                                    <p>@role.Username (@role.RoleName)</p>
+                                </div>
+                            }
+                        }
+                    }
                 </div>
                 <div class="col-md-3">
                     <div class="row">

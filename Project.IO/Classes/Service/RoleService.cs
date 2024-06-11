@@ -92,5 +92,37 @@ namespace Project.IO.Classes.Service
             return true;
         }
 
+        public async Task<List<Role>> GetAllMembersInProject()
+        {
+
+            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync("Role/");
+            string jsonResponse = response.Body;
+            List<Role> roles = JsonConvert.DeserializeObject<List<Role>>(jsonResponse);
+
+            List<Role> roleList = new List<Role>();
+
+            if (roles != null)
+            {
+                foreach (Role role in roles)
+                {
+                    if (role != null && role.ProjectId.Equals(SessionService.Instance.ProjectId))
+                    {
+                        Role currentRole = new Role(role.RoleName)
+                        {
+                            Id = role.Id,
+                            ProjectId = role.ProjectId,
+                            Username = role.Username,
+                            UserId = role.UserId
+                        };
+
+                        roleList.Add(currentRole);
+                    }
+                }
+            }
+
+
+            return roleList;
+        }
+
     }
 }

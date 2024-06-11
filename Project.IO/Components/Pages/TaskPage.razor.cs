@@ -1,6 +1,5 @@
 ﻿using BlazorBootstrap;
 using Project.IO.Classes.Model;
-using System.Reflection;
 using System.Diagnostics;
 using Project.IO.Classes.Service;
 using Microsoft.AspNetCore.Components;
@@ -21,6 +20,8 @@ namespace Project.IO.Components.Pages
 
         [Inject]
         private TaskService TaskService { get; set; } = default!;
+
+        private RoleService roleService = new RoleService();
 
         [Inject]
         private NavigationManager navigationManager { get; set; } = default!;
@@ -63,7 +64,7 @@ namespace Project.IO.Components.Pages
 
         public async Task<List<Role>> ShowAllMembers()
         {
-            var memberList = await TaskService.GetAllMembersInProject();
+            var memberList = await roleService.GetAllMembersInProject();
 
             if (memberList == null)
             {
