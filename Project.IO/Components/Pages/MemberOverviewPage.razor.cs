@@ -2,7 +2,6 @@
 using Project.IO.Utilities;
 using Project.IO.Classes;
 using System.Diagnostics;
-using System.ComponentModel;
 using Project.IO.Classes.Service;
 using Project.IO.Classes.Model;
 
@@ -77,7 +76,16 @@ namespace Project.IO.Components.Pages
             if (IsEmpty(chosenUser) && IsEmpty(chosenRole))
             {
                 await roleService.AddRoleToMember(chosenUser, chosenRole);
+                await GetProjectMembers();
+                ClearInputMenu();
+                await memberModal.HideAsync();
             }
+        }
+
+        private void ClearInputMenu()
+        {
+            chosenUser = string.Empty;
+            chosenRole = null;
         }
 
         private bool IsEmpty(string value)
