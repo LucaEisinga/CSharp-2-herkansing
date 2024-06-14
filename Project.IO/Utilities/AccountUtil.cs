@@ -44,6 +44,16 @@ namespace Project.IO.Utilities
             }
         }
 
+        public async Task<Member> GetCurrentLoggedInUserName()
+        {
+            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync($"Member/{SessionService.Instance.UserId}");
+            string jsonResponse = response.Body;
+            Member loggedInMember = JsonConvert.DeserializeObject<Member>(jsonResponse);
+
+            return loggedInMember;
+        }
+
+
         public async Task<bool> canLogin(string userName, string password)
         {
 

@@ -9,6 +9,7 @@ namespace Project.IO.Classes.Service
     {
 
         private DatabaseUtil databaseUtil = new DatabaseUtil();
+        private MemberProjectService memberProjectService = new MemberProjectService();
 
         private async Task<int> AutoIncrementRole()
         {
@@ -46,8 +47,23 @@ namespace Project.IO.Classes.Service
                 role.ProjectId = SessionService.Instance.ProjectId;
                 role.Username = username;
 
+                var projectName = await GetCurrentProject();
+
+                if (projectName != null)
+                {
+                    await memberProjectService.AddNewParticipantChosenMember(chosenUserId, username, projectName.Title);
+                }
+
                 SetResponse response = await databaseUtil.CreateConnection().SetAsync($"Role/{nextId}", role);
             }
+        }
+
+        public async Task<ProjectModel> GetCurrentProject()
+        {
+            int? projectId = SessionService.Instance.ProjectId;
+
+            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync($"Project/{projectId}");
+            return JsonConvert.DeserializeObject<ProjectModel>(response.Body);
         }
 
         private async Task<int> getUserIdChosenForRole(string chosenUser)

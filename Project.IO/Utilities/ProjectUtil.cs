@@ -6,13 +6,15 @@ using System.ComponentModel;
 using System.Diagnostics;
 using Project.IO.Classes.Model;
 using Project.IO.Classes.Service;
-using Microsoft.UI.Xaml.Media;
 
 namespace Project.IO.Utilities
 {
     internal class ProjectUtil
     {
         private DatabaseUtil databaseUtil = new DatabaseUtil();
+        private RoleService roleService = new RoleService();
+        private AccountUtil accountUtil = new AccountUtil();
+        private MemberProjectService memberProjectService = new MemberProjectService();
 
         public async Task<int> AutoIncrement()
         {
@@ -57,6 +59,12 @@ namespace Project.IO.Utilities
                 throw new ArgumentNullException(nameof(project));
             }
 
+            var currentUser = await accountUtil.GetCurrentLoggedInUserName();
+
+            await roleService.AddRoleToMember(currentUser.username, "voorzitter");
+
+            await memberProjectService.AddNewParticipant(currentUser.username, title);
+
             FirebaseClient client = databaseUtil.CreateConnection();
 
             SetResponse response = await client.SetAsync($"Project/{nextId}", project);
@@ -71,18 +79,18 @@ namespace Project.IO.Utilities
         }
 
 
-        public async Task<List<ProjectModel>> GetProjectsForLoggedInUser()
+        public async Task<List<MemberProjectModel>> GetProjectsForLoggedInUser()
         {
             if (!SessionService.Instance.IsLoggedIn)
                 throw new InvalidOperationException("User isn't logged in");
 
             int? userId = SessionService.Instance.UserId;
 
-            List<ProjectModel> projectModels = new List<ProjectModel>();
+            List<MemberProjectModel> memberProjectModels = new List<MemberProjectModel>();
 
-            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync("Project");
+            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync("MemberProject/");
             string jsonResponse = response.Body;
-            List<ProjectModel> projects = JsonConvert.DeserializeObject<List<ProjectModel>>(jsonResponse);
+            List<MemberProjectModel> projects = JsonConvert.DeserializeObject<List<MemberProjectModel>>(jsonResponse);
 
             if (projects != null)
             {
@@ -90,18 +98,19 @@ namespace Project.IO.Utilities
                 {
                     if (project != null && project.UserId.Equals(userId))
                     {
-                        ProjectModel instantProject = new ProjectModel(project.Title, project.Description, project.Deadline)
+                        MemberProjectModel instantProject = new MemberProjectModel(project.Username, project.ProjectName)
                         {
                             Id = project.Id,
-                            UserId = project.UserId
+                            UserId = project.UserId,
+                            ProjectId = project.ProjectId
                         };
 
-                        projectModels.Add(instantProject);
+                        memberProjectModels.Add(instantProject);
                     }
                 }
             }
 
-            return projectModels;
+            return memberProjectModels;
         }
 
         public async Task<ProjectModel> GetProjectById(int projectId)

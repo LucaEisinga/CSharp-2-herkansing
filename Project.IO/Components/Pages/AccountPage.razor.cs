@@ -1,6 +1,7 @@
 ﻿using BlazorBootstrap;
 using Microsoft.AspNetCore.Components;
 using Project.IO.Classes;
+using Project.IO.Classes.Model;
 using Project.IO.Classes.Service;
 using Project.IO.Utilities;
 using System.Diagnostics;
@@ -21,7 +22,7 @@ namespace Project.IO.Components.Pages
         private string? email;
         private string? password;
         private string? repeatPassword;
-        private List<ProjectModel> userProjects;
+        private List<MemberProjectModel> userProjects;
 
         /*private async Task OnShowModalClick()
         {
