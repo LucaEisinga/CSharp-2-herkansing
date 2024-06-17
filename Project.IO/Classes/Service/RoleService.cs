@@ -68,7 +68,6 @@ namespace Project.IO.Classes.Service
 
         private async Task<int> getUserIdChosenForRole(string chosenUser)
         {
-
             FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync("Member");
             string jsonResponse = response.Body;
             List<Member> members = JsonConvert.DeserializeObject<List<Member>>(jsonResponse);
@@ -110,7 +109,6 @@ namespace Project.IO.Classes.Service
 
         public async Task<List<Role>> GetAllMembersInProject()
         {
-
             FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync("Role/");
             string jsonResponse = response.Body;
             List<Role> roles = JsonConvert.DeserializeObject<List<Role>>(jsonResponse);
@@ -140,5 +138,46 @@ namespace Project.IO.Classes.Service
             return roleList;
         }
 
+        public async Task<Role> GetRoleById(int id)
+        {
+            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync("Role/");
+            string jsonResponse = response.Body;
+            List<Role> roles = JsonConvert.DeserializeObject<List<Role>>(jsonResponse);
+
+            Role chosenRole = null;
+
+            if (roles != null) 
+            {
+                foreach (Role role in roles)
+                {
+                    if (role != null && role.Id.Equals(id))
+                    {
+                        return chosenRole = new Role(role.RoleName)
+                        {
+                            Id = role.Id,
+                            ProjectId = role.ProjectId,
+                            UserId = role.UserId,
+                            Username = role.Username
+                        };
+                    }
+                }
+            }
+
+            return chosenRole;
+        }
+
+        public async Task<Member> GetRoleMemberByUserId(int userId)
+        {
+            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync($"Member/{userId}");
+            string jsonResponse = response.Body;
+            Member member = JsonConvert.DeserializeObject<Member>(jsonResponse);
+
+            return member;
+        }
+
+        public async Task UpdateRoleOfUser(int roleId, string newRoleName)
+        {
+            await databaseUtil.CreateConnection().SetAsync($"Role/{roleId}/RoleName", newRoleName);
+        }
     }
 }

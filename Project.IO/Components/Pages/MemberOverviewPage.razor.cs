@@ -4,6 +4,7 @@ using Project.IO.Classes;
 using System.Diagnostics;
 using Project.IO.Classes.Service;
 using Project.IO.Classes.Model;
+using Microsoft.AspNetCore.Components;
 
 namespace Project.IO.Components.Pages
 {
@@ -19,6 +20,9 @@ namespace Project.IO.Components.Pages
         private List<Role> roles = new List<Role>();
 
         private ProjectModel currentProject;
+
+        [Inject]
+        private NavigationManager navigationManager { get; set; } = default!;
 
         protected override async Task OnInitializedAsync()
         {
@@ -115,6 +119,12 @@ namespace Project.IO.Components.Pages
             }
 
             return roles;
+        }
+
+        public void NavigateToRole(int roleId)
+        {
+            Console.WriteLine(roleId);
+            navigationManager.NavigateTo($"/roleChangePage/{roleId}");
         }
 
     }

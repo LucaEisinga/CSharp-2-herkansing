@@ -61,7 +61,7 @@
                         {
                             if (role != null)
                             {
-                                <div class="btn member-button">
+                                <div class="btn member-button" @onclick="() => NavigateToRole(role.Id)">
                                     <i class="bi bi-person-fill icon-100"></i>
                                     <p>@role.Username (@role.RoleName)</p>
                                 </div>
