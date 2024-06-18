@@ -42,7 +42,7 @@ else
             </div>
             <div class="row">
                 <div class="col-sm-3">
-                    <button class="btn big-button-red">
+                    <button class="btn big-button-red" @onclick="Logout">
                         Uitloggen
                     </button>
                 </div>
@@ -54,15 +54,34 @@ else
     </div>
 }
 
-@code
-{
+@code {
     [Parameter]
     public int ProjectId { get; set; }
 
     private ProjectModel project;
 
+    [Inject]
+    public NavigationManager Navigation { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
+        await InitializeProject();
+    }
+
+    private async Task InitializeProject()
+    {
+        if (!SessionService.Instance.IsLoggedIn)
+        {
+            Navigation.NavigateTo("/accountPage");
+            return;
+        }
+
         project = await ProjectUtil.GetProjectById(ProjectId);
+    }
+
+    protected void Logout()
+    {
+        SessionService.Instance.Logout();
+        Navigation.NavigateTo("/accountPage");
     }
 }
