@@ -13,10 +13,10 @@ namespace Project.IO.Components.Pages
     partial class MainMenuBase : LayoutComponentBase
     {
         [Inject]
-        public ProjectUtil ProjectUtil { get; set; }
+        private ProjectUtil ProjectUtil { get; set; }
 
         [Inject]
-        public NavigationManager Navigation { get; set; }
+        private NavigationManager Navigation { get; set; }
 
         [Parameter]
         public int ProjectId { get; set; }
@@ -31,7 +31,7 @@ namespace Project.IO.Components.Pages
         protected void Logout()
         {
             SessionService.Instance.Logout();
-            Navigation.NavigateTo("/login");
+            Navigation.NavigateTo("/accountPage");
         }
     }
 }

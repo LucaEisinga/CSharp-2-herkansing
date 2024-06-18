@@ -6,7 +6,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using Project.IO.Classes.Model;
 using Project.IO.Classes.Service;
-using Microsoft.UI.Xaml.Media;
 
 namespace Project.IO.Utilities
 {
