@@ -21,6 +21,7 @@ namespace Project.IO
             builder.Services.AddBlazoredLocalStorage();
             builder.Services.AddScoped<SessionService>();
             builder.Services.AddScoped<ProjectUtil>();
+            builder.Services.AddScoped<RoleService>();
 
 
 #if DEBUG

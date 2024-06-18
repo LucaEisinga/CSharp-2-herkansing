@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Project.IO.Classes
 {
-    internal class ProjectModel
+    public class ProjectModel
     {
         public int Id { get; set; }
         public string Title { get; set; }

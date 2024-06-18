@@ -21,9 +21,6 @@ namespace Project.IO.Components.Pages
 
         private ProjectModel currentProject;
 
-        [Inject]
-        private NavigationManager navigationManager { get; set; } = default!;
-
         protected override async Task OnInitializedAsync()
         {
             try
@@ -124,7 +121,7 @@ namespace Project.IO.Components.Pages
         public void NavigateToRole(int roleId)
         {
             Console.WriteLine(roleId);
-            navigationManager.NavigateTo($"/roleChangePage/{roleId}");
+            Navigation.NavigateTo($"/roleChangePage/{roleId}");
         }
 
     }

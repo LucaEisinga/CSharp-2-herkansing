@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace Project.IO.Classes.Service
 {
-    internal class RoleService
+    public class RoleService
     {
 
         private DatabaseUtil databaseUtil = new DatabaseUtil();
@@ -138,13 +138,11 @@ namespace Project.IO.Classes.Service
             return roleList;
         }
 
-        public async Task<Role> GetRoleById(int id)
+        public async Task<Role?> GetRoleById(int id)
         {
             FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync("Role/");
             string jsonResponse = response.Body;
             List<Role> roles = JsonConvert.DeserializeObject<List<Role>>(jsonResponse);
-
-            Role chosenRole = null;
 
             if (roles != null) 
             {
@@ -152,27 +150,34 @@ namespace Project.IO.Classes.Service
                 {
                     if (role != null && role.Id.Equals(id))
                     {
-                        return chosenRole = new Role(role.RoleName)
-                        {
-                            Id = role.Id,
-                            ProjectId = role.ProjectId,
-                            UserId = role.UserId,
-                            Username = role.Username
-                        };
+                        return role;
                     }
                 }
             }
 
-            return chosenRole;
+            return null;
         }
 
-        public async Task<Member> GetRoleMemberByUserId(int userId)
+        public async Task<string?> GetRoleMemberByUserId(int userId)
         {
-            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync($"Member/{userId}");
+            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync($"Member/");
             string jsonResponse = response.Body;
-            Member member = JsonConvert.DeserializeObject<Member>(jsonResponse);
+            List<Member> members = JsonConvert.DeserializeObject<List<Member>>(jsonResponse);
 
-            return member;
+            string? userName = null;
+
+            if (members != null)
+            {
+                foreach (Member member in members)
+                {
+                    if (member != null && member.Id.Equals(userId))
+                    {
+                        userName = member.username;
+                    }
+                }
+            }
+
+            return userName;
         }
 
         public async Task UpdateRoleOfUser(int roleId, string newRoleName)

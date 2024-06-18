@@ -1,26 +1,31 @@
 ﻿using Project.IO.Classes.Service;
 using Project.IO.Classes.Model;
 using Microsoft.AspNetCore.Components;
+using System.Diagnostics;
 
 namespace Project.IO.Components.Pages
 {
     partial class RoleChangePage
     {
-        private RoleService roleService = new RoleService();
-        private string newestRole;
+        [Parameter]
         public int RoleId { get; set; }
-        protected Role CurrentRole { get; set; }
-        private Member chosenMember;
+        protected RoleService? roleService = new RoleService();
+
         [Inject]
-        private NavigationManager navigationManager { get; set; } = default!;
+        public NavigationManager? Navigation { get; set; }
+
+        private string? newestRole;
+        protected Role? CurrentRole { get; set; }
+        private string? chosenMember;
+
         protected override async Task OnInitializedAsync()
         {
-            Console.WriteLine(RoleId);
+            System.Diagnostics.Debug.WriteLine(RoleId);
             // Fetch the role data
             CurrentRole = await roleService.GetRoleById(RoleId);
             chosenMember = await GetMemberFromRole();
         }
-        private async Task<Member> GetMemberFromRole()
+        private async Task<string?> GetMemberFromRole()
         {
             return await roleService.GetRoleMemberByUserId(CurrentRole.UserId);
         }
@@ -30,7 +35,7 @@ namespace Project.IO.Components.Pages
         }
         public void NavigateBackToMemberOverview()
         {
-            navigationManager.NavigateTo("/memberOverviewPage");
+            Navigation.NavigateTo("/memberOverviewPage");
         }
     }
 }
