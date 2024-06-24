@@ -1,7 +1,6 @@
 ﻿using BlazorBootstrap;
 using Microsoft.AspNetCore.Components;
 using Project.IO.Classes;
-using Project.IO.Classes.Model;
 using Project.IO.Classes.Service;
 using Project.IO.Utilities;
 using System.Diagnostics;
@@ -22,7 +21,7 @@ namespace Project.IO.Components.Pages
         private string? email;
         private string? password;
         private string? repeatPassword;
-        private List<MemberProjectModel> userProjects;
+        private List<ProjectModel> userProjects;
 
         /*private async Task OnShowModalClick()
         {
@@ -76,7 +75,7 @@ namespace Project.IO.Components.Pages
             {
                 if (password.Equals(repeatPassword))
                 {
-                    _accountUtil.RegisterNewUser(userName, email, password, repeatPassword);
+                    _accountUtil.RegisterNewUser(userName, email, password);
                 }
             }
         }
