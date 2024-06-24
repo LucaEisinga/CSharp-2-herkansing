@@ -15,6 +15,7 @@ namespace Project.IO.Utilities
         private RoleService roleService = new RoleService();
         private AccountUtil accountUtil = new AccountUtil();
         private MemberProjectService memberProjectService = new MemberProjectService();
+        private ProjectService projectService = new ProjectService();
 
         public async Task<int> AutoIncrement()
         {
@@ -61,6 +62,8 @@ namespace Project.IO.Utilities
 
             var currentUser = await accountUtil.GetCurrentLoggedInUserName();
 
+            await projectService.AddNewParticipant(1);
+
             await roleService.AddRoleToMember(currentUser.username, "voorzitter");
 
             await memberProjectService.AddNewParticipant(currentUser.username, title);
@@ -79,18 +82,18 @@ namespace Project.IO.Utilities
         }
 
 
-        public async Task<List<MemberProjectModel>> GetProjectsForLoggedInUser()
+        public async Task<List<Role>> GetProjectsForLoggedInUser()
         {
             if (!SessionService.Instance.IsLoggedIn)
                 throw new InvalidOperationException("User isn't logged in");
 
             int? userId = SessionService.Instance.UserId;
 
-            List<MemberProjectModel> memberProjectModels = new List<MemberProjectModel>();
+            List<Role> memberProjectModels = new List<Role>();
 
-            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync("MemberProject/");
+            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync("Role/");
             string jsonResponse = response.Body;
-            List<MemberProjectModel> projects = JsonConvert.DeserializeObject<List<MemberProjectModel>>(jsonResponse);
+            List<Role> projects = JsonConvert.DeserializeObject<List<Role>>(jsonResponse);
 
             if (projects != null)
             {
@@ -98,14 +101,7 @@ namespace Project.IO.Utilities
                 {
                     if (project != null && project.UserId.Equals(userId))
                     {
-                        MemberProjectModel instantProject = new MemberProjectModel(project.Username, project.ProjectName)
-                        {
-                            Id = project.Id,
-                            UserId = project.UserId,
-                            ProjectId = project.ProjectId
-                        };
-
-                        memberProjectModels.Add(instantProject);
+                        memberProjectModels.Add(project);
                     }
                 }
             }

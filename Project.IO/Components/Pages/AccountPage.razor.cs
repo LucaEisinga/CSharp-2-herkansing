@@ -22,7 +22,7 @@ namespace Project.IO.Components.Pages
         private string? email;
         private string? password;
         private string? repeatPassword;
-        private List<MemberProjectModel> userProjects;
+        private List<Role> userProjects;
         [Inject]
         private NavigationManager navigationManager { get; set; } = default!;
 

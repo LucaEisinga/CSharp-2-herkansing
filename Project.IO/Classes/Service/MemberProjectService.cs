@@ -50,7 +50,7 @@ namespace Project.IO.Classes.Service
             await databaseUtil.CreateConnection().SetAsync($"MemberProject/{nextId}", participant);
         }
 
-        public async Task AddNewParticipantChosenMember(int userId, string username, string projectName)
+        public async Task AddNewParticipant(int userId, string username, string projectName)
         {
             int nextId = await AutoIncrementMemberProject();
             MemberProjectModel participant = new MemberProjectModel(username, projectName)

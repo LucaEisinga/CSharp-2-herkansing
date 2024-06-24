@@ -51,7 +51,7 @@ namespace Project.IO.Classes.Service
 
                 if (projectName != null)
                 {
-                    await memberProjectService.AddNewParticipantChosenMember(chosenUserId, username, projectName.Title);
+                    await memberProjectService.AddNewParticipant(chosenUserId, username, projectName.Title);
                 }
 
                 SetResponse response = await databaseUtil.CreateConnection().SetAsync($"Role/{nextId}", role);
