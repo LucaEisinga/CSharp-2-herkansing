@@ -21,6 +21,8 @@ namespace Project.IO.Components.Pages
         private string? password;
         private string? repeatPassword;
         private List<MemberProjectModel> userProjects;
+        [Inject]
+        private NavigationManager navigationManager { get; set; } = default!;
 
         private async Task LoginUser()
         {
@@ -45,7 +47,7 @@ namespace Project.IO.Components.Pages
             {
                 if (password.Equals(repeatPassword))
                 {
-                    _accountUtil.RegisterNewUser(userName, email, password, repeatPassword);
+                    _accountUtil.RegisterNewUser(userName, email, password);
                 }
             }
         }
@@ -66,13 +68,13 @@ namespace Project.IO.Components.Pages
 
         private void NavigateToAddProject()
         {
-            Navigation.NavigateTo("/addProject");
+            navigationManager.NavigateTo("/addProject");
         }
 
         private void NavigateToProject(int projectId)
         {
             SessionService.Instance.ProjectId = projectId;
-            Navigation.NavigateTo($"/mainMenu/{projectId}");
+            navigationManager.NavigateTo($"/mainMenu/{projectId}");
         }
     }
 }

@@ -12,14 +12,12 @@ namespace Project.IO.Classes.Model
         public string username;
         public string email;
         public string password;
-        public string repeatPassword;
 
-        public Member(string username, string email, string password, string repeatPassword)
+        public Member(string username, string email, string password)
         {
             setUsername(username);
             setEmail(email);
             setPassword(password);
-            setRepeatPassword(repeatPassword);
         }
 
         private string getUsername()
@@ -60,20 +58,5 @@ namespace Project.IO.Classes.Model
                 this.password = password;
             }
         }
-
-        private string getRepeatPassword()
-        {
-            return repeatPassword;
-        }
-
-        private void setRepeatPassword(string repeatPassword)
-        {
-            if (repeatPassword != null)
-            {
-                this.repeatPassword = repeatPassword;
-            }
-        }
-
-
     }
 }
