@@ -22,19 +22,6 @@ namespace Project.IO.Classes.Model
             setRepeatPassword(repeatPassword);
         }
 
-        /*private int getId()
-        {
-            return this.id;
-        }
-
-        private void setId(int id)
-        {
-            if (id != 0)
-            {
-                this.id = id;
-            }
-        }*/
-
         private string getUsername()
         {
             return username;

@@ -1,6 +1,4 @@
-﻿using Blazored.LocalStorage;
-
-namespace Project.IO.Classes.Service
+﻿namespace Project.IO.Classes.Service
 {
     public class SessionService
     {

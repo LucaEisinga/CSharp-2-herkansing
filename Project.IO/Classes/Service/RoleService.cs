@@ -134,7 +134,6 @@ namespace Project.IO.Classes.Service
                 }
             }
 
-
             return roleList;
         }
 

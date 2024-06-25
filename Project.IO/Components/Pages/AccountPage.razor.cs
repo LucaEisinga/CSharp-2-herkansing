@@ -1,6 +1,4 @@
 ﻿using BlazorBootstrap;
-using Microsoft.AspNetCore.Components;
-using Project.IO.Classes;
 using Project.IO.Classes.Model;
 using Project.IO.Classes.Service;
 using Project.IO.Utilities;
@@ -24,30 +22,10 @@ namespace Project.IO.Components.Pages
         private string? repeatPassword;
         private List<MemberProjectModel> userProjects;
 
-        /*private async Task OnShowModalClick()
-        {
-
-
-                // Show the modal
-                await modal.ShowAsync();
-            
-        }*/
-
-        private async Task OnHideModalClick()
-        {
-            await modal.HideAsync();
-        }
-
-        private void ShowConnection()
-        {
-            databaseUtil.CreateConnection();
-        }
-
         private async Task LoginUser()
         {
             if (await _accountUtil.canLogin(logUser, logPassword))
             {
-
                 await LoadUserProjects();
 
                 await modal.ShowAsync();
@@ -59,15 +37,6 @@ namespace Project.IO.Components.Pages
             Debug.WriteLine("Loading user projects...");
 
             userProjects = await _projectUtil.GetProjectsForLoggedInUser();
-
-            /*if (userProjects != null && userProjects.Count > 0)
-            {
-                Debug.WriteLine($"Loaded {userProjects.Count} projects.");
-            }
-            else
-            {
-                Debug.WriteLine("No projects found for the user");
-            }*/
         }
 
         private void CreateNewUser()

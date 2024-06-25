@@ -1,5 +1,4 @@
-﻿
-using FireSharp.Response;
+﻿using FireSharp.Response;
 using Newtonsoft.Json;
 using Project.IO.Classes.Model;
 using Project.IO.Utilities;
@@ -44,7 +43,6 @@ namespace Project.IO.Classes.Service
             deadline.ProjectId = SessionService.Instance.ProjectId;
 
             SetResponse response = await databaseUtil.CreateConnection().SetAsync($"Deadline/{nextId}", deadline);
-
         }
 
         public async Task<List<DeadlineModel>> GetAllDeadlines()
@@ -75,7 +73,6 @@ namespace Project.IO.Classes.Service
             }
 
             return deadlineList;
-
         }
 
     }
