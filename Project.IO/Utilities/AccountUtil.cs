@@ -101,8 +101,19 @@ namespace Project.IO.Utilities
                     }
                 }
             }
-
             return true;
+        }
+        public async Task<Member> GetMemberById(int id)
+        {
+            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync($"Member/Id/{id}");
+            string jsonResponse = response.Body;
+            return JsonConvert.DeserializeObject<Member>(jsonResponse);
+        }
+        public async Task<Member> getMemberByEmail(string email)
+        {
+            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync($"Member/email/{email}");
+            string jsonResponse = response.Body;
+            return JsonConvert.DeserializeObject<Member>(jsonResponse);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿@page "/roleChangePage/{RoleId:int}"
+﻿@page "/editMemberRolePage/{Id:int}"
 
 <div class="container-fluid">
     <div class="row p-5">
@@ -11,23 +11,33 @@
                 @if (chosenMember != null)
                 {
                     <div class="mb-2">
-                        <h5 style="color: #9b78ff;">Gebruiker: @chosenMember /</h5>
+                        <h5 style="color: #9b78ff;">Gebruiker: @chosenMember.username /</h5>
                     </div>
                 }
-                @if (CurrentRole != null)
+                @if (memberData != null)
                 {
                     <div class="mb-2">
-                        <h5 style="color: #9b78ff;">Rol: @CurrentRole.RoleName </h5>
+                        <h5 style="color: #9b78ff;">Rol: @roleService.GetRoleById(memberData.RoleId) </h5>
                     </div>
                 }
                 <div class="form-group px-3">
                     <select @bind="newestRole" class="form-select my-3 bg-light" aria-label="Default select example">
-                        <option selected>Selecteer rol...</option>
-                        <option value="voorzitter">voorzitter</option>
-                        <option value="vice-voorzitter">vice-voorzitter</option>
-                        <option value="notulist">notulist</option>
-                        <option value="code controleur">code controleur</option>
-                        <option value="planner">planner</option>
+                        @if(roles == null)
+                        {
+                            <option disabled>Geen rollen beschikbaar</option>
+                        }
+                        else
+                        {
+                            <option selected>Selecteer rol...</option>
+                            @foreach (var role in roles)
+                            {
+                                <option value="@role.Id">@role.RoleName</option>
+                            }
+                            @* <option value="vice-voorzitter">vice-voorzitter</option>
+                            <option value="notulist">notulist</option>
+                            <option value="code controleur">code controleur</option>
+                            <option value="planner">planner</option> *@
+                        }
                     </select>
                 </div>
                 <div class="form-group px-3">

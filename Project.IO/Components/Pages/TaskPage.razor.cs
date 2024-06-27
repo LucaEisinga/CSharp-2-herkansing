@@ -2,6 +2,7 @@
 using Project.IO.Classes.Model;
 using System.Diagnostics;
 using Project.IO.Classes.Service;
+using Project.IO.Utilities;
 using Microsoft.AspNetCore.Components;
 
 namespace Project.IO.Components.Pages
@@ -15,13 +16,17 @@ namespace Project.IO.Components.Pages
         private DateTime taskDeadline = DateTime.Now;
         private string? taskDescription;
 
-        private List<Role> members = [];
+        private List<Member> members = [];
         private List<TaskModel> tasks = [];
+        [Inject]
+        private AccountUtil accountUtil { get; set; } = default!;
+        [Inject]
+        private ProjectUtil projectUtil { get; set; } = default!;
 
         [Inject]
         private TaskService TaskService { get; set; } = default!;
-
-        private RoleService roleService = new RoleService();
+        [Inject]
+        private ProjectAssignmentService projectService { get; set; } = default!;
 
         [Inject]
         private NavigationManager navigationManager { get; set; } = default!;
@@ -62,9 +67,9 @@ namespace Project.IO.Components.Pages
             }
         }
 
-        public async Task<List<Role>> ShowAllMembers()
+        public async Task<List<Member>> ShowAllMembers()
         {
-            var memberList = await roleService.GetAllMembersInProject();
+            var memberList = await projectUtil.GetMembersInProject();
 
             if (memberList == null)
             {

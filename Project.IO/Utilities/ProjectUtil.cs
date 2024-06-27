@@ -14,7 +14,7 @@ namespace Project.IO.Utilities
         private DatabaseUtil databaseUtil = new DatabaseUtil();
         private RoleService roleService = new RoleService();
         private AccountUtil accountUtil = new AccountUtil();
-        private ProjectService projectService = new ProjectService();
+        private ProjectAssignmentService projectService = new ProjectAssignmentService();
 
         public async Task<int> AutoIncrement()
         {
@@ -51,6 +51,7 @@ namespace Project.IO.Utilities
             int nextId = await AutoIncrement();
             ProjectModel project = new ProjectModel(title, description, deadline);
             project.Id = nextId;
+            await roleService.initializeDefaultRoles(nextId);
             SessionService.Instance.ProjectId = nextId;
             project.UserId = (int)SessionService.Instance.UserId;
 
@@ -108,6 +109,19 @@ namespace Project.IO.Utilities
         {
             FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync($"Project/{projectId}");
             return JsonConvert.DeserializeObject<ProjectModel>(response.Body);
+        }
+
+        public async Task<List<Member>> GetMembersInProject()
+        {
+            List<ProjectAssignment> projectAssignments = await projectService.GetProjectAssignments();
+            List<Member> projectMembers = new List<Member>();
+            foreach(ProjectAssignment assignment in projectAssignments)
+            {
+                FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync($"Member/{assignment.UserId}");
+                Member member = JsonConvert.DeserializeObject<Member>(response.Body);
+                projectMembers.Add(member);
+            }
+            return projectMembers;
         }
     }
 }

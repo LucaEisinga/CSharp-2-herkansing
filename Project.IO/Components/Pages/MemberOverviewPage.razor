@@ -1,7 +1,6 @@
 ﻿@page "/memberOverviewPage"
 @using System.Diagnostics
 @using Newtonsoft.Json
-@inject NavigationManager Navigation
 
 <div class="container-fluid">
 
@@ -10,7 +9,7 @@
             <div class="text-center py-2 px-2">
                 <span class="h4" style="color: #9b78ff">Lid toevoegen</span>
                 <div class="form-group px-3">
-                    <input @bind="chosenUser" type="text" class="form-control my-3 bg-light" placeholder="Gebruikersnaam van gebruiker..." required>
+                    <input @bind="@chosenUser" type="text" class="form-control my-3 bg-light" placeholder="Email-adres van gebruiker..." required>
                 </div>
                 <div class="form-group px-3">
                     <select @bind="@chosenRole" class="form-select my-3 bg-light" aria-label="Default select example">
@@ -52,19 +51,19 @@
             <p class="h1 fw-bold" style="color: #9b78ff">Mijn groep</p>
             <div class="row">
                 <div class="col-md-9">
-                    @if (roles == null)
+                    @if (members == null)
                     {
                         <p>Geen leden in project of beschikbaar...</p>
                     }
                     else
                     {
-                        @foreach(var role in roles)
+                        @foreach(var member in members)
                         {
-                            if (role != null)
+                            if (member != null)
                             {
-                                <div class="btn member-button" @onclick="() => NavigateToRole(role.Id)">
+                                <div class="btn member-button" @onclick="() => NavigateToProjectMember(member.Id)">
                                     <i class="bi bi-person-fill icon-100"></i>
-                                    <p>@role.Username (@role.RoleName)</p>
+                                    <p>@accountUtil.GetMemberById(@member.UserId) @roleService.GetRoleById(@member.RoleId)</p>
                                 </div>
                             }
                         }

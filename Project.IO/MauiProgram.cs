@@ -20,7 +20,7 @@ namespace Project.IO
             builder.Services.AddMauiBlazorWebView();
             builder.Services.AddBlazoredLocalStorage();
             builder.Services.AddScoped<SessionService>();
-            builder.Services.AddScoped<ProjectService>();
+            builder.Services.AddScoped<ProjectAssignmentService>();
             builder.Services.AddScoped<ProjectUtil>();
             builder.Services.AddScoped<RoleService>();
 

@@ -32,28 +32,6 @@ namespace Project.IO.Classes.Service
             return maxId + 1;
         }
 
-        public async Task AddRoleToMember(string username, string roleName)
-        {
-
-            if (await hasRoleAlready(await getUserIdChosenForRole(username)))
-            {
-                int nextId = await AutoIncrementRole();
-                int chosenUserId = await getUserIdChosenForRole(username);
-
-                Role role = new Role(roleName);
-                role.Id = nextId;
-
-                var projectName = await GetCurrentProject();
-
-                if (projectName != null)
-                {
-                    await memberProjectService.AddNewParticipant(chosenUserId, username, projectName.Title);
-                }
-
-                SetResponse response = await databaseUtil.CreateConnection().SetAsync($"Role/{nextId}", role);
-            }
-        }
-
         public async Task<ProjectModel> GetCurrentProject()
         {
             int? projectId = SessionService.Instance.ProjectId;
@@ -103,51 +81,28 @@ namespace Project.IO.Classes.Service
             return true;
         }
 
-        public async Task<List<Role>> GetAllMembersInProject()
-        {
-            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync("Role/");
-            string jsonResponse = response.Body;
-            List<Role> roles = JsonConvert.DeserializeObject<List<Role>>(jsonResponse);
-
-            List<Role> roleList = new List<Role>();
-
-            if (roles != null)
-            {
-                foreach (Role role in roles)
-                {
-                    if (role != null && role.ProjectId.Equals(SessionService.Instance.ProjectId))
-                    {
-                        Role currentRole = new Role(role.RoleName, role.ProjectId)
-                        {
-                            Id = role.Id
-                        };
-
-                        roleList.Add(currentRole);
-                    }
-                }
-            }
-
-
-            return roleList;
-        }
-
         public async Task<Role?> GetRoleById(int id)
         {
-            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync("Role/");
+            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync($"Role/Id/{id}");
+            string jsonResponse = response.Body;
+            return JsonConvert.DeserializeObject<Role>(jsonResponse);
+        }
+        public async Task<Role?> GetRoleByName(string name)
+        {
+            int ProjectId = GetCurrentProject().Id;
+            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync($"Role/ProjectId/{ProjectId}");
             string jsonResponse = response.Body;
             List<Role> roles = JsonConvert.DeserializeObject<List<Role>>(jsonResponse);
-
-            if (roles != null) 
+            if(roles!=null)
             {
                 foreach (Role role in roles)
                 {
-                    if (role != null && role.Id.Equals(id))
+                    if(role.RoleName == name)
                     {
                         return role;
                     }
                 }
             }
-
             return null;
         }
 
@@ -208,6 +163,30 @@ namespace Project.IO.Classes.Service
             else
             {
                 await databaseUtil.CreateConnection().SetAsync($"Role/{nextId}", roleToAdd);
+            }
+        }
+        public async Task<List<Role>> getRolesForProject()
+        {
+            int ProjectId = GetCurrentProject().Id;
+            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync($"Role/ProjectId/{ProjectId}");
+            return JsonConvert.DeserializeObject<List<Role>>(response.Body);
+        }
+        public async Task initializeDefaultRoles(int ProjectId)
+        {
+            List<string> defaultRoles = new List<string>();
+            defaultRoles.Add("voorzitter");
+            defaultRoles.Add("vice-voorzitter");
+            defaultRoles.Add("notulist");
+            defaultRoles.Add("code controleur");
+            defaultRoles.Add("planner");
+            foreach(string roleName in defaultRoles)
+            {
+                int nextId = await AutoIncrementRole();
+                Role role = new Role(roleName, ProjectId)
+                {
+                    Id = nextId
+                };
+                await databaseUtil.CreateConnection().SetAsync($"Role/{nextId}", role);
             }
         }
     }

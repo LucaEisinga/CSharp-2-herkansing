@@ -12,12 +12,20 @@ namespace Project.IO.Components.Pages
     {
 
         private Modal memberModal = default!;
-        private ProjectUtil projectUtil = new ProjectUtil();
-        private RoleService roleService = new RoleService();
+        [Inject]
+        private AccountUtil accountUtil {get;set;} = default!;
+        [Inject]
+        private ProjectUtil projectUtil { get; set; } = default!;
+        [Inject]
+        private RoleService roleService { get; set; } = default!;
+        [Inject]
+        private ProjectAssignmentService projectService { get; set; } = default!;
+        [Inject]
+        private NavigationManager Navigation {get;set;} = default!;
         private string? chosenUser;
         private string? chosenRole;
 
-        private List<Role> roles = new List<Role>();
+        private List<ProjectAssignment> members = new List<ProjectAssignment>();
 
         private ProjectModel currentProject;
 
@@ -74,12 +82,17 @@ namespace Project.IO.Components.Pages
 
         private async Task addUserToProject()
         {
-            if (IsEmpty(chosenUser) && IsEmpty(chosenRole))
+            if (!(IsEmpty(chosenUser) || IsEmpty(chosenRole)))
             {
-                await roleService.AddRoleToMember(chosenUser, chosenRole);
-                await GetProjectMembers();
-                ClearInputMenu();
-                await memberModal.HideAsync();
+                Member user = await accountUtil.getMemberByEmail(chosenUser);
+                Role role = await roleService.GetRoleByName(chosenRole);
+                if (user!=null)
+                {
+                    await projectService.AddNewParticipant(user.Id, role.Id);
+                    await GetProjectMembers();
+                    ClearInputMenu();
+                    await memberModal.HideAsync();
+                }
             }
         }
 
@@ -93,7 +106,7 @@ namespace Project.IO.Components.Pages
         {
             bool result = false;
 
-            if (!(value == null) || !(value == ""))
+            if (value == null || value == "")
             {
                 result = true;
             }
@@ -101,27 +114,27 @@ namespace Project.IO.Components.Pages
             return result;
         }
 
-        private async Task<List<Role>> GetProjectMembers()
+        private async Task<List<ProjectAssignment>> GetProjectMembers()
         {
 
-            roles = await roleService.GetAllMembersInProject();
+            members = await projectService.GetProjectAssignments();
 
-            if (roles == null)
+            if (members == null)
             {
                 Debug.WriteLine("Role list is null in GetAllMembersInProject method.");
             }
             else
             {
-                Debug.WriteLine($"Get members fetched {roles.Count} members.");
+                Debug.WriteLine($"Get members fetched {members.Count} members.");
             }
 
-            return roles;
+            return members;
         }
 
-        public void NavigateToRole(int roleId)
+        public void NavigateToProjectMember(int roleId)
         {
             Console.WriteLine(roleId);
-            Navigation.NavigateTo($"/roleChangePage/{roleId}");
+            Navigation.NavigateTo($"/editMemberRolePage/{roleId}");
         }
 
     }

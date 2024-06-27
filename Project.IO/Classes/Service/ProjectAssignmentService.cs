@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 
 namespace Project.IO.Classes.Service
 {
-    internal class ProjectService
+    internal class ProjectAssignmentService
     {
 
         private DatabaseUtil databaseUtil = new DatabaseUtil();
 
         public async Task<int> AutoIncrementId()
         {
-            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync("MemberProject");
+            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync("ProjectAssignment");
             string jsonResponse = response.Body;
             List<ProjectAssignment> participants = JsonConvert.DeserializeObject<List<ProjectAssignment>>(jsonResponse);
 
@@ -52,6 +52,17 @@ namespace Project.IO.Classes.Service
                 Id = nextId
             };
             await databaseUtil.CreateConnection().SetAsync($"MemberProject/{nextId}", participant);
+        }
+        public async Task<List<ProjectAssignment>> GetProjectAssignments()
+        {
+            int ProjectId = (int)SessionService.Instance.ProjectId;
+            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync($"ProjectAssignment/ProjectId{ProjectId}");
+            return JsonConvert.DeserializeObject<List<ProjectAssignment>>(response.Body);
+        }
+        public async Task<ProjectAssignment> getMemberData(int id)
+        {
+            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync($"ProjectAssignment/Id/{id}");
+            return JsonConvert.DeserializeObject<ProjectAssignment>(response.Body);
         }
     }
 }
