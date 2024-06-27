@@ -94,21 +94,9 @@ namespace Project.IO.Classes.Service
         }
         public async Task<TaskModel?> GetTaskById(int id)
         {
-            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync($"Task/");
+            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync($"Task/{id}");
             string jsonResponse = response.Body;
-            List<TaskModel> tasks = JsonConvert.DeserializeObject<List<TaskModel>>(jsonResponse);
-            if (tasks != null)
-            {
-                foreach (TaskModel task in tasks)
-                {
-                    if (task != null && task.Id.Equals(id))
-                    {
-                        Console.WriteLine($"Task Id: {task?.Id}, Title: {task?.Title}");
-                        return task;
-                    }
-                }
-            }
-            return null;
+            return JsonConvert.DeserializeObject<TaskModel>(jsonResponse);
         }
         public async Task DeleteTask(int id)
         {

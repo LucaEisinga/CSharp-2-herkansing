@@ -105,15 +105,23 @@ namespace Project.IO.Utilities
         }
         public async Task<Member> GetMemberById(int id)
         {
-            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync($"Member/Id/{id}");
+            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync($"Member/{id}");
             string jsonResponse = response.Body;
             return JsonConvert.DeserializeObject<Member>(jsonResponse);
         }
         public async Task<Member> getMemberByEmail(string email)
         {
-            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync($"Member/email/{email}");
+            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync($"Member");
             string jsonResponse = response.Body;
-            return JsonConvert.DeserializeObject<Member>(jsonResponse);
+            List<Member> members = JsonConvert.DeserializeObject<List<Member>>(jsonResponse);
+            foreach(Member member in members)
+            {
+                if(member.email == email)
+                {
+                    return member;
+                }
+            }
+            return null;
         }
     }
 }

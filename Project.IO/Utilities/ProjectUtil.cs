@@ -85,17 +85,16 @@ namespace Project.IO.Utilities
 
             List<ProjectModel> projects = new List<ProjectModel>();
 
-            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync($"ProjectAssignment/UserId/{userId}");
+            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync($"ProjectAssignment");
             string jsonResponse = response.Body;
             List<ProjectAssignment> projectAssignments = JsonConvert.DeserializeObject<List<ProjectAssignment>>(jsonResponse);
-
             if (projectAssignments != null)
             {
                 foreach (var projectAssignment in projectAssignments)
                 {
                     if (projectAssignment != null && projectAssignment.UserId.Equals(userId))
                     {
-                        FirebaseResponse tempResponse = await databaseUtil.CreateConnection().GetAsync($"Project/Id/{projectAssignment.ProjectId}");
+                        FirebaseResponse tempResponse = await databaseUtil.CreateConnection().GetAsync($"Project/{projectAssignment.ProjectId}");
                         ProjectModel project = JsonConvert.DeserializeObject<ProjectModel>(tempResponse.Body);
                         projects.Add(project);
                     }

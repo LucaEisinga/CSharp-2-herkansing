@@ -62,14 +62,14 @@ namespace Project.IO.Components.Pages
 
             userProjects = await _projectUtil.GetProjectsForLoggedInUser();
 
-            /*if (userProjects != null && userProjects.Count > 0)
+            if (userProjects != null && userProjects.Count > 0)
             {
                 Debug.WriteLine($"Loaded {userProjects.Count} projects.");
             }
             else
             {
                 Debug.WriteLine("No projects found for the user");
-            }*/
+            }
         }
 
         private void CreateNewUser()

@@ -51,17 +51,29 @@ namespace Project.IO.Classes.Service
             {
                 Id = nextId
             };
-            await databaseUtil.CreateConnection().SetAsync($"MemberProject/{nextId}", participant);
+            await databaseUtil.CreateConnection().SetAsync($"ProjectAssignment/{nextId}", participant);
         }
         public async Task<List<ProjectAssignment>> GetProjectAssignments()
         {
             int ProjectId = (int)SessionService.Instance.ProjectId;
-            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync($"ProjectAssignment/ProjectId{ProjectId}");
-            return JsonConvert.DeserializeObject<List<ProjectAssignment>>(response.Body);
+            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync($"ProjectAssignment");
+            List<ProjectAssignment> allAssignments = JsonConvert.DeserializeObject<List<ProjectAssignment>>(response.Body);
+            List< ProjectAssignment> projectAssignments = [];
+            if (allAssignments != null)
+            {
+                foreach (var projectAssignment in allAssignments)
+                {
+                    if (projectAssignment != null && projectAssignment.ProjectId.Equals(ProjectId))
+                    {
+                        projectAssignments.Add(projectAssignment);
+                    }
+                }
+            }
+            return projectAssignments;
         }
         public async Task<ProjectAssignment> getMemberData(int id)
         {
-            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync($"ProjectAssignment/Id/{id}");
+            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync($"ProjectAssignment/{id}");
             return JsonConvert.DeserializeObject<ProjectAssignment>(response.Body);
         }
     }

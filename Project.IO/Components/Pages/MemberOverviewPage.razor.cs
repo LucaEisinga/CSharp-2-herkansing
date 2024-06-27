@@ -22,6 +22,7 @@ namespace Project.IO.Components.Pages
         private ProjectAssignmentService projectService { get; set; } = default!;
         [Inject]
         private NavigationManager Navigation {get;set;} = default!;
+        private List<Role> roles = new List<Role>();
         private string? chosenUser;
         private string? chosenRole;
 
@@ -35,6 +36,7 @@ namespace Project.IO.Components.Pages
             {
                 // Fetch the Role data
                 await GetProjectMembers();
+                roles = await roleService.getRolesForProject();
             }
             catch (Exception ex)
             {

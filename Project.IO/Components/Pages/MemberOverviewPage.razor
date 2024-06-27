@@ -13,12 +13,18 @@
                 </div>
                 <div class="form-group px-3">
                     <select @bind="@chosenRole" class="form-select my-3 bg-light" aria-label="Default select example">
-                        <option selected>Selecteer rol...</option>
-                        <option value="voorzitter">voorzitter</option>
-                        <option value="vice-voorzitter">vice-voorzitter</option>
-                        <option value="notulist">notulist</option>
-                        <option value="code controleur">code controleur</option>
-                        <option value="planner">planner</option>
+                        @if(roles == null)
+                        {
+                            <option disabled>Geen rollen beschikbaar</option>
+                        }
+                        else
+                        {
+                            <option selected>Selecteer rol...</option>
+                            @foreach (var role in roles)
+                            {
+                                <option value="@role.Id">@role.RoleName</option>
+                            }
+                        }
                     </select>
                 </div>
                 <div class="form-group px-3">
@@ -29,11 +35,7 @@
                         }
                         else
                         {
-
-                            if (currentProject != null)
-                            {
-                                <option value="@currentProject.Id">@currentProject.Title</option>
-                            }
+                            <option value="@currentProject.Id">@currentProject.Title</option>
                         }
                     </select>
                 </div>

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Project.IO.Classes.Model;
 using Project.IO.Classes.Service;
+using Project.IO.Utilities;
 
 namespace Project.IO.Components.Pages
 {
@@ -9,23 +10,25 @@ namespace Project.IO.Components.Pages
 		[Inject]
 		protected TaskService TaskService { get; set; }
 		[Inject]
+		protected AccountUtil accountUtil { get; set; }
+		[Inject]
 		private NavigationManager navigationManager { get; set; } = default!;
 		[Parameter]
         public int TaskId { get; set;}
-		private string name;
+		private Member TaskOwner;
 
-		protected TaskModel Task { get; set; }
+		protected TaskModel Task;
 
 		protected override async Task OnInitializedAsync()
 		{
 			Console.WriteLine(TaskId);
 			// Fetch the task data
 			Task = await TaskService.GetTaskById(TaskId);
-			name = await getMemberName();
+			TaskOwner = await getMemberName();
 		}
-		private async Task<string> getMemberName()
+		private async Task<Member> getMemberName()
 		{
-			return await TaskService.GetMemberNameUsingId(Task.UserId);
+			return await accountUtil.GetMemberById(Task.UserId);
 		}
 		private async Task DeleteTask()
 		{

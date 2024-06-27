@@ -63,7 +63,7 @@ namespace Project.IO.Classes.Service
         private async Task<bool> hasRoleAlready(int userId)
         {
 
-            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync($"ProjectAssignment/UserId/{userId}");
+            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync($"ProjectAssignment");
             string jsonResponse = response.Body;
             List<ProjectAssignment> roles = JsonConvert.DeserializeObject<List<ProjectAssignment>>(jsonResponse);
 
@@ -71,7 +71,7 @@ namespace Project.IO.Classes.Service
             {
                 foreach (var role in roles)
                 {
-                    if (role != null && role.ProjectId.Equals(SessionService.Instance.ProjectId))
+                    if (role != null && role.UserId.Equals(userId) && role.ProjectId.Equals(SessionService.Instance.ProjectId))
                     {
                         return false;
                     }
@@ -83,21 +83,21 @@ namespace Project.IO.Classes.Service
 
         public async Task<Role?> GetRoleById(int id)
         {
-            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync($"Role/Id/{id}");
+            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync($"Role/{id}");
             string jsonResponse = response.Body;
             return JsonConvert.DeserializeObject<Role>(jsonResponse);
         }
         public async Task<Role?> GetRoleByName(string name)
         {
             int ProjectId = GetCurrentProject().Id;
-            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync($"Role/ProjectId/{ProjectId}");
+            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync($"Role");
             string jsonResponse = response.Body;
             List<Role> roles = JsonConvert.DeserializeObject<List<Role>>(jsonResponse);
             if(roles!=null)
             {
                 foreach (Role role in roles)
                 {
-                    if(role.RoleName == name)
+                    if(role.RoleName == name && role.ProjectId == ProjectId)
                     {
                         return role;
                     }
@@ -129,9 +129,9 @@ namespace Project.IO.Classes.Service
             return userName;
         }
 
-        public async Task UpdateRoleOfUser(int roleId, string newRoleName)
+        public async Task UpdateRoleOfUser(int roleId, int newRoleName)
         {
-            await databaseUtil.CreateConnection().SetAsync($"Role/{roleId}/RoleName", newRoleName);
+            await databaseUtil.CreateConnection().SetAsync($"ProjectAssignment/{roleId}/RoleId", newRoleName);
         }
         public async Task AddRoleToProject(string roleName)
         {
@@ -141,7 +141,7 @@ namespace Project.IO.Classes.Service
             {
                 Id = nextId
             };
-            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync($"Role/ProjectId/{ProjectId}");
+            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync($"Role");
             string jsonResponse = response.Body;
             List<Role> projectRoles = JsonConvert.DeserializeObject<List<Role>>(jsonResponse);
             if(projectRoles!=null)
@@ -149,7 +149,7 @@ namespace Project.IO.Classes.Service
                 bool roleExists = false;
                 foreach (Role role in projectRoles)
                 {
-                    if (role.RoleName == roleName)
+                    if (role.RoleName == roleName && role.ProjectId == ProjectId)
                     {
                         roleExists = true;
                         break;
@@ -168,17 +168,28 @@ namespace Project.IO.Classes.Service
         public async Task<List<Role>> getRolesForProject()
         {
             int ProjectId = GetCurrentProject().Id;
-            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync($"Role/ProjectId/{ProjectId}");
-            return JsonConvert.DeserializeObject<List<Role>>(response.Body);
+            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync($"Role");
+            List<Role> roles = JsonConvert.DeserializeObject<List<Role>>(response.Body);
+            List<Role> projectRoles =[];
+            foreach (Role role in roles)
+            {
+                if ( role.ProjectId == ProjectId)
+                {
+                    projectRoles.Add(role);
+                }
+            }
+            return projectRoles;
         }
         public async Task initializeDefaultRoles(int ProjectId)
         {
-            List<string> defaultRoles = new List<string>();
-            defaultRoles.Add("voorzitter");
-            defaultRoles.Add("vice-voorzitter");
-            defaultRoles.Add("notulist");
-            defaultRoles.Add("code controleur");
-            defaultRoles.Add("planner");
+            List<string> defaultRoles =
+            [
+                "voorzitter",
+                "vice-voorzitter",
+                "notulist",
+                "code controleur",
+                "planner",
+            ];
             foreach(string roleName in defaultRoles)
             {
                 int nextId = await AutoIncrementRole();

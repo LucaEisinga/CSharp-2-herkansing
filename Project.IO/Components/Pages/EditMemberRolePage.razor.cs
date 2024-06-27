@@ -20,7 +20,7 @@ namespace Project.IO.Components.Pages
         [Inject]
         public NavigationManager? Navigation { get; set; }
 
-        private string? newestRole;
+        private int newestRole;
         protected ProjectAssignment? memberData { get; set; }
         private Member? chosenMember;
         private List<Role> roles = new List<Role>();
