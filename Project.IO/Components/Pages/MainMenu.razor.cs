@@ -2,11 +2,6 @@
 using Project.IO.Classes;
 using Project.IO.Classes.Service;
 using Project.IO.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Project.IO.Components.Pages
 {
@@ -22,6 +17,7 @@ namespace Project.IO.Components.Pages
         public int ProjectId { get; set; }
 
         protected ProjectModel project;
+
 
         protected override async Task OnInitializedAsync()
         {

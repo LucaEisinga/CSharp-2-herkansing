@@ -44,6 +44,7 @@ namespace Project.IO.Utilities
                 SetResponse response = await databaseUtil.CreateConnection().SetAsync($"Member/{nextId}", member);
             }
         }
+
         public async Task<Member> GetCurrentLoggedInUserName()
         {
             FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync($"Member/{SessionService.Instance.UserId}");

@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Project.IO.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Project.IO.Classes.Service;
 
 namespace Project.IO.Components.Pages
 {
@@ -14,9 +10,17 @@ namespace Project.IO.Components.Pages
 
         private FileUtil fileUtil = new FileUtil();
 
+        [Inject]
+        private NavigationManager Navigation { get; set; }
+
         private async Task FileUploading(InputFileChangeEventArgs e)
         {
             await fileUtil.HandleFileSelected(e);
+        }
+
+        private void NavigateToProject()
+        {
+            Navigation.NavigateTo($"/mainMenu/{SessionService.Instance.ProjectId}");
         }
 
     }

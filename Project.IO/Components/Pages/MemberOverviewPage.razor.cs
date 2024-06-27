@@ -124,5 +124,10 @@ namespace Project.IO.Components.Pages
             Navigation.NavigateTo($"/roleChangePage/{roleId}");
         }
 
+        private void NavigateToProject()
+        {
+            Navigation.NavigateTo($"/mainMenu/{SessionService.Instance.ProjectId}");
+        }
+
     }
 }

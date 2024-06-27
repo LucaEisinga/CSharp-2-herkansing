@@ -144,5 +144,10 @@ namespace Project.IO.Components.Pages
                     return "btn long-button-green";
             }
         }
+
+        private void NavigateToProject()
+        {
+            navigationManager.NavigateTo($"/mainMenu/{SessionService.Instance.ProjectId}");
+        }
     }
 }
