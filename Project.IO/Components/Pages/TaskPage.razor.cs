@@ -15,7 +15,6 @@ namespace Project.IO.Components.Pages
         private int? projectMember;
         private DateTime taskDeadline = DateTime.Now;
         private string? taskDescription;
-
         private List<Member> members = [];
         private List<TaskModel> tasks = [];
         [Inject]
