@@ -44,7 +44,7 @@ namespace Project.IO.Components.Pages
                     return;
                 }
 
-                await ProjectUtil.AddProjectToFirebase(ProjectTitle, ProjectDescription, ProjectDeadline);
+                await ProjectUtil.createProject(ProjectTitle, ProjectDescription, ProjectDeadline);
                 await DisplayAlert("Success", "Project added successfully.", "OK");
                 NavigationManager.NavigateTo("/");
             }

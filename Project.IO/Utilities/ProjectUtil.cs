@@ -14,7 +14,6 @@ namespace Project.IO.Utilities
         private DatabaseUtil databaseUtil = new DatabaseUtil();
         private RoleService roleService = new RoleService();
         private AccountUtil accountUtil = new AccountUtil();
-        private MemberProjectService memberProjectService = new MemberProjectService();
         private ProjectService projectService = new ProjectService();
 
         public async Task<int> AutoIncrement()
@@ -46,7 +45,7 @@ namespace Project.IO.Utilities
             return maxId + 1;
         }
 
-        public async Task AddProjectToFirebase(string title, string description, DateTime deadline)
+        public async Task createProject(string title, string description, DateTime deadline)
         {
             
             int nextId = await AutoIncrement();
@@ -60,13 +59,7 @@ namespace Project.IO.Utilities
                 throw new ArgumentNullException(nameof(project));
             }
 
-            var currentUser = await accountUtil.GetCurrentLoggedInUserName();
-
             await projectService.AddNewParticipant(1);
-
-            await roleService.AddRoleToMember(currentUser.username, "voorzitter");
-
-            await memberProjectService.AddNewParticipant(currentUser.username, title);
 
             FirebaseClient client = databaseUtil.CreateConnection();
 
@@ -82,31 +75,33 @@ namespace Project.IO.Utilities
         }
 
 
-        public async Task<List<Role>> GetProjectsForLoggedInUser()
+        public async Task<List<ProjectModel>> GetProjectsForLoggedInUser()
         {
             if (!SessionService.Instance.IsLoggedIn)
                 throw new InvalidOperationException("User isn't logged in");
 
             int? userId = SessionService.Instance.UserId;
 
-            List<Role> memberProjectModels = new List<Role>();
+            List<ProjectModel> projects = new List<ProjectModel>();
 
-            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync("Role/");
+            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync($"ProjectAssignment/UserId/{userId}");
             string jsonResponse = response.Body;
-            List<Role> projects = JsonConvert.DeserializeObject<List<Role>>(jsonResponse);
+            List<ProjectAssignment> projectAssignments = JsonConvert.DeserializeObject<List<ProjectAssignment>>(jsonResponse);
 
-            if (projects != null)
+            if (projectAssignments != null)
             {
-                foreach (var project in projects)
+                foreach (var projectAssignment in projectAssignments)
                 {
-                    if (project != null && project.UserId.Equals(userId))
+                    if (projectAssignment != null && projectAssignment.UserId.Equals(userId))
                     {
-                        memberProjectModels.Add(project);
+                        FirebaseResponse tempResponse = await databaseUtil.CreateConnection().GetAsync($"Project/Id/{projectAssignment.ProjectId}");
+                        ProjectModel project = JsonConvert.DeserializeObject<ProjectModel>(tempResponse.Body);
+                        projects.Add(project);
                     }
                 }
             }
 
-            return memberProjectModels;
+            return projects;
         }
 
         public async Task<ProjectModel> GetProjectById(int projectId)

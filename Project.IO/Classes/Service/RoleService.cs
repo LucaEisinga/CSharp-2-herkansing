@@ -9,7 +9,6 @@ namespace Project.IO.Classes.Service
     {
 
         private DatabaseUtil databaseUtil = new DatabaseUtil();
-        private MemberProjectService memberProjectService = new MemberProjectService();
 
         private async Task<int> AutoIncrementRole()
         {
@@ -43,9 +42,6 @@ namespace Project.IO.Classes.Service
 
                 Role role = new Role(roleName);
                 role.Id = nextId;
-                role.UserId = chosenUserId;
-                role.ProjectId = SessionService.Instance.ProjectId;
-                role.Username = username;
 
                 var projectName = await GetCurrentProject();
 
@@ -89,15 +85,15 @@ namespace Project.IO.Classes.Service
         private async Task<bool> hasRoleAlready(int userId)
         {
 
-            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync("Role");
+            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync($"ProjectAssignment/UserId/{userId}");
             string jsonResponse = response.Body;
-            List<Role> roles = JsonConvert.DeserializeObject<List<Role>>(jsonResponse);
+            List<ProjectAssignment> roles = JsonConvert.DeserializeObject<List<ProjectAssignment>>(jsonResponse);
 
             if (roles != null)
             {
                 foreach (var role in roles)
                 {
-                    if (role != null && role.UserId.Equals(userId) && role.ProjectId.Equals(SessionService.Instance.ProjectId))
+                    if (role != null && role.ProjectId.Equals(SessionService.Instance.ProjectId))
                     {
                         return false;
                     }
@@ -121,12 +117,9 @@ namespace Project.IO.Classes.Service
                 {
                     if (role != null && role.ProjectId.Equals(SessionService.Instance.ProjectId))
                     {
-                        Role currentRole = new Role(role.RoleName)
+                        Role currentRole = new Role(role.RoleName, role.ProjectId)
                         {
-                            Id = role.Id,
-                            ProjectId = role.ProjectId,
-                            Username = role.Username,
-                            UserId = role.UserId
+                            Id = role.Id
                         };
 
                         roleList.Add(currentRole);
@@ -174,6 +167,7 @@ namespace Project.IO.Classes.Service
                     {
                         userName = member.username;
                     }
+
                 }
             }
 
@@ -183,6 +177,38 @@ namespace Project.IO.Classes.Service
         public async Task UpdateRoleOfUser(int roleId, string newRoleName)
         {
             await databaseUtil.CreateConnection().SetAsync($"Role/{roleId}/RoleName", newRoleName);
+        }
+        public async Task AddRoleToProject(string roleName)
+        {
+            int nextId = await AutoIncrementRole();
+            int ProjectId = GetCurrentProject().Id;
+            Role roleToAdd = new Role(roleName,ProjectId)
+            {
+                Id = nextId
+            };
+            FirebaseResponse response = await databaseUtil.CreateConnection().GetAsync($"Role/ProjectId/{ProjectId}");
+            string jsonResponse = response.Body;
+            List<Role> projectRoles = JsonConvert.DeserializeObject<List<Role>>(jsonResponse);
+            if(projectRoles!=null)
+            {
+                bool roleExists = false;
+                foreach (Role role in projectRoles)
+                {
+                    if (role.RoleName == roleName)
+                    {
+                        roleExists = true;
+                        break;
+                    }
+                }
+                if(!roleExists)
+                {
+                    await databaseUtil.CreateConnection().SetAsync($"Role/{nextId}",roleToAdd);
+                }
+            }
+            else
+            {
+                await databaseUtil.CreateConnection().SetAsync($"Role/{nextId}", roleToAdd);
+            }
         }
     }
 }

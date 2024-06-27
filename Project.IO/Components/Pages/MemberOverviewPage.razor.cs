@@ -72,7 +72,7 @@ namespace Project.IO.Components.Pages
             return project;
         }
 
-        private async Task AddRoleToUser()
+        private async Task addUserToProject()
         {
             if (IsEmpty(chosenUser) && IsEmpty(chosenRole))
             {

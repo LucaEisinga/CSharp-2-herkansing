@@ -10,14 +10,13 @@ namespace Project.IO.Classes.Model
     {
 
         public int Id { get; set; }
-        public int UserId { get; set; }
-        public int? ProjectId { get; set; }
+        public int ProjectId { get; set; }
         public string RoleName { get; set; }
-        public string Username { get; set; }
 
-        public Role(string RoleName)
+        public Role(string RoleName, int ProjectId)
         {
             this.setRoleName(RoleName);
+            this.ProjectId = ProjectId;
         }
         private string getRoleName()
         {
