@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components;
 using System.Diagnostics;
+using Project.IO.Classes.Service;
 
 namespace Project.IO.Utilities
 {
@@ -8,7 +9,7 @@ namespace Project.IO.Utilities
     {
         public async Task HandleFileSelected(InputFileChangeEventArgs e)
         {
-            var uploadDirectory = Path.Combine(AppContext.BaseDirectory, "ProjectFiles");
+            var uploadDirectory = Path.Combine(AppContext.BaseDirectory, $"ProjectFiles/{SessionService.Instance.ProjectId}");
 
             // Ensure directory exists
             if (!Directory.Exists(uploadDirectory))
