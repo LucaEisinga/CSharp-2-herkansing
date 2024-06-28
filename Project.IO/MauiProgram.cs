@@ -22,6 +22,7 @@ namespace Project.IO
             builder.Services.AddScoped<SessionService>();
             builder.Services.AddScoped<ProjectAssignmentService>();
             builder.Services.AddScoped<ProjectUtil>();
+            builder.Services.AddScoped<AccountUtil>();
             builder.Services.AddScoped<RoleService>();
 
 

@@ -35,7 +35,11 @@
                         }
                         else
                         {
-                            <option value="@currentProject.Id">@currentProject.Title</option>
+                            if(currentProject!=null)
+                            {
+                                <option value="@currentProject.Id">@currentProject.Title</option>
+                            }
+
                         }
                     </select>
                 </div>
@@ -59,15 +63,12 @@
                     }
                     else
                     {
-                        @foreach(var member in members)
+                        @foreach(var member in memberRoles)
                         {
-                            if (member != null)
-                            {
-                                <div class="btn member-button" @onclick="() => NavigateToProjectMember(member.Id)">
-                                    <i class="bi bi-person-fill icon-100"></i>
-                                    <p>@accountUtil.GetMemberById(@member.UserId) @roleService.GetRoleById(@member.RoleId)</p>
-                                </div>
-                            }
+                            <div class="btn member-button" @onclick="() => NavigateToProjectMember(member.AssignmentId)">
+                                <i class="bi bi-person-fill icon-100"></i>
+                                <p>@member.Username (@member.Rolename)</p>
+                            </div>
                         }
                     }
                 </div>

@@ -11,13 +11,13 @@
                 @if (chosenMember != null)
                 {
                     <div class="mb-2">
-                        <h5 style="color: #9b78ff;">Gebruiker: @chosenMember.username /</h5>
+                        <h5 style="color: #9b78ff;">Gebruiker: @chosenMember.username</h5>
                     </div>
                 }
-                @if (memberData != null)
+                @if (currentRole != null)
                 {
                     <div class="mb-2">
-                        <h5 style="color: #9b78ff;">Rol: @roleService.GetRoleById(memberData.RoleId) </h5>
+                        <h5 style="color: #9b78ff;">Rol: @currentRole</h5>
                     </div>
                 }
                 <div class="form-group px-3">

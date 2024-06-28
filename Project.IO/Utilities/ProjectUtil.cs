@@ -49,8 +49,10 @@ namespace Project.IO.Utilities
         {
             
             int nextId = await AutoIncrement();
-            ProjectModel project = new ProjectModel(title, description, deadline);
-            project.Id = nextId;
+            ProjectModel project = new(title, description, deadline)
+            {
+                Id = nextId
+            };
             await roleService.initializeDefaultRoles(nextId);
             SessionService.Instance.ProjectId = nextId;
             project.UserId = (int)SessionService.Instance.UserId;

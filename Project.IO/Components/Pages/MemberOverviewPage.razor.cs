@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace Project.IO.Components.Pages
 {
-    public partial class MemberOverviewPage
+    public partial class MemberOverviewPage : ComponentBase
     {
 
         private Modal memberModal = default!;
@@ -22,11 +22,13 @@ namespace Project.IO.Components.Pages
         private ProjectAssignmentService projectService { get; set; } = default!;
         [Inject]
         private NavigationManager Navigation {get;set;} = default!;
-        private List<Role> roles = new List<Role>();
+        private List<Role> roles = [];
         private string? chosenUser;
         private string? chosenRole;
 
-        private List<ProjectAssignment> members = new List<ProjectAssignment>();
+        private List<(int AssignmentId,string Username, string Rolename)> memberRoles = [];
+
+        private List<ProjectAssignment> members = [];
 
         private ProjectModel currentProject;
 
@@ -36,7 +38,13 @@ namespace Project.IO.Components.Pages
             {
                 // Fetch the Role data
                 await GetProjectMembers();
-                roles = await roleService.getRolesForProject();
+                await GetProjectRoles();
+                foreach(ProjectAssignment member in members)
+                {
+                    string username = await GetMemberNameAsync(member.UserId);
+                    string rolename = await GetRoleNameAsync(member.RoleId);
+                    memberRoles.Add((member.Id,username,rolename));
+                }
             }
             catch (Exception ex)
             {
@@ -120,10 +128,9 @@ namespace Project.IO.Components.Pages
         {
 
             members = await projectService.GetProjectAssignments();
-
             if (members == null)
             {
-                Debug.WriteLine("Role list is null in GetAllMembersInProject method.");
+                Debug.WriteLine("Member list is null in GetAllMembersInProject method.");
             }
             else
             {
@@ -132,12 +139,37 @@ namespace Project.IO.Components.Pages
 
             return members;
         }
+        private async Task<List<Role>> GetProjectRoles()
+        {
+            roles = await roleService.getRolesForProject();
+            if (roles == null)
+            {
+                Debug.WriteLine("Role list is null in GetAllRolesInProject method.");
+            }
+            else
+            {
+                Debug.WriteLine($"Get roles fetched {roles.Count} roles.");
+            }
+
+            return roles;
+        }
 
         public void NavigateToProjectMember(int roleId)
         {
             Console.WriteLine(roleId);
             Navigation.NavigateTo($"/editMemberRolePage/{roleId}");
         }
-
+        public string GetMemberName(int userId) => GetMemberNameAsync(userId).GetAwaiter().GetResult();
+        public string GetRoleName(int roleId) => GetRoleNameAsync(roleId).GetAwaiter().GetResult();
+        private async Task<string> GetMemberNameAsync(int userId)
+        {
+            Member member = await accountUtil.GetMemberById(userId);
+            return member.username;
+        }
+        private async Task<string> GetRoleNameAsync(int RoleId)
+        {
+            Role role = await roleService.GetRoleById(RoleId);
+            return role.RoleName;
+        }
     }
 }

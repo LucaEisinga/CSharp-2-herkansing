@@ -24,14 +24,23 @@ namespace Project.IO.Components.Pages
         protected ProjectAssignment? memberData { get; set; }
         private Member? chosenMember;
         private List<Role> roles = new List<Role>();
+        private string currentRole;
 
         protected override async Task OnInitializedAsync()
         {
             System.Diagnostics.Debug.WriteLine(Id);
             // Fetch the role data
             memberData = await projectService.getMemberData(Id);
+
             chosenMember = await accountUtil.GetMemberById(memberData.UserId);
             roles = await roleService.getRolesForProject();
+            foreach(Role role in roles)
+            {
+                if(role.Id == memberData.RoleId)
+                {
+                    currentRole = role.RoleName;
+                }
+            }
         }
         private async Task UpdateRole()
         {
