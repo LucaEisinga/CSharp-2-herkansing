@@ -97,7 +97,7 @@ namespace Project.IO.Classes.Service
             {
                 foreach (Role role in roles)
                 {
-                    if(role.RoleName == name && role.ProjectId == ProjectId)
+                    if(role != null && role.RoleName == name && role.ProjectId == ProjectId)
                     {
                         return role;
                     }

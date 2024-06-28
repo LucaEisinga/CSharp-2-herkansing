@@ -116,7 +116,7 @@ namespace Project.IO.Utilities
             List<Member> members = JsonConvert.DeserializeObject<List<Member>>(jsonResponse);
             foreach(Member member in members)
             {
-                if(member.email == email)
+                if(member != null && member.email == email)
                 {
                     return member;
                 }

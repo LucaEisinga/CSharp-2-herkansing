@@ -24,7 +24,7 @@ namespace Project.IO.Components.Pages
         private NavigationManager Navigation {get;set;} = default!;
         private List<Role> roles = [];
         private string? chosenUser;
-        private string? chosenRole;
+        private int chosenRole;
 
         private List<(int AssignmentId,string Username, string Rolename)> memberRoles = [];
 
@@ -39,19 +39,23 @@ namespace Project.IO.Components.Pages
                 // Fetch the Role data
                 await GetProjectMembers();
                 await GetProjectRoles();
-                foreach(ProjectAssignment member in members)
-                {
-                    string username = await GetMemberNameAsync(member.UserId);
-                    string rolename = await GetRoleNameAsync(member.RoleId);
-                    memberRoles.Add((member.Id,username,rolename));
-                }
+                await LoadMemberList();
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error loading roles: {ex.Message}");
             }
         }
-
+        private async Task LoadMemberList()
+        {
+            memberRoles = [];
+            foreach (ProjectAssignment member in members)
+            {
+                string username = await GetMemberNameAsync(member.UserId);
+                string rolename = await GetRoleNameAsync(member.RoleId);
+                memberRoles.Add((member.Id, username, rolename));
+            }
+        }
         private async void ShowAddMemberModal()
         {
             try
@@ -92,14 +96,15 @@ namespace Project.IO.Components.Pages
 
         private async Task addUserToProject()
         {
-            if (!(IsEmpty(chosenUser) || IsEmpty(chosenRole)))
+            if (!(IsEmpty(chosenUser) || chosenRole.Equals(null)))
             {
                 Member user = await accountUtil.getMemberByEmail(chosenUser);
-                Role role = await roleService.GetRoleByName(chosenRole);
+                Role role = await roleService.GetRoleById(chosenRole);
                 if (user!=null)
                 {
                     await projectService.AddNewParticipant(user.Id, role.Id);
                     await GetProjectMembers();
+                    await LoadMemberList();
                     ClearInputMenu();
                     await memberModal.HideAsync();
                 }
@@ -109,7 +114,7 @@ namespace Project.IO.Components.Pages
         private void ClearInputMenu()
         {
             chosenUser = string.Empty;
-            chosenRole = null;
+            chosenRole = 0;
         }
 
         private bool IsEmpty(string value)
@@ -136,7 +141,6 @@ namespace Project.IO.Components.Pages
             {
                 Debug.WriteLine($"Get members fetched {members.Count} members.");
             }
-
             return members;
         }
         private async Task<List<Role>> GetProjectRoles()
