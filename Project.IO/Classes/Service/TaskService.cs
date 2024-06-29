@@ -100,6 +100,7 @@ namespace Project.IO.Classes.Service
         public async Task DeleteTask(int id)
         {
             await databaseUtil.CreateConnection().DeleteAsync($"Task/{id}");
+            await deadlineService.DeleteDeadline(id);
         }
     }
 }

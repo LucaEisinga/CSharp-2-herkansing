@@ -75,5 +75,10 @@ namespace Project.IO.Classes.Service
             return deadlineList;
         }
 
+        public async Task DeleteDeadline(int id)
+        {
+            await databaseUtil.CreateConnection().DeleteAsync($"Deadline/{id}");
+        }
+
     }
 }
