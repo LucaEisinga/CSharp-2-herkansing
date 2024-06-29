@@ -24,6 +24,7 @@ namespace Project.IO
             builder.Services.AddScoped<ProjectUtil>();
             builder.Services.AddScoped<AccountUtil>();
             builder.Services.AddScoped<RoleService>();
+            builder.Services.AddScoped<AccountUtil>();
 
 
 #if DEBUG

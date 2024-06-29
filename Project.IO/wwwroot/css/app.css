@@ -102,15 +102,16 @@ h1:focus {
 .big-button,
 .big-button-red {
     min-height: 250px;
-    min-width: 250px;
-    align-items: center;
-    justify-content: center;
     background-color: #9b78ff;
-    border-radius: 5px;
-    display: flex;
-    margin-top: 20px;
     border: 0px;
+    border-radius: 5px;
+    font-weight: bold;
+    justify-content: center;
+    font-size: 20px;
+    padding: 5px;
+    margin: 10px;
     color: white;
+    width: 25%;
     -webkit-box-shadow: 10px 10px 5px 0px rgba(138,138,138,1);
     -moz-box-shadow: 10px 10px 5px 0px rgba(138,138,138,1);
     box-shadow: 10px 10px 5px 0px rgba(138,138,138,1);
@@ -125,16 +126,19 @@ h1:focus {
     .big-button,
     .big-button-red {
         min-height: 250px;
-        min-width: 250px;
-        align-items: center;
-        justify-content: center;
         background-color: #9b78ff;
-        border-radius: 5px;
-        display: flex;
-        margin-top: 20px;
         border: 0px;
-        font-size: 30px;
+        border-radius: 5px;
+        font-weight: bold;
+        justify-content: center;
+        font-size: 20px;
+        padding: 5px;
+        margin: 10px;
         color: white;
+        width: 25%;
+        -webkit-box-shadow: 10px 10px 5px 0px rgba(138,138,138,1);
+        -moz-box-shadow: 10px 10px 5px 0px rgba(138,138,138,1);
+        box-shadow: 10px 10px 5px 0px rgba(138,138,138,1);
     }
 
     .big-button-red {
@@ -148,16 +152,19 @@ h1:focus {
     .big-button,
     .big-button-red {
         min-height: 220px;
-        min-width: 220px;
-        align-items: center;
-        justify-content: center;
         background-color: #9b78ff;
-        border-radius: 5px;
-        display: flex;
-        margin-top: 20px;
         border: 0px;
-        font-size: 25px;
+        border-radius: 5px;
+        font-weight: bold;
+        justify-content: center;
+        font-size: 18px;
+        padding: 5px;
+        margin: 10px;
         color: white;
+        width: 25%;
+        -webkit-box-shadow: 10px 10px 5px 0px rgba(138,138,138,1);
+        -moz-box-shadow: 10px 10px 5px 0px rgba(138,138,138,1);
+        box-shadow: 10px 10px 5px 0px rgba(138,138,138,1);
     }
 
     .big-button-red {
@@ -170,16 +177,19 @@ h1:focus {
     .big-button,
     .big-button-red {
         min-height: 200px;
-        min-width: 200px;
-        align-items: center;
-        justify-content: center;
         background-color: #9b78ff;
-        border-radius: 5px;
-        display: flex;
-        margin-top: 20px;
         border: 0px;
-        font-size: 20px;
+        border-radius: 5px;
+        font-weight: bold;
+        justify-content: center;
+        font-size: 16px;
+        padding: 5px;
+        margin: 10px;
         color: white;
+        width: 25%;
+        -webkit-box-shadow: 10px 10px 5px 0px rgba(138,138,138,1);
+        -moz-box-shadow: 10px 10px 5px 0px rgba(138,138,138,1);
+        box-shadow: 10px 10px 5px 0px rgba(138,138,138,1);
     }
 
     .big-button-red {
@@ -192,16 +202,19 @@ h1:focus {
     .big-button,
     .big-button-red {
         min-height: 160px;
-        min-width: 160px;
-        align-items: center;
-        justify-content: center;
         background-color: #9b78ff;
-        border-radius: 5px;
-        display: flex;
-        margin-top: 20px;
         border: 0px;
-        font-size: 17px;
+        border-radius: 5px;
+        font-weight: bold;
+        justify-content: center;
+        font-size: 14px;
+        padding: 5px;
+        margin: 10px;
         color: white;
+        width: 25%;
+        -webkit-box-shadow: 10px 10px 5px 0px rgba(138,138,138,1);
+        -moz-box-shadow: 10px 10px 5px 0px rgba(138,138,138,1);
+        box-shadow: 10px 10px 5px 0px rgba(138,138,138,1);
     }
 
     .big-button-red {
@@ -214,15 +227,19 @@ h1:focus {
     .big-button,
     .big-button-red {
         min-height: 150px;
-        min-width: 150px;
-        align-items: center;
-        justify-content: center;
         background-color: #9b78ff;
-        border-radius: 5px;
-        display: flex;
         border: 0px;
-        font-size: 15px;
+        border-radius: 5px;
+        font-weight: bold;
+        justify-content: center;
+        font-size: 12px;
+        padding: 5px;
+        margin: 10px;
         color: white;
+        width: 25%;
+        -webkit-box-shadow: 10px 10px 5px 0px rgba(138,138,138,1);
+        -moz-box-shadow: 10px 10px 5px 0px rgba(138,138,138,1);
+        box-shadow: 10px 10px 5px 0px rgba(138,138,138,1);
     }
 
     .big-button-red {
@@ -236,15 +253,19 @@ h1:focus {
     .big-button,
     .big-button-red {
         min-height: 120px;
-        min-width: 120px;
-        align-items: center;
-        justify-content: center;
         background-color: #9b78ff;
-        border-radius: 5px;
-        display: flex;
         border: 0px;
-        font-size: 12px;
+        border-radius: 5px;
+        font-weight: bold;
+        justify-content: center;
+        font-size: 10px;
+        padding: 5px;
+        margin: 10px;
         color: white;
+        width: 25%;
+        -webkit-box-shadow: 10px 10px 5px 0px rgba(138,138,138,1);
+        -moz-box-shadow: 10px 10px 5px 0px rgba(138,138,138,1);
+        box-shadow: 10px 10px 5px 0px rgba(138,138,138,1);
     }
 
     .big-button-red {
@@ -257,15 +278,19 @@ h1:focus {
     .big-button,
     .big-button-red {
         min-height: 100px;
-        min-width: 100px;
-        align-items: center;
-        justify-content: center;
         background-color: #9b78ff;
-        border-radius: 5px;
-        display: flex;
         border: 0px;
-        font-size: 10px;
+        border-radius: 5px;
+        font-weight: bold;
+        justify-content: center;
+        font-size: 8px;
+        padding: 5px;
+        margin: 10px;
         color: white;
+        width: 25%;
+        -webkit-box-shadow: 10px 10px 5px 0px rgba(138,138,138,1);
+        -moz-box-shadow: 10px 10px 5px 0px rgba(138,138,138,1);
+        box-shadow: 10px 10px 5px 0px rgba(138,138,138,1);
     }
 
     .big-button-red {

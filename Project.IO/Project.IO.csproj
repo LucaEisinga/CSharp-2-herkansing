@@ -58,6 +58,14 @@
     </ItemGroup>
 
     <ItemGroup>
+      <AndroidResource Remove="wwwroot\ProjectFiles\**" />
+      <Compile Remove="wwwroot\ProjectFiles\**" />
+      <Content Remove="wwwroot\ProjectFiles\**" />
+      <EmbeddedResource Remove="wwwroot\ProjectFiles\**" />
+      <None Remove="wwwroot\ProjectFiles\**" />
+    </ItemGroup>
+
+    <ItemGroup>
         <PackageReference Include="Blazor.Bootstrap" Version="2.2.0" />
         <PackageReference Include="Blazored.LocalStorage" Version="4.5.0" />
         <PackageReference Include="FireSharp" Version="2.0.4" />

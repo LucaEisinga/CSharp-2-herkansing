@@ -49,7 +49,6 @@ namespace Project.IO.Classes.Service
             await deadlineService.AddNewDeadline(projectMember, await this.GetMemberNameUsingId(projectMember), taskTitle, taskDeadline);
 
             SetResponse response = await databaseUtil.CreateConnection().SetAsync($"Task/{nextId}", task);
-
         }
 
         public async Task<List<TaskModel>> GetAllTasks()

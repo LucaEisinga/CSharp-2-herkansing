@@ -20,19 +20,6 @@ namespace Project.IO.Classes.Model
             setPassword(password);
         }
 
-        /*private int getId()
-        {
-            return this.id;
-        }
-
-        private void setId(int id)
-        {
-            if (id != 0)
-            {
-                this.id = id;
-            }
-        }*/
-
         private string getUsername()
         {
             return username;

@@ -87,6 +87,7 @@ namespace Project.IO.Classes.Service
             string jsonResponse = response.Body;
             return JsonConvert.DeserializeObject<Role>(jsonResponse);
         }
+        
         public async Task<Role?> GetRoleByName(string name)
         {
             int ProjectId = GetCurrentProject().Id;

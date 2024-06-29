@@ -16,39 +16,41 @@ else
     <div class="container-fluid">
         <div class="px-4 py-4 rounded" style="background-color: white">
             <div class="row">
-                <h1 style="color: #9b78ff; font-weight: bold">Welkom, naam!</h1>
-                <div class="col-sm-3">
-                    <NavLink class="nav-link" href="taskPage">
-                        <button class="btn big-button">
-                            Mijn taken
-                        </button>
+                <div class="col-md-12">
+                    <h1 style="color: #9b78ff; font-weight: bold">Welkom, Gebruiker!</h1>
+                    <NavLink href="taskPage">
+                        <div class="btn big-button">
+                            <i class="bi bi-laptop icon-100"></i>
+                            <p class="fw-bold">Mijn taken</p>
+                        </div>
                     </NavLink>
-                </div>
-                <div class="col-sm-3">
-                    <button class="btn big-button">
-                        Mijn groep
-                    </button>
-                </div>
-                <div class="col-sm-3">
-                    <button class="btn big-button">
-                        Projectdeadlines
-                    </button>
-                </div>
-                <div class="col-sm-3">
-                    <button class="btn big-button">
-                        Mijn documenten
-                    </button>
+                    <NavLink href="memberOverviewPage">
+                        <div class="btn big-button">
+                            <i class="bi bi-people-fill icon-100"></i>
+                            <p class="fw-bold">Mijn groep</p>
+                        </div>
+                    </NavLink>
+                    <NavLink href="deadlinePage">
+                        <div class="btn big-button">
+                            <i class="bi bi-clock-fill icon-100"></i>
+                            <p class="fw-bold">Project deadlines</p>
+                        </div>
+                    </NavLink>
+                    <NavLink href="documentOverviewPage">
+                        <div class="btn big-button">
+                            <i class="bi bi-file-earmark-fill icon-100"></i>
+                            <p class="fw-bold">Mijn documenten</p>
+                        </div>
+                    </NavLink>
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-3">
-                    <button class="btn big-button-red" @onclick="Logout">
-                        Uitloggen
-                    </button>
+                <div class="col-md-12">
+                    <div class="btn big-button-red" @onclick="Logout">
+                        <i class="bi bi-box-arrow-in-right icon-100"></i>
+                        <p class="fw-bold">Uitloggen</p>
+                    </div>
                 </div>
-                <div class="col-sm-3"></div>
-                <div class="col-sm-3"></div>
-                <div class="col-sm-3"></div>
             </div>
         </div>
     </div>

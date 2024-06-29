@@ -1,5 +1,4 @@
-﻿
-namespace Project.IO.Classes.Model
+﻿namespace Project.IO.Classes.Model
 {
     public class TaskModel
     {

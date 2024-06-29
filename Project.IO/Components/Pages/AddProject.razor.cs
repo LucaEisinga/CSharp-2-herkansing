@@ -46,7 +46,7 @@ namespace Project.IO.Components.Pages
 
                 await ProjectUtil.createProject(ProjectTitle, ProjectDescription, ProjectDeadline);
                 await DisplayAlert("Success", "Project added successfully.", "OK");
-                NavigationManager.NavigateTo("/");
+                NavigationManager.NavigateTo($"/mainMenu/{SessionService.Instance.ProjectId}");
             }
             catch (Exception ex)
             {
@@ -61,18 +61,5 @@ namespace Project.IO.Components.Pages
             Console.WriteLine($"{title}: {message}");
             return Task.CompletedTask;
         }
-
-        /*private async Task<List<ProjectModel>> GetUserProjects()
-        {
-            try
-            {
-                return await ProjectUtil.GetProjectsForLoggedInUser();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error getting projects: {ex.Message}");
-                return new List<ProjectModel>();
-            }
-        }*/
     }
 }

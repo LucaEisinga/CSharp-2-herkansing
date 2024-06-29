@@ -175,5 +175,11 @@ namespace Project.IO.Components.Pages
             Role role = await roleService.GetRoleById(RoleId);
             return role.RoleName;
         }
+
+        private void NavigateToProject()
+        {
+            Navigation.NavigateTo($"/mainMenu/{SessionService.Instance.ProjectId}");
+        }
+
     }
 }
